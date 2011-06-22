@@ -1,5 +1,5 @@
 <?php
-include 'config.php';
+include 'admin/config.php';
 $inshtml="";
 $c=1;
 $d=1;
@@ -134,6 +134,6 @@ else if($PGTITLE==2) {
 	else if($id==$c-1) {
 		echo "<a href='?id=".($id-1)."'>&lt; Previous</a> | ";
 	}
-?><a href="login.php">Login</a> | <a href="whatsthis.php">What's this</a> | <a href="impressum.php">Impressum</a></p>
+?><a href="admin/login.php">Login</a> | <a href="whatsthis.php">What's this</a> | <a href="impressum.php">Impressum</a></p>
 </body>
 </html>

@@ -13,7 +13,7 @@ $PGNAME = $objResult->value;
 if($_SESSION['access']!=allowd||$_SESSION['access']==NULL)
 {
     session_destroy(); 
-	header("Location: error.php");
+	header("Location: /error.php");
 }
 else {
 	$_SESSION['access']=allowd;
@@ -28,7 +28,7 @@ mysql_close($connect);
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" >
 		<meta http-equiv="content-language" content="de">
 <meta name="generator" content="Martin Giger">
-	<link rel="stylesheet" href="style.css" type="text/css" media="screen" >
+	<link rel="stylesheet" href="/style.css" type="text/css" media="screen" >
     </head>
 <body>
    <h2 id="head">Erfolgreich gespeichert.</h2>

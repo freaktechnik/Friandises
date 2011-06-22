@@ -2,7 +2,7 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title><?php include 'config.php';$connect = mysql_connect("$DB_LOCA", "$DB_USER", "$DB_PASS");
+<title><?php include 'admin/config.php';$connect = mysql_connect("$DB_LOCA", "$DB_USER", "$DB_PASS");
 if (!$connect)
 {
    die('Could not connect: ' . mysql_error());
@@ -29,6 +29,6 @@ mysql_close($connect);
 <p><?php echo $PGDSC; ?><p>
 <?php echo $PGNAME; ?> is a link collection of videos. You can watch those videos directly on the page. This page supports youtube and sf videoportal videos, more can be comming soon. the page is built to be simple, for user and owner. It is very simple to add a video.
 </div>
-<p id="footer"><a href="index.php">Home</a> | <a href="impressum.php">Impressum</a> | <a href="login.php">Login</a></p>
+<p id="footer"><a href="index.php">Home</a> | <a href="impressum.php">Impressum</a> | <a href="admin/login.php">Login</a></p>
 </body>
 </html>

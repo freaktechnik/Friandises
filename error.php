@@ -2,7 +2,8 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
     <head>
-        <title><?php include 'config.php';$connect = mysql_connect("$DB_LOCA", "$DB_USER", "$DB_PASS");
+        <title><?php include 'admin/config.php';
+		$connect = mysql_connect("$DB_LOCA", "$DB_USER", "$DB_PASS");
 if (!$connect)
 {
    die('Could not connect: ' . mysql_error());

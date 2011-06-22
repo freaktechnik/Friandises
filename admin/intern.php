@@ -2,7 +2,7 @@
 if($_SESSION['access']!=allowd||$_SESSION['access']==NULL)
 {
     session_destroy(); 
-	header("Location: error.php");
+	header("Location: /error.php");
     break;
 }
 else {
@@ -25,7 +25,7 @@ $PGNAME = $objResult->value;
 <html>
 <head>
 <title><?php echo $PGNAME; ?> - Video hinzufügen</title>
-<link rel="stylesheet" href="style.css" type="text/css" media="screen" >
+<link rel="stylesheet" href="/style.css" type="text/css" media="screen" >
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" >
 <meta http-equiv="content-language" content="de">
 <meta name="generator" content="Martin Giger">

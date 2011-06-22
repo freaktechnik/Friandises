@@ -2,7 +2,7 @@
 if($_SESSION['access']!=allowd||$_SESSION['access']==NULL)
 {
     session_destroy(); 
-	header("Location: error.php");
+	header("Location: /error.php");
 }
 else {
 	$_SESSION['access']=allowd;
@@ -27,11 +27,11 @@ $PGDSC = $objResult->value;
 <html>
 <head>
 <title><?php echo $PGNAME; ?> - Benutzerinfos</title>
-<link rel="stylesheet" href="style.css" type="text/css" media="screen" >
+<link rel="stylesheet" href="/style.css" type="text/css" media="screen" >
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" >
 <meta http-equiv="content-language" content="de">
 <meta name="generator" content="Martin Giger">
-<script type="text/javascript" src="jquery-1.6.1.min.js"></script>
+<script type="text/javascript" src="/jquery-1.6.1.min.js"></script>
 <script>
 var oldpw="";
 var newpw="";

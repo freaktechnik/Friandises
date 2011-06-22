@@ -11,7 +11,7 @@ $query = mysql_query("SELECT value FROM settings WHERE name='name'");
 $objResult = mysql_fetch_object($query);
 $PGNAME = $objResult->value;
 if($_SESSION['access']==allowd) {
-    header("Location: intern.php");
+    header("Location: /intern.php");
 }
 mysql_close($connect);
 ?>
@@ -20,7 +20,7 @@ mysql_close($connect);
 <html>
 <head>
 <title><?php echo $PGNAME; ?> - Login</title>
-<link rel="stylesheet" href="style.css" type="text/css" media="screen" >
+<link rel="stylesheet" href="/style.css" type="text/css" media="screen" >
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" >
 <meta http-equiv="content-language" content="en">
 <meta name="generator" content="Martin Giger">
@@ -41,6 +41,6 @@ mysql_close($connect);
 </table>
 </form>
 </div>
-<p id="footer"><a href="index.php">Home</a></p>
+<p id="footer"><a href="/index.php">Home</a></p>
 </body>
 </html>

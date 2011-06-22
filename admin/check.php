@@ -8,7 +8,7 @@ if (!$connect)
    die('Could not connect: ' . mysql_error());
 }
   
-if (empty($_POST['passwort'])){header("Location: index.php"); break;}
+if (empty($_POST['passwort'])){header("Location: /index.php"); break;}
 
 mysql_select_db($DB_NAME, $connect);
 
@@ -36,7 +36,7 @@ $objResult = mysql_fetch_object($query);
 
 if($_SESSION['access']=!allowd)
 {
-    header("Location: error.php");
+    header("Location: /error.php");
     break;
 }
 ?>

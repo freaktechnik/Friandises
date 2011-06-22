@@ -3,7 +3,7 @@
 if($_SESSION['access']!=allowd||$_SESSION['access']==NULL)
 {
     session_destroy(); 
-	header("Location: index.php");
+	header("Location: /index.php");
 }
 else {
 	$_SESSION['access']=allowd;

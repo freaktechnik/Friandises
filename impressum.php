@@ -2,7 +2,7 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title><?php include 'config.php';$connect = mysql_connect("$DB_LOCA", "$DB_USER", "$DB_PASS");
+<title><?php include 'admin/config.php';$connect = mysql_connect("$DB_LOCA", "$DB_USER", "$DB_PASS");
 if (!$connect)
 {
    die('Could not connect: ' . mysql_error());
@@ -29,6 +29,6 @@ This page uses <a href="http://jquery.com">jQuery</a> and fancybox.<br>
 Flash may be required.<br>
 Thx for reading.
 </div>
-<p id="footer"><a href="index.php">Home</a> | <a href="whatsthis.php">What's this</a> | <a href="login.php">Login</a></p>
+<p id="footer"><a href="index.php">Home</a> | <a href="whatsthis.php">What's this</a> | <a href="admin/login.php">Login</a></p>
 </body>
 </html>
