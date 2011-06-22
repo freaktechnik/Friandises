@@ -31,7 +31,7 @@ $PGDSC = $objResult->value;
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" >
 <meta http-equiv="content-language" content="de">
 <meta name="generator" content="Martin Giger">
-<script type="text/javascript" src="jquery-1.5.1.min.js"></script>
+<script type="text/javascript" src="jquery-1.6.1.min.js"></script>
 <script>
 var oldpw="";
 var newpw="";

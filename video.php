@@ -59,6 +59,7 @@ if($q==0||$objResult->category==$quat) {
 	if($id==1) {
 		$inshtml="<h3>".$objResult->name."</h3><object width='750' height='450'><param name='allowFullScreen' value='true'></param><param name='movie' value='".$objResult->url."&fs=1'></param><embed allowfullscreen='true' width='750' height='450' type='application/x-shockwave-flash' src='".$objResult->url."&fs=1'></embed></object>".$share."<p>".$objResult->caption."</p>";
 		$quat=$objResult->category;
+		$namez = $objResult->name;
 	}
 	$c=2;
 }
@@ -72,6 +73,7 @@ do {
 		if($id==$c) {
 			$inshtml="<h3>".$objResult->name."</h3><object width='750' height='450'><param name='allowFullScreen' value='true'></param><param name='movie' value='".$objResult->url."&fs=1'></param><embed allowfullscreen='true' width='750' height='450' type='application/x-shockwave-flash' src='".$objResult->url."&fs=1'></embed></object>".$share."<p>".$objResult->caption."</p>";
 			$quat=$objResult->category;
+			$namez = $objResult->name;
 		}
 	}
 	if(!(array_search($objResult->category,$categories))) {
@@ -100,7 +102,7 @@ mysql_close($connect);
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title><?php echo $PGNAME; ?> <?php if($_GET['cat']) { echo "- ".$_GET['cat']; } else {  echo "- ".$PGTEA; } ?></title>
+<title><?php echo $PGNAME." - ".$namez; ?> </title>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" >
 <meta name="description" content="<?php echo $PGDSC; ?>" >
 <meta name="keywords" content="<?php echo $PGTGS; ?>">
