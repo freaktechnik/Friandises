@@ -124,6 +124,16 @@ else if($PGTITLE==2) {
 <p><?php echo $PGTEA; ?></p></div>
 <div id="navigation"><ul><li><a href="<?php echo $PGURL; ?>">Home</a></li><?php echo $cat; ?></ul></div><br>
 <div id="videop"><?php echo $inshtml; ?></div>
-<p id="footer"><a href="login.php">Login</a> | <a href="whatsthis.php">What's this</a> | <a href="impressum.php">Impressum</a></p>
+<p id="footer"><?php
+	if($id==1) {
+		echo "<a href='?id=2'>Next &gt;</a> | ";
+	}
+	else if($id<$c-1) {
+		echo "<a href='?id=".($id-1)."'>&lt; Previous</a> <a href='?id=".($id+1)."'>Next &gt;</a> | ";
+	}
+	else if($id==$c-1) {
+		echo "<a href='?id=".($id-1)."'>&lt; Previous</a> | ";
+	}
+?><a href="login.php">Login</a> | <a href="whatsthis.php">What's this</a> | <a href="impressum.php">Impressum</a></p>
 </body>
 </html>
