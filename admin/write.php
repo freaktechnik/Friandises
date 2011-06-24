@@ -41,6 +41,10 @@ if($what=="video") {
 		$thumbnail= preg_replace('#http://www.youtube.com/v/#','http://i1.ytimg.com/vi/',$url);
 		$thumbnail.=$suffix;
 	}
+	/*else if(preg_match('#http://vimeo.com#',$url)) {
+		$url = preg_replace('#http://www.youtu.be/#','http://www.youtube.com/v/',$url);
+		$thumbnail= preg_replace('#http://www.youtube.com/v/#','http://i1.ytimg.com/vi/',$url);
+	} neesds HTML Player.*/
 
 	$sql = "INSERT INTO content (url, name, caption, category, thumbnail) VALUES ('$url', '$name', '$caption', '$category', '$thumbnail');";
 	$results = mysql_query($sql);

@@ -49,7 +49,7 @@ $share = '<!-- AddThis Button BEGIN -->
 <a class="addthis_counter addthis_pill_style"></a>
 </div>
 <script type="text/javascript">var addthis_config = {"data_track_clickback":true};</script>
-<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=freaktechnik"></script>
+<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="'.$ADD_PUBID.'"></script>
 <!-- AddThis Button END -->';
 
 $categories[0]=placeholder;
@@ -57,9 +57,10 @@ $query = mysql_query("SELECT name, url, caption, thumbnail, hello, category FROM
 $objResult = mysql_fetch_object($query);
 if($q==0||$objResult->category==$quat) {
 	if($id==1) {
-		$inshtml="<h3>".$objResult->name."</h3><object width='750' height='450'><param name='allowFullScreen' value='true'></param><param name='movie' value='".$objResult->url."&fs=1'></param><embed allowfullscreen='true' width='750' height='450' type='application/x-shockwave-flash' src='".$objResult->url."&fs=1'></embed></object>".$share."<p>".$objResult->caption."</p>";
 		$quat=$objResult->category;
 		$namez = $objResult->name;
+		$url = $objResult->url."&fs=1";
+		$capz = $objResult->caption;
 	}
 	$c=2;
 }
@@ -71,9 +72,10 @@ $objResult = mysql_fetch_object($query);
 do {
 	if($objResult!=NULL&&($q==0||$objResult->category==$quat)) {
 		if($id==$c) {
-			$inshtml="<h3>".$objResult->name."</h3><object width='750' height='450'><param name='allowFullScreen' value='true'></param><param name='movie' value='".$objResult->url."&fs=1'></param><embed allowfullscreen='true' width='750' height='450' type='application/x-shockwave-flash' src='".$objResult->url."&fs=1'></embed></object>".$share."<p>".$objResult->caption."</p>";
 			$quat=$objResult->category;
 			$namez = $objResult->name;
+			$url = $objResult->url."&fs=1";
+			$capz = $objResult->caption;
 		}
 	}
 	if(!(array_search($objResult->category,$categories))) {
@@ -106,7 +108,7 @@ mysql_close($connect);
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" >
 <meta name="description" content="<?php echo $PGDSC; ?>" >
 <meta name="keywords" content="<?php echo $PGTGS; ?>">
-<meta http-equiv="content-language" content="de">
+<meta http-equiv="content-language" content="en">
 <meta name="generator" content="Martin Giger">
 <link rel="stylesheet" href="/fancybox/jquery.fancybox-1.3.4.css" type="text/css" media="screen" >
 <link rel="stylesheet" href="style.css" type="text/css" media="screen" >
@@ -123,7 +125,15 @@ else if($PGTITLE==2) {
 ?></a>
 <p><?php echo $PGTEA; ?></p></div>
 <div id="navigation"><ul><li><a href="<?php echo $PGURL; ?>">Home</a></li><?php echo $cat; ?></ul></div><br>
-<div id="videop"><?php echo $inshtml; ?></div>
+<div id="videop"><h3><?php echo $namez; ?></h3>
+<object width='720' height='450'>
+<param name='allowFullScreen' value='true'></param>
+<param name='movie' value='<?php echo $url; ?>'></param>
+<embed allowfullscreen='true' width='750' height='450' type='application/x-shockwave-flash' src='<?php echo $url; ?>'></embed>
+</object>
+<p><?php echo $share; ?></p>
+<p><?php echo $capz; ?></p>
+</div>
 <p id="footer"><?php
 	if($id==1) {
 		echo "<a href='?id=2'>Next &gt;</a> | ";
