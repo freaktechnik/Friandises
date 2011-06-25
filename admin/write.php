@@ -48,6 +48,7 @@ if($what=="video") {
 
 	$sql = "INSERT INTO content (url, name, caption, category, thumbnail) VALUES ('$url', '$name', '$caption', '$category', '$thumbnail');";
 	$results = mysql_query($sql);
+	include "rsscreate.php";
 	header("Location: intern.php?suc=1");
 }
 else if($what=="settings") {
@@ -61,6 +62,8 @@ else if($what=="settings") {
 	$items=$_POST['items'];
 	$addthis=$_POST['addthis'];
 	$gana=$_POST['gana'];
+	$owner=$_POST['owner'];
+	$lang=$_POST['lang'];
 	$sql = "UPDATE settings SET value='$url' WHERE name='url';";
 	$results = mysql_query($sql);
 	$sql = "UPDATE settings SET value='$name' WHERE name='name';";
@@ -81,6 +84,10 @@ else if($what=="settings") {
 	$results = mysql_query($sql);
 	$sql = "UPDATE settings SET value='$gana' WHERE name='gana';";
 	$results = mysql_query($sql);
+	$sql = "UPDATE settings SET value='$owner' WHERE name='owner';";
+	$results = mysql_query($sql);
+	$sql = "UPDATE settings SET value='$lang' WHERE name='lang';";
+	$results = mysql_query($sql);
 	header("Location: settings.php?suc=1");
 }
 else if($what=="edit") {
@@ -92,6 +99,7 @@ else if($what=="edit") {
 	$cat=$_POST['category'];
 	$sql = "UPDATE content SET url='$url',name='$name',caption='$descl',thumbnail='$thumb',category='$cat' WHERE id='$id'";
 	$results = mysql_query($sql);
+	include "rsscreate.php";
 	header("Location: edit.php?suc=1&id=".$id);
 }
 else if($what=="user") {

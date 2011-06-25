@@ -41,7 +41,6 @@ $query = mysql_query("SELECT value FROM settings WHERE name='addthis'");
 $objResult = mysql_fetch_object($query);
 $ADD_PUBID = $objResult->value;
 $cnt = 0;
-$count = 0;
 
 $id = $_GET['id'];
 
@@ -58,26 +57,24 @@ $share = '<!-- AddThis Button BEGIN -->
 $categories[0]=placeholder;
 $query = mysql_query("SELECT name, url, caption, thumbnail, hello, category FROM content WHERE id='1'");
 $objResult = mysql_fetch_object($query);
-if($q==0||$objResult->category==$quat) {
-	if($id==1) {
-		$quat=$objResult->category;
-		$namez = $objResult->name;
-		$url = $objResult->url."&fs=1";
-		$capz = $objResult->caption;
-	}
-	$c=2;
+if($id==1) {
+	$quat=$objResult->category;
+	$namez = $objResult->name;
+	$url = $objResult->url."&fs=1&hd=1";
+	$capz = $objResult->caption;
 }
+$c=2;
+
 $categories[1]=$objResult->category;
 $d=2;
 $query = mysql_query("SELECT name, url, caption, thumbnail, hello, category FROM content WHERE id='$c'");
 $objResult = mysql_fetch_object($query);
-
 do {
-	if($objResult!=NULL&&($q==0||$objResult->category==$quat)) {
+	if($objResult!=NULL) {
 		if($id==$c) {
 			$quat=$objResult->category;
 			$namez = $objResult->name;
-			$url = $objResult->url."&fs=1";
+			$url = $objResult->url."&fs=1&hd=1";
 			$capz = $objResult->caption;
 		}
 	}
