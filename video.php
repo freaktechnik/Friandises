@@ -37,6 +37,9 @@ $PGTEA = $objResult->value;
 $query = mysql_query("SELECT value FROM settings WHERE name='items'");
 $objResult = mysql_fetch_object($query);
 $PGITMS = (int)$objResult->value;
+$query = mysql_query("SELECT value FROM settings WHERE name='addthis'");
+$objResult = mysql_fetch_object($query);
+$ADD_PUBID = $objResult->value;
 $cnt = 0;
 $count = 0;
 
