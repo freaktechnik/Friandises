@@ -99,7 +99,9 @@ a:hover {
 	display: none;
 	color: black;
 	height: 16px;
+	width: 187px;
 	overflow: hidden;
+	/*overflow: ellipsis ;*/
 }
 
 #videos li:hover .title {
