@@ -62,7 +62,7 @@ if($what=="video") {
 	include "rsscreate.php";
 	header("Location: intern.php?suc=1");
 }
-else if($what=="settings") {
+else if($what=="settings"&&$_SESSION['admin']==1) {
 	$name=$_POST['name'];
 	$url=$_POST['url'];
 	$descl=$_POST['desc'];

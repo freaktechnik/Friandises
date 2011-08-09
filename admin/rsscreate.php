@@ -1,6 +1,6 @@
 <?php
 include 'config.php';
-date_default_timezone_set('UTC');
+date_default_timezone_set('Europe/Paris');
 $connect = mysql_connect("$DB_LOCA", "$DB_USER", "$DB_PASS");
 if (!$connect)
 {
@@ -28,7 +28,7 @@ $objResult = mysql_fetch_object($query);
 $PGLANG = $objResult->value;
 
 function dateConvertTimestamp($mysqlDate) {
-	$rawdate=strtotime($mysqlDate);
+    $rawdate=strtotime($mysqlDate);
 	if ($rawdate == -1) {
 		$convertedDate = 'conversion failed';
 	}
@@ -40,35 +40,58 @@ function dateConvertTimestamp($mysqlDate) {
 
 $query = mysql_query("SELECT name, url, caption, thumbnail, hello, category, creator, added FROM content WHERE id='1'");
 $objResult = mysql_fetch_object($query);
-$newPubDate = dateConvert("$objResult->added");
-$filec="<item>
-      <title>".$objResult->name."</title>
-      <description>".$objResult->caption."</description>
-      <link>".$PGURL."/video.php?id=1</link>
-      <author>".$objResult->creator."</author>
-	  <pubDate>".$newPubDate."</pubDate>
-	  <category>".$objResult->category."</category>
-      <guid isPermaLink='true'>".$PGURL."/video.php?id=1</guid>
+$newPubDate = dateConvertTimestamp("$objResult->added");
+$filec="
+    <item>
+        <title>".$objResult->name."</title>
+        <description>".$objResult->caption."</description>
+        <link>".$PGURL."/video.php?id=1</link>
+        <pubDate>".$newPubDate."</pubDate>
+        <category>".$objResult->category."</category>
+        <guid isPermaLink='true'>".$PGURL."/video.php?id=1</guid>
+	    <media:content url='".$objResult->url."' type='application/x-shockwave-flash' medium='video' isDefault='true' lang='".$PGLANG."' />
+        <media:embed url='".$objResult->url."' width='512' height='323' >
+            <media:param name='type'>application/x-shockwave-flash</media:param>
+            <media:param name='width'>512</media:param>
+            <media:param name='height'>323</media:param>
+            <media:param name='allowFullScreen'>true</media:param>
+            <media:param name='movie'>".$objResult->url."</media:param>
+        </media:embed>
+        <media:thumbnail url='".$objResult->thumbnail."' />
+        <media:description>".$objResult->caption."</media:description>
+        <media:title>".$objResult->name."</media:title>
+        <media:keywords>".$objResult->category."</media:keywords>
     </item>
-	</channel>
- 
+</channel>
 </rss>";
-//  at author field should be name,email
+//  at author field should be email
 $c=2;
 
 $query = mysql_query("SELECT name, url, caption, thumbnail, hello, category, creator, added FROM content WHERE id='$c'");
 $objResult = mysql_fetch_object($query);
 do {
 	if($objResult!=NULL) {
-		$newPubDate = dateConvert("$objResult->added");
-		$filec="<item>
+		$newPubDate = dateConvertTimestamp("$objResult->added");
+		$filec="
+    <item>
       <title>".$objResult->name."</title>
       <description>".$objResult->caption."</description>
       <link>".$PGURL."/video.php?id=".$c."</link>
-      <author>".$objResult->creator."</author>
 	  <pubDate>".$newPubDate."</pubDate>
 	  <category>".$objResult->category."</category>
       <guid isPermaLink='true'>".$PGURL."/video.php?id=".$c."</guid>
+	  <media:content url='".$objResult->url."' type='application/x-shockwave-flash' medium='video' isDefault='true' lang='".$PGLANG."' />
+	  <media:embed url='".$objResult->url."' width='512' height='323' >
+        <media:param name='type'>application/x-shockwave-flash</media:param>
+        <media:param name='width'>512</media:param>
+        <media:param name='height'>323</media:param>
+        <media:param name='allowFullScreen'>true</media:param>
+        <media:param name='movie'>".$objResult->url."</media:param>
+     </media:embed>
+	  <media:thumbnail url='".$objResult->thumbnail."' />
+	  <media:description>".$objResult->caption."</media:description>
+	  <media:title>".$objResult->name."</media:title>
+	  <media:keywords>".$objResult->category."</media:keywords>
     </item>".$filec;
 	}
 	$c=$c+1;
@@ -76,21 +99,22 @@ do {
 	$objResult = mysql_fetch_object($query);
 } while($objResult->hello==1);
 
-$filec ='<?xml version="1.0" encoding="utf-8"?>
- 
-<rss version="2.0">
+$filec ='<?xml version="1.0" encoding="utf-8" ?>
+<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/">
 <channel>
-<title>'.$PG_NAME.'</title>
+    <title>'.$PGNAME.'</title>
     <link>'.$PGURL.'</link>
     <description>'.$PGDSC.'</description>
     <language>'.$PGLANG.'</language>
     <copyright>'.$PGOWN.'</copyright>
-    <pubDate>'.date(DATE_RFC822).'</pubDate>
+    <pubDate>'.date('D, d M Y h:i:s T').'</pubDate>
     <image>
-      <url>'.$PGURL."/".$PGIMG.'</url>
+        <url>'.$PGURL."/".$PGIMG.'</url>
+        <title>'.$PGNAME.'</title>
+        <link>'.$PGURL.'</link>
     </image>'.$filec;
 
-$file = fopen('feed.rss','w+');
+$file = fopen('feed.rss','w');
 fwrite($file, $filec);
 fclose($file);
 ?>
