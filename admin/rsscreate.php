@@ -44,7 +44,7 @@ $newPubDate = dateConvertTimestamp("$objResult->added");
 $filec="
     <item>
         <title>".$objResult->name."</title>
-        <description>".$objResult->caption."</description>
+        <description><![CDATA[<img src='".$objResult->thumbnail."' alt='".$objResult->name." /><p>".$objResult->caption."</p>]]></description>
         <link>".$PGURL."/video.php?id=1</link>
         <pubDate>".$newPubDate."</pubDate>
         <category>".$objResult->category."</category>
@@ -76,7 +76,7 @@ do {
 		$filec="
     <item>
         <title>".$objResult->name."</title>
-        <description>".$objResult->caption."</description>
+        <description><![CDATA[<img src='".$objResult->thumbnail."' alt='".$objResult->name." /><p>".$objResult->caption."</p>]]></description>
         <link>".$PGURL."/video.php?id=".$c."</link>
         <pubDate>".$newPubDate."</pubDate>
         <category>".$objResult->category."</category>
