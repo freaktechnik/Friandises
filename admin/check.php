@@ -15,7 +15,7 @@ mysql_select_db($DB_NAME, $connect);
 $username=$_POST['name'];
 $password=$_POST['passwort'];
 
-$query = mysql_query("SELECT user, password FROM logins WHERE user='$username'");
+$query = mysql_query("SELECT user, password, admin FROM logins WHERE user='$username'");
 $objResult = mysql_fetch_object($query);
 
 
@@ -25,6 +25,7 @@ $objResult = mysql_fetch_object($query);
     $_SESSION['access']=allowd;
     $_SESSION['username']=$_POST['name'];
     $_SESSION['login_time']=date("U");
+	$_SESSION['admin']=$objResult->admin;
     header("Location: intern.php");
     break;
   }

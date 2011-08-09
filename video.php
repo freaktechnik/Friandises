@@ -44,16 +44,6 @@ $cnt = 0;
 
 $id = $_GET['id'];
 
-$share = '<!-- AddThis Button BEGIN -->
-<div class="addthis_toolbox addthis_default_style ">
-<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
-<a class="addthis_button_tweet"></a>
-<a class="addthis_counter addthis_pill_style"></a>
-</div>
-<script type="text/javascript">var addthis_config = {"data_track_clickback":true};</script>
-<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="'.$ADD_PUBID.'"></script>
-<!-- AddThis Button END -->';
-
 $categories[0]=placeholder;
 $query = mysql_query("SELECT name, url, caption, thumbnail, hello, category FROM content WHERE id='1'");
 $objResult = mysql_fetch_object($query);
@@ -86,6 +76,17 @@ do {
 	$query = mysql_query("SELECT name, url, caption, thumbnail, hello, category FROM content WHERE id='$c'");
 	$objResult = mysql_fetch_object($query);
 } while($objResult->hello==1);
+
+$share = '<!-- AddThis Button BEGIN -->
+<div class="addthis_toolbox addthis_default_style">
+<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+<a class="addthis_button_tweet"></a>
+<a class="addthis_counter addthis_pill_style"></a>
+</div>
+<script type="text/javascript">var addthis_config = {"data_track_clickback":true,"swfurl":'.$url.'};</script>
+<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="'.$ADD_PUBID.'"></script>
+<!-- AddThis Button END -->';
+
 $f=1;
 while($f<$d) {
 	if($quat==$categories[$f]) {
@@ -124,7 +125,7 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-<div id="topnav"><form method="POST" id="loginform" style="display:none;" action="admin/check.php">Username:<input type="text" name="name"/> | Password:<input type="password" name="passwort"/> <input type="submit" value="login"></form><a id="loginlink" href="admin/login.php">Login</a> | <a href="impressum.php">Impressum</a></div>
+<div id="topnav"><form method="POST" id="loginform" style="display:none;" action="admin/check.php">Username:<input type="text" name="name"/> | Password:<input type="password" name="passwort"/> <input type="submit" value="login"></form><a id="loginlink" href="admin/login.php">Login</a></div>
 <div id="head"><a href="<?php echo $PGURL; ?>" style="text-decoration:none;"><?php 
 if($PGTITLE==1) {
 	echo "<h1>".$PGNAME."</h1>";
@@ -135,31 +136,26 @@ else if($PGTITLE==2) {
 ?></a>
 <p><?php echo $PGTEA; ?></p></div>
 <div id="navigation"><ul><li><a href="<?php echo $PGURL; ?>">Home</a></li><?php echo $cat; ?></ul></div><br>
-<div id="leftrnav">
-	<?php
-		if($id<$c-1) {
-			echo "<a href='?id=".($id-1)."'>&lt; Previous</a>";
-		}
-		else if($id==$c-1) {
-			echo "<a href='?id=".($id-1)."'>&lt; Previous</a>";
-		}
-	?><img id="spacer" src="images/clear.png"/><?php
-		if($id==1) {
-			echo "<a href='?id=2'>Next &gt;</a>";
-		}
-		else if($id<$c-1) {
-			echo "<a href='?id=".($id+1)."'>Next &gt;</a>";
-		}
-	?>
-</div>
 <div id="videop"><h3><?php echo $namez; ?></h3>
 <object width='720' height='450'>
 <param name='allowFullScreen' value='true'></param>
 <param name='movie' value='<?php echo $url; ?>'></param>
 <embed allowfullscreen='true' width='750' height='450' type='application/x-shockwave-flash' src='<?php echo $url; ?>'></embed>
 </object>
-<p><?php echo $share; ?></p>
+<div id="footline">
+	<?php
+		if($id<=$c-1&&$id!=1) {
+			echo "<a href='?id=".($id-1)."' class='left'>&lt; Previous</a>";
+		}
+	?><div class="center"><?php echo $share; ?></div><?php
+		if($id<$c-1) {
+			echo "<a href='?id=".($id+1)."' class='right'>Next &gt;</a>";
+		}
+	?>
+</div><br>
 <p><?php echo $capz; ?></p>
 </div>
+<div id="bottom">
+<div id="footer"><a href="impressum.php">Impressum</a> | <a href="<?php echo $PGURL; ?>/admin/feed.rss" title="RSS Feed"><img src="images/rss.png" alt="RSS Feed" /></a></div></div>
 </body>
 </html>

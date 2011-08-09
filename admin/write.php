@@ -27,6 +27,7 @@ if($what=="video") {
 	$day=$_POST['day'];
 	$month=$_POST['month'];
 	$year=$_POST['year'];
+	$creator=$_SESSION['username'];
 
 	if(preg_match('#http://.+youtube.com/#',$url)) {
 		$url = preg_replace('#http://.+youtube.com/.+watch#','watch',$url);
@@ -56,7 +57,7 @@ if($what=="video") {
 		die("Please enter a proper year");
 	}
 
-	$sql = "INSERT INTO content (url, name, caption, category, thumbnail, date) VALUES ('$url', '$name', '$caption', '$category', '$thumbnail', '$date');";
+	$sql = "INSERT INTO content (url, name, caption, category, thumbnail, date, creator) VALUES ('$url', '$name', '$caption', '$category', '$thumbnail', '$date', '$creator');";
 	$results = mysql_query($sql);
 	include "rsscreate.php";
 	header("Location: intern.php?suc=1");

@@ -40,6 +40,13 @@ a:hover {
 #videos ul {
 	margin: 5px;
 	padding: 0;
+	position: relative;
+}
+
+#videos {
+	display: block;
+	position: relative;
+	float: left;
 }
 
 #navigation li, #videos li {
@@ -108,14 +115,6 @@ a:hover {
 	display: block;
 }
 
-#leftrnav {
-	margin: 0 auto;
-	position: relative;
-	text-align: center;
-	z-index: 1000;
-	float: center;
-}
-
 #spacer {
 	width: 780px;
 	height: 1em;
@@ -135,6 +134,7 @@ a:hover {
 	-moz-box-shadow:1px 1px 10px #ccc;
 	-webkit-box-shadow:1px 1px 10px #ccc;
 	box-shadow:1px 1px 10px #ccc;	
+	float: center;
 }
 
 #login {
@@ -207,12 +207,52 @@ a img {
 	width: 750px;
 	margin-left: auto;
 	margin-right: auto;
+	float: center;
+}
+
+#bottom {
+	padding-top: 5px;
+	position: relative;
+	bottom: 0;
+	width: 100%;
+	/*background: #1c1c1c;*/
+	height: 100%;
+	float: left;
+}
+
+#pagination {
+	text-align: center;
 }
 
 #footer {
-	position: fixed;
-	bottom: 5px;
+	text-align: center;
+	background: #cccccc;
+	font-size: 14px;
 	right: 0;
-	background: #1C1C1C;
+	color: #1C1C1C;
 	padding: 3px;
+	padding-bottom: 5px;
+}
+
+#footer a {
+	color: #1C1C1C;
+}
+
+#footer a:hover{
+	color: #2C2C2C;
+}
+
+.left {
+	float: left;
+	text-align: left;
+}
+
+.right {
+	float: right;
+	text-align: right;
+}
+
+.center {
+	float: left;
+	text-align: center;
 }

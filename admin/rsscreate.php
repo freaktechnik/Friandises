@@ -27,32 +27,48 @@ $query = mysql_query("SELECT value FROM settings WHERE name='lang'");
 $objResult = mysql_fetch_object($query);
 $PGLANG = $objResult->value;
 
-$query = mysql_query("SELECT name, url, caption, thumbnail, hello, category FROM content WHERE id='1'");
+function dateConvertTimestamp($mysqlDate) {
+	$rawdate=strtotime($mysqlDate);
+	if ($rawdate == -1) {
+		$convertedDate = 'conversion failed';
+	}
+	else {
+		$convertedDate = date('D, d M Y h:i:s T',$rawdate);
+	}
+	return $convertedDate;
+}
+
+$query = mysql_query("SELECT name, url, caption, thumbnail, hello, category, creator, added FROM content WHERE id='1'");
 $objResult = mysql_fetch_object($query);
+$newPubDate = dateConvert("$objResult->added");
 $filec="<item>
       <title>".$objResult->name."</title>
       <description>".$objResult->caption."</description>
       <link>".$PGURL."/video.php?id=1</link>
-      <author>".$PGOWN."</author>
-      <guid>1</guid>
+      <author>".$objResult->creator."</author>
+	  <pubDate>".$newPubDate."</pubDate>
+	  <category>".$objResult->category."</category>
+      <guid isPermaLink='true'>".$PGURL."/video.php?id=1</guid>
     </item>
 	</channel>
  
 </rss>";
-//  <pubDate></pubDate>
 //  at author field should be name,email
 $c=2;
 
-$query = mysql_query("SELECT name, url, caption, thumbnail, hello, category FROM content WHERE id='$c'");
+$query = mysql_query("SELECT name, url, caption, thumbnail, hello, category, creator, added FROM content WHERE id='$c'");
 $objResult = mysql_fetch_object($query);
 do {
 	if($objResult!=NULL) {
+		$newPubDate = dateConvert("$objResult->added");
 		$filec="<item>
       <title>".$objResult->name."</title>
       <description>".$objResult->caption."</description>
       <link>".$PGURL."/video.php?id=".$c."</link>
-      <author>".$PGOWN."</author>
-      <guid>".$c."</guid>
+      <author>".$objResult->creator."</author>
+	  <pubDate>".$newPubDate."</pubDate>
+	  <category>".$objResult->category."</category>
+      <guid isPermaLink='true'>".$PGURL."/video.php?id=".$c."</guid>
     </item>".$filec;
 	}
 	$c=$c+1;

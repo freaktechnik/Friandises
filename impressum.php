@@ -46,5 +46,7 @@ Visit the Friandises project (on which this page is based) on Github: <a href="h
 Flash may be required.<br>
 Thx for reading.
 </div>
+<div id="bottom">
+<div id="footer"><b>Impressum</b> | <a href="<?php echo $PGURL; ?>/admin/feed.rss" title="RSS Feed"><img src="images/rss.png" alt="RSS Feed" /></a></div></div>
 </body>
 </html>
