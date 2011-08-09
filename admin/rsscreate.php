@@ -48,8 +48,13 @@ $filec="
         <link>".$PGURL."/video.php?id=1</link>
         <pubDate>".$newPubDate."</pubDate>
         <category>".$objResult->category."</category>
+        <enclosure url='".$objResult->url."' type='application/x-shockwave-flash' />
         <guid isPermaLink='true'>".$PGURL."/video.php?id=1</guid>
-	    <media:content url='".$objResult->url."' type='application/x-shockwave-flash' medium='video' isDefault='true' lang='".$PGLANG."' />
+	    <media:content url='".$objResult->url."' type='application/x-shockwave-flash' expression='full' medium='video' isDefault='true' lang='".$PGLANG."' />
+        <media:thumbnail url='".$objResult->thumbnail."' />
+        <media:description type='html'><img src='".$objResult->thumbnail."' alt='".$objResult->name."'/>".$objResult->caption."</media:description>
+        <media:title>".$objResult->name."</media:title>
+        <media:keywords>".$objResult->category."</media:keywords>
         <media:embed url='".$objResult->url."' width='512' height='323' >
             <media:param name='type'>application/x-shockwave-flash</media:param>
             <media:param name='width'>512</media:param>
@@ -57,10 +62,6 @@ $filec="
             <media:param name='allowFullScreen'>true</media:param>
             <media:param name='movie'>".$objResult->url."</media:param>
         </media:embed>
-        <media:thumbnail url='".$objResult->thumbnail."' />
-        <media:description>".$objResult->caption."</media:description>
-        <media:title>".$objResult->name."</media:title>
-        <media:keywords>".$objResult->category."</media:keywords>
     </item>
 </channel>
 </rss>";
@@ -74,24 +75,25 @@ do {
 		$newPubDate = dateConvertTimestamp("$objResult->added");
 		$filec="
     <item>
-      <title>".$objResult->name."</title>
-      <description>".$objResult->caption."</description>
-      <link>".$PGURL."/video.php?id=".$c."</link>
-	  <pubDate>".$newPubDate."</pubDate>
-	  <category>".$objResult->category."</category>
-      <guid isPermaLink='true'>".$PGURL."/video.php?id=".$c."</guid>
-	  <media:content url='".$objResult->url."' type='application/x-shockwave-flash' medium='video' isDefault='true' lang='".$PGLANG."' />
-	  <media:embed url='".$objResult->url."' width='512' height='323' >
-        <media:param name='type'>application/x-shockwave-flash</media:param>
-        <media:param name='width'>512</media:param>
-        <media:param name='height'>323</media:param>
-        <media:param name='allowFullScreen'>true</media:param>
-        <media:param name='movie'>".$objResult->url."</media:param>
-     </media:embed>
-	  <media:thumbnail url='".$objResult->thumbnail."' />
-	  <media:description>".$objResult->caption."</media:description>
-	  <media:title>".$objResult->name."</media:title>
-	  <media:keywords>".$objResult->category."</media:keywords>
+        <title>".$objResult->name."</title>
+        <description>".$objResult->caption."</description>
+        <link>".$PGURL."/video.php?id=".$c."</link>
+        <pubDate>".$newPubDate."</pubDate>
+        <category>".$objResult->category."</category>
+        <enclosure url='".$objResult->url."' type='application/x-shockwave-flash' />
+        <guid isPermaLink='true'>".$PGURL."/video.php?id=".$c."</guid>
+        <media:content url='".$objResult->url."' type='application/x-shockwave-flash' expression='full' medium='video' isDefault='true' lang='".$PGLANG."' />
+        <media:thumbnail url='".$objResult->thumbnail."' />
+        <media:description type='html'><img src='".$objResult->thumbnail."' alt='".$objResult->name."'/>".$objResult->caption."</media:description>
+        <media:title>".$objResult->name."</media:title>
+        <media:keywords>".$objResult->category."</media:keywords>
+        <media:embed url='".$objResult->url."' width='512' height='323' >
+            <media:param name='type'>application/x-shockwave-flash</media:param>
+            <media:param name='width'>512</media:param>
+            <media:param name='height'>323</media:param>
+            <media:param name='allowFullScreen'>true</media:param>
+            <media:param name='movie'>".$objResult->url."</media:param>
+        </media:embed>
     </item>".$filec;
 	}
 	$c=$c+1;
