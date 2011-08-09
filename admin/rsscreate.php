@@ -40,6 +40,16 @@ function dateConvertTimestamp($mysqlDate) {
 
 $query = mysql_query("SELECT name, url, caption, thumbnail, hello, category, creator, added FROM content WHERE id='1'");
 $objResult = mysql_fetch_object($query);
+$creator=$objResult->creator;
+$query = mysql_query("SELECT email,showemail FROM logins WHERE user='$creator'");
+$result = mysql_fetch_object($query);
+if($result->showemail==1) {
+	$author= "
+        <author>".$result->email."</author>";
+}
+else {
+	$author = "";
+}
 $newPubDate = dateConvertTimestamp("$objResult->added");
 $filec="
     <item>
@@ -47,7 +57,7 @@ $filec="
         <description><![CDATA[<img src='".$objResult->thumbnail."' alt='".$objResult->name." /><p>".$objResult->caption."</p>]]></description>
         <link>".$PGURL."/video.php?id=1</link>
         <pubDate>".$newPubDate."</pubDate>
-        <category>".$objResult->category."</category>
+        <category>".$objResult->category."</category>".$author."
         <enclosure url='".$objResult->url."' type='application/x-shockwave-flash' />
         <guid isPermaLink='true'>".$PGURL."/video.php?id=1</guid>
 	    <media:content url='".$objResult->url."' type='application/x-shockwave-flash' expression='full' medium='video' isDefault='true' lang='".$PGLANG."' />
@@ -65,13 +75,22 @@ $filec="
     </item>
 </channel>
 </rss>";
-//  at author field should be email
 $c=2;
 
 $query = mysql_query("SELECT name, url, caption, thumbnail, hello, category, creator, added FROM content WHERE id='$c'");
 $objResult = mysql_fetch_object($query);
 do {
 	if($objResult!=NULL) {
+		$creator=$objResult->creator;
+		$query = mysql_query("SELECT email,showemail FROM logins WHERE user='$creator'");
+		$result = mysql_fetch_object($query);
+		if($result->showemail==1) {
+			$author= "
+				<author>".$result->email."</author>";
+		}
+		else {
+			$author = "";
+		}
 		$newPubDate = dateConvertTimestamp("$objResult->added");
 		$filec="
     <item>
@@ -79,7 +98,7 @@ do {
         <description><![CDATA[<img src='".$objResult->thumbnail."' alt='".$objResult->name." /><p>".$objResult->caption."</p>]]></description>
         <link>".$PGURL."/video.php?id=".$c."</link>
         <pubDate>".$newPubDate."</pubDate>
-        <category>".$objResult->category."</category>
+        <category>".$objResult->category."</category>".$author."
         <enclosure url='".$objResult->url."' type='application/x-shockwave-flash' />
         <guid isPermaLink='true'>".$PGURL."/video.php?id=".$c."</guid>
         <media:content url='".$objResult->url."' type='application/x-shockwave-flash' expression='full' medium='video' isDefault='true' lang='".$PGLANG."' />

@@ -140,5 +140,14 @@ else if($what=="user") {
 	}
 }
 
+else if($what=="email") {
+	$email=$_POST['email'];
+	$showemail=$_POST['showemail'];
+	$un=$_POST['username'];
+	$sql = "UPDATE logins SET email='$email',showemail='$showemail' WHERE user='$un'";
+	$results = mysql_query($sql);
+	header("Location: user.php?suc=3");
+}
+
 mysql_close($connect);
 ?>

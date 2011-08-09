@@ -13,7 +13,7 @@ if (!$connect)
 {
    die('Could not connect: ' . mysql_error());
 }
-
+$un =$_SESSION['username'];
 mysql_select_db($DB_NAME, $connect);
 $query = mysql_query("SELECT value FROM settings WHERE name='name'");
 $objResult = mysql_fetch_object($query);
@@ -21,6 +21,10 @@ $PGNAME = $objResult->value;
 $query = mysql_query("SELECT value FROM settings WHERE name='desc'");
 $objResult = mysql_fetch_object($query);
 $PGDSC = $objResult->value;
+$query = mysql_query("SELECT email,showemail FROM logins WHERE user='$un'");
+$objResult = mysql_fetch_object($query);
+$email = $objResult->email;
+$showemail = $objResult->showemail;
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
@@ -146,6 +150,20 @@ Passwort ändern:
 	}
 	else if($_GET['suc']==2) {
 		echo "images/wrong.png";
+	}
+	else {
+		echo "images/clear.png";
+	}
+	?>">
+</form>
+E-Mail Einstellungen:
+<form method="POST" action="write.php">
+	<p>E-Mail Adresse: <input id="email" type="email" name="email" value="<?php echo $email ?>" class="textfield"></p>
+	<p>E-Mail Adresse im RSS-Feed anzeigen? <input type="radio" name="showemail" value="0" <?php if($showemail==0) { echo "checked";} ?>> Nein <input type="radio" name="showemail" value="1" <?php if($showemail==1) { echo "checked"; }?>> Ja</p>
+	<input type="text" name="what" value="email" style="display:none;">
+	<input type="text" name="username" value="<?php echo $_SESSION['username']; ?>" style="display:none;">
+	<input type="submit" value="speichern" style="text-align:right;"><img class="sym" id="4" src="<?php if($_GET['suc']==3) {
+		echo "images/ok.png";
 	}
 	else {
 		echo "images/clear.png";
