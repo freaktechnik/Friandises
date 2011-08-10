@@ -149,5 +149,54 @@ else if($what=="email") {
 	header("Location: user.php?suc=3");
 }
 
+else if($what=="newu") {
+	$query = mysql_query("SELECT value FROM settings WHERE name='name'");
+	$objResult = mysql_fetch_object($query);
+	$PGNAME = $objResult->value;
+	$query = mysql_query("SELECT value FROM settings WHERE name='url'");
+	$objResult = mysql_fetch_object($query);
+	$PGURL = $objResult->value;
+	$name=$_POST['name'];
+	$email=$_POST['email'];
+	$admin=$_POST['admin'];
+	$length = 8;
+	$password = "";
+    $possible = "12346789bcdfghjkmnpqrtvwxyz -BCDFGHJKLMNPQRTVWXYZ";
+    $maxlength = strlen($possible);
+    if ($length > $maxlength) {
+      $length = $maxlength;
+    }
+    $i = 0; 
+    while ($i < $length) { 
+      $char = substr($possible, mt_rand(0, $maxlength-1), 1);
+
+      if (!strstr($password, $char)) { 
+        $password .= $char;
+        $i++;
+      }
+    }
+	$query = mysql_query("SELECT email FROM logins WHERE user='$name'");
+	$objResult = mysql_fetch_object($query);
+	if($objResult!=NULL) {
+		die("User already exists. Try again.");
+	}
+	$query = mysql_query("SELECT user FROM logins WHERE email='$email'");
+	$objResult = mysql_fetch_object($query);
+	if($objResult!=NULL) {
+		die("A user is already registered with that e-Mail adress. Try again.");
+	}
+	
+	$sql = "INSERT INTO logins (user, password, admin, email) VALUES ('$name', '$password', '$admin', '$email');";
+	$results = mysql_query($sql);
+	$subject = "Your new account on ".$PGNAME."";
+	$body = "Hi ".$name."\n\nSomeone just created a new account on ".$PGNAME." for you. You can find ".$PGNAME." under ".$PGURL.". \nYour login informations:\nUsername: ".$name."\nPassword: ".$password."\nyou can edit your e-mail adress and password once you are logged in.";
+	if (mail($email, $subject, $body)) {
+		header("Location: newu.php?suc=1");
+	}
+	else {
+		die("Error.");
+	}
+}
+
 mysql_close($connect);
 ?>

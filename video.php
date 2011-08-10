@@ -125,7 +125,7 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-<div id="topnav"><form method="POST" id="loginform" style="display:none;" action="admin/check.php">Username:<input type="text" name="name"/> | Password:<input type="password" name="passwort"/> <input type="submit" value="login"></form><a id="loginlink" href="admin/login.php">Login</a></div>
+<div id="topnav"><form method="POST" id="loginform" style="display:none;" action="admin/check.php">Username:<input type="text" name="name"/> | Password:<input type="password" name="passwort"/> <input type="submit" value="Log in"></form><a id="loginlink" href="admin/login.php">Log in</a></div>
 <div id="head"><a href="<?php echo $PGURL; ?>" style="text-decoration:none;"><?php 
 if($PGTITLE==1) {
 	echo "<h1>".$PGNAME."</h1>";

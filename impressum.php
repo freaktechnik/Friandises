@@ -35,14 +35,14 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-<div id="topnav"><form method="POST" id="loginform" style="display:none;" action="admin/check.php">Username:<input type="text" name="name"/> | Password:<input type="password" name="passwort"/> <input type="submit" value="login"></form><a id="loginlink" href="admin/login.php">Login</a> | <a href="index.php">Home</a></div>
+<div id="topnav"><form method="POST" id="loginform" style="display:none;" action="admin/check.php">Username:<input type="text" name="name"/> | Password:<input type="password" name="passwort"/> <input type="submit" value="Log in"></form><a id="loginlink" href="admin/login.php">Log in</a> | <a href="index.php">Home</a></div>
 <h1 id="head">Impressum</h1>
 <div id="text">
 <?php echo $PGDSC; ?><br>
-<?php echo $PGNAME; ?> is a link collection of videos. You can watch those videos directly on the page. This page supports youtube and sf videoportal videos, more can be comming soon. The page is built to be simple, for user and owner. It is very simple to add a video.
+<?php echo $PGNAME; ?> is a link collection of videos. You can watch those videos directly on the page. This page supports youtube and sf videoportal videos, more to come. The page is built to be simple, for user and owner. It is very simple to add a video.
 Neither page owner nor author are responsible for the video content.<br>
 This page uses <a href="http://jquery.com">jQuery</a> and <a href="http://fancybox.net">fancybox</a>.<br>
-Visit the Friandises project (on which this page is based) on Github: <a href="https://github.com/freaktechnik/Friandises">Friandises on Github</a>.<br>
+Visit the Friandises project (which this website runs) on Github: <a href="https://github.com/freaktechnik/Friandises">Friandises on Github</a>.<br>
 Flash may be required.<br>
 Thx for reading.
 </div>

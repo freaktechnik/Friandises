@@ -134,9 +134,9 @@ function check() {
 </script>
 </head>
 <body>
-<div id="topnav"><a href="logout.php">logout</a></div>
+<div id="topnav"><a href="logout.php">Log out</a></div>
 <h2 id="head">Benutzerinfos</h2>
-<div id="navigation"><ul><li><a href="intern.php">Video hinzufügen</a></li><li><a href="edits.php">Videodetails Bearbeiten</a></li><?php if($_SESSION['admin']==1) {echo '<li><a href="settings.php">Einstellungen</a></li>';} ?><li style="text-align: right;"><a href="#"  class="actual">Benutzername: <?php echo $_SESSION['username']; ?></a></li></ul></div>
+<div id="navigation"><ul><li><a href="intern.php">Video hinzufügen</a></li><li><a href="edits.php">Videodetails Bearbeiten</a></li><?php if($_SESSION['admin']==1) {echo '<li><a href="settings.php">Einstellungen</a></li><li><a href="newu.php">Benutzer hinzufügen</a></li>';} ?><li style="text-align: right;"><a href="#"  class="actual">Benutzername: <?php echo $_SESSION['username']; ?></a></li></ul></div>
 <div id="intern">
 Passwort ändern:
 <form method="POST" action="write.php">

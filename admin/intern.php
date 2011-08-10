@@ -31,9 +31,9 @@ $PGNAME = $objResult->value;
 <meta name="generator" content="Martin Giger">
 </head>
 <body>
-<div id="topnav"><a href="logout.php">logout</a></div>
+<div id="topnav"><a href="logout.php">Log out</a></div>
 <h2 id="head">Video hinzufügen</h2>
-<div id="navigation"><ul><li><a href="#" class="actual">Video hinzufügen</a></li><li><a href="edits.php">Videodetails Bearbeiten</a></li><?php if($_SESSION['admin']==1) {echo '<li><a href="settings.php">Einstellungen</a></li>';} ?><li style="text-align: right;"><a href="user.php">Benutzername: <?php echo $_SESSION['username']; ?></a></li></ul></div>
+<div id="navigation"><ul><li><a href="#" class="actual">Video hinzufügen</a></li><li><a href="edits.php">Videodetails Bearbeiten</a></li><?php if($_SESSION['admin']==1) {echo '<li><a href="settings.php">Einstellungen</a></li><li><a href="newu.php">Benutzer hinzufügen</a></li>';} ?><li style="text-align: right;"><a href="user.php">Benutzername: <?php echo $_SESSION['username']; ?></a></li></ul></div>
 <div id="intern">
 <form method="POST" action="write.php">
 	<p>Titel: <input type="text" name="name" class="textfield"></p>
@@ -90,7 +90,7 @@ $PGNAME = $objResult->value;
 		<option value="12">December</option>
 	</select> <input type="text" size="4" maxlength="4" name="year" class="textfield"></p>
 	<input type="text" name="what" value="video" style="display:none;">
-	<input type="submit" value="hinzufügen" style="text-align:right;"><img class="sym" src="<?php if($_GET['suc']==1) {
+	<input type="submit" value="Hinzufügen" style="text-align:right;"><img class="sym" src="<?php if($_GET['suc']==1) {
 		echo "images/ok.png";
 	}
 	else {

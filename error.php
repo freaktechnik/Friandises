@@ -23,5 +23,10 @@ echo $PGNAME; ?> - Error 401 Access denied</title>
 <body>
    <h2 id="head">Error 401 Access denied</h2>
    <div id="text"><a href="index.php">Home</a></div>
+   <div id="bottom">
+		<div id="footer">
+			<a href="impressum.php">Impressum</a> | <a href="<?php echo $PGURL; ?>/admin/feed.rss" title="RSS Feed"><img src="images/rss.png" alt="RSS Feed" /></a>
+		</div>
+	</div>
 </body>
 </html>
