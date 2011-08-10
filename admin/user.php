@@ -125,7 +125,7 @@ $(document).ready(function () {
 });
 function check() {
 	if(a1==1&&a2==1&&a3==1) {
-		$("#s").attr("disabled","");
+		$("#s").removeAttr('disabled');
 	}
 	else {
 		$("#s").attr("disabled","true");
@@ -162,7 +162,7 @@ E-Mail Einstellungen:
 	<p>E-Mail Adresse im RSS-Feed anzeigen? <input type="radio" name="showemail" value="0" <?php if($showemail==0) { echo "checked";} ?>> Nein <input type="radio" name="showemail" value="1" <?php if($showemail==1) { echo "checked"; }?>> Ja</p>
 	<input type="text" name="what" value="email" style="display:none;">
 	<input type="text" name="username" value="<?php echo $_SESSION['username']; ?>" style="display:none;">
-	<input type="submit" value="speichern" style="text-align:right;"><img class="sym" id="4" src="<?php if($_GET['suc']==3) {
+	<input type="submit" value="speichern" style="text-align:right;"><img class="sym" src="<?php if($_GET['suc']==3) {
 		echo "images/ok.png";
 	}
 	else {

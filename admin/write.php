@@ -194,7 +194,7 @@ else if($what=="newu") {
 	$sql = "INSERT INTO logins (user, password, admin, email) VALUES ('$name', '$password', '$admin', '$email');";
 	$results = mysql_query($sql);
 	$subject = "Your new account on ".$PGNAME."";
-	$body = "Hi ".$name."\n\nSomeone just created a new account on ".$PGNAME." for you. You can find ".$PGNAME." under ".$PGURL.". \nYour login informations:\nUsername: ".$name."\nPassword: ".$password."\nyou can edit your e-mail adress and password once you are logged in.";
+	$body = "Hi ".$name."\n\nSomeone just created a new account on ".$PGNAME." for you. You can find ".$PGNAME." under ".$PGURL.". \nYour login informations:\nUsername: ".$name."\nPassword: ".$password."\nYou can edit your e-mail adress and password when you are logged in.";
 	if (mail($email, $subject, $body)) {
 		header("Location: newu.php?suc=1");
 	}

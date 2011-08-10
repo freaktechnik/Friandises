@@ -41,6 +41,7 @@ mysql_close($connect);
 	?>"><input type="submit" value="Log in"></td></tr>
 </table>
 </form>
+<a href="newpw.php">Forgot password?</a>
 </div>
 </body>
 </html>
