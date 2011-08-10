@@ -144,6 +144,9 @@ else if($what=="email") {
 	$email=$_POST['email'];
 	$showemail=$_POST['showemail'];
 	$un=$_POST['username'];
+	if (!(filter_var($email, FILTER_VALIDATE_EMAIL))) {
+		die("e-Mail adress not valid!");
+	}
 	$sql = "UPDATE logins SET email='$email',showemail='$showemail' WHERE user='$un'";
 	$results = mysql_query($sql);
 	header("Location: user.php?suc=3");
@@ -185,7 +188,9 @@ else if($what=="newu") {
 	if($objResult!=NULL) {
 		die("A user is already registered with that e-Mail adress. Try again.");
 	}
-	
+	if (!(filter_var($email, FILTER_VALIDATE_EMAIL))) {
+		die("e-Mail adress not valid!");
+	}
 	$sql = "INSERT INTO logins (user, password, admin, email) VALUES ('$name', '$password', '$admin', '$email');";
 	$results = mysql_query($sql);
 	$subject = "Your new account on ".$PGNAME."";
