@@ -1,82 +1,12 @@
 <?php
 include 'admin/config.php';
-$inshtml="";
-$c=1;
-$d=1;
-$q=0;
-
-$connect = mysql_connect("$DB_LOCA", "$DB_USER", "$DB_PASS");
-if (!$connect)
-{
-   die('Could not connect: ' . mysql_error());
-}
-
-mysql_select_db($DB_NAME, $connect);
-
-$query = mysql_query("SELECT value FROM settings WHERE name='url'");
-$objResult = mysql_fetch_object($query);
-$PGURL = $objResult->value;
-$query = mysql_query("SELECT value FROM settings WHERE name='name'");
-$objResult = mysql_fetch_object($query);
-$PGNAME = $objResult->value;
-$query = mysql_query("SELECT value FROM settings WHERE name='img'");
-$objResult = mysql_fetch_object($query);
-$PGIMG = $objResult->value;
-$query = mysql_query("SELECT value FROM settings WHERE name='tmode'");
-$objResult = mysql_fetch_object($query);
-$PGTITLE = (int)$objResult->value;
-$query = mysql_query("SELECT value FROM settings WHERE name='desc'");
-$objResult = mysql_fetch_object($query);
-$PGDSC = $objResult->value;
-$query = mysql_query("SELECT value FROM settings WHERE name='tags'");
-$objResult = mysql_fetch_object($query);
-$PGTGS = $objResult->value;
-$query = mysql_query("SELECT value FROM settings WHERE name='teaser'");
-$objResult = mysql_fetch_object($query);
-$PGTEA = $objResult->value;
-$query = mysql_query("SELECT value FROM settings WHERE name='items'");
-$objResult = mysql_fetch_object($query);
-$PGITMS = (int)$objResult->value;
-$query = mysql_query("SELECT value FROM settings WHERE name='addthis'");
-$objResult = mysql_fetch_object($query);
-$ADD_PUBID = $objResult->value;
-$cnt = 0;
+include 'inc/pagevar.php';
+include 'inc/items.php';
 
 $id = $_GET['id'];
-
 $categories[0]=placeholder;
-$query = mysql_query("SELECT name, url, caption, thumbnail, hello, category FROM content WHERE id='1'");
-$objResult = mysql_fetch_object($query);
-if($id==1) {
-	$quat=$objResult->category;
-	$namez = $objResult->name;
-	$url = $objResult->url."&fs=1&hd=1";
-	$capz = $objResult->caption;
-}
-$c=2;
 
-$categories[1]=$objResult->category;
-$d=2;
-$query = mysql_query("SELECT name, url, caption, thumbnail, hello, category FROM content WHERE id='$c'");
-$objResult = mysql_fetch_object($query);
-do {
-	if($objResult!=NULL) {
-		if($id==$c) {
-			$quat=$objResult->category;
-			$namez = $objResult->name;
-			$url = $objResult->url."&fs=1&hd=1";
-			$capz = $objResult->caption;
-		}
-	}
-	if(!(array_search($objResult->category,$categories))) {
-			$categories[$d]=$objResult->category;
-			$d=$d+1;
-	}
-	$c=$c+1;
-	$query = mysql_query("SELECT name, url, caption, thumbnail, hello, category FROM content WHERE id='$c'");
-	$objResult = mysql_fetch_object($query);
-} while($objResult->hello==1);
-
+$suffix="&fs=1&hd=1";
 $share = '<!-- AddThis Button BEGIN -->
 <div class="addthis_toolbox addthis_default_style">
 <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
@@ -87,19 +17,48 @@ $share = '<!-- AddThis Button BEGIN -->
 <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="'.$ADD_PUBID.'"></script>
 <!-- AddThis Button END -->';
 
-$f=1;
-while($f<$d) {
+if($id<$items_length) {
+	$namez = $items[$id]["name"];
+	$left="";
+	$right="";
+	if($id!=1) {
+		$left = "<a href='?id=".($id-1)."' class='left'>&lt; Previous</a>";
+	}
+	if($id<$items_length-1) {
+		$right ="<a href='?id=".($id+1)."' class='right'>Next &gt;</a>";
+	}
+	$inshtml= "<object width='720' height='450'>
+<param name='allowFullScreen' value='true'></param>
+<param name='movie' value='".$items[$id]["url"].$suffix."'></param>
+<embed allowfullscreen='true' width='750' height='450' type='application/x-shockwave-flash' src='".$items[$id]["url"].$suffix."'></embed>
+</object>
+<div id='footline'>
+	".$left."<div class='center'>".$share."</div>".$right."
+</div><br>
+<p>".$items[$id]["caption"]."</p>";
+	$quat=$items[$id]["category"];
+}
+
+else {
+	$namez = "Video not found!";
+	$inshtml = "there is no video with this ID";
+}
+
+for($inde=0;$inde<$items_length;$inde=$inde+1) {
+	if(!(array_search($items[$inde]["category"],$categories))||$d==1) {
+		$categories[$d]=$items[$inde]["category"];
+		$d=$d+1;
+	}
+}
+for($f=1;$f<$d;$f=$f+1) {
 	if($quat==$categories[$f]) {
 		$class='actual';
 	}
 	else {
 		$class='';
 	}
-	$cat=$cat."<li><a href='/?cat=".$categories[$f]."' class='".$class."' title='".$categories[$f]."'>".$categories[$f]."</a></li>";
-	$f=$f+1;
+	$cat=$cat."<li><a href='?cat=".$categories[$f]."' class='".$class."' title='".$categories[$f]."'>".$categories[$f]."</a></li>";
 }
-
-mysql_close($connect);
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
@@ -137,23 +96,7 @@ else if($PGTITLE==2) {
 <p><?php echo $PGTEA; ?></p></div>
 <div id="navigation"><ul><li><a href="<?php echo $PGURL; ?>">Home</a></li><?php echo $cat; ?></ul></div><br>
 <div id="videop"><h3><?php echo $namez; ?></h3>
-<object width='720' height='450'>
-<param name='allowFullScreen' value='true'></param>
-<param name='movie' value='<?php echo $url; ?>'></param>
-<embed allowfullscreen='true' width='750' height='450' type='application/x-shockwave-flash' src='<?php echo $url; ?>'></embed>
-</object>
-<div id="footline">
-	<?php
-		if($id<=$c-1&&$id!=1) {
-			echo "<a href='?id=".($id-1)."' class='left'>&lt; Previous</a>";
-		}
-	?><div class="center"><?php echo $share; ?></div><?php
-		if($id<$c-1) {
-			echo "<a href='?id=".($id+1)."' class='right'>Next &gt;</a>";
-		}
-	?>
-</div><br>
-<p><?php echo $capz; ?></p>
+<?php echo $inshtml; ?>
 </div>
 <div id="bottom">
 <div id="footer"><a href="impressum.php">Impressum</a> | <a href="<?php echo $PGURL; ?>/admin/feed.rss" title="RSS Feed"><img src="images/rss.png" alt="RSS Feed" /></a></div></div>
