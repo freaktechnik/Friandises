@@ -3,7 +3,7 @@ include 'admin/config.php';
 include 'inc/pagevar.php';
 include 'inc/items.php';
 
-$id = $_GET['id'];
+$id = (int)$_GET['id'];
 $categories[0]=placeholder;
 
 $suffix="&fs=1&hd=1";
@@ -14,10 +14,10 @@ $share = '<!-- AddThis Button BEGIN -->
 <a class="addthis_counter addthis_pill_style"></a>
 </div>
 <script type="text/javascript">var addthis_config = {"data_track_clickback":true,"swfurl":'.$url.'};</script>
-<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="'.$ADD_PUBID.'"></script>
+<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid='."'".$ADD_PUBID."'".'"></script>
 <!-- AddThis Button END -->';
 
-if($id<$items_length) {
+if($id<$items_length)  {
 	$namez = $items[$id]["name"];
 	$left="";
 	$right="";
@@ -62,17 +62,30 @@ for($f=1;$f<$d;$f=$f+1) {
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#">
 <head>
-<title><?php echo $PGNAME." - ".$namez; ?> </title>
-<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" >
-<meta name="description" content="<?php echo $PGDSC; ?>" >
-<meta name="keywords" content="<?php echo $PGTGS; ?>">
-<meta http-equiv="content-language" content="en">
-<meta name="generator" content="Martin Giger">
-<link rel="stylesheet" href="/fancybox/jquery.fancybox-1.3.4.css" type="text/css" media="screen" >
-<link rel="stylesheet" href="style.css" type="text/css" media="screen" >
-<script type="text/javascript" src="jquery-1.6.1.min.js"></script>
+	
+	<!-- Info -->
+    <title><?php echo $PGNAME." - ".$namez; ?></title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta name="description" content="<?php echo $PGDSC; ?>">
+    <meta name="keywords" content="<?php echo $PGTGS; ?>">
+    <meta http-equiv="content-language" content="<?php echo $PGLANG ?>">
+    <meta property="og:title" content="<?php echo $namez; ?>">
+    <meta property="og:type" content="movie">
+    <meta property="og:url" content="<?php echo $PGURL."/video.php?id=".$id; ?>">
+    <meta property="og:image" content="<?php echo $items[$id]["thumbnail"]; ?>">
+    <meta property="og:description"
+          content="<?php $descre=str_replace("\"","'",$items[$id]["caption"]);echo $descre; ?>">
+    <meta property="og:video" content="<?php echo $items[$id]["url"]; ?>">
+	<meta property="og:video:type" content="application/x-shockwave-flash">
+
+	<!-- CSS -->
+    <link rel="stylesheet" href="style.css" type="text/css" media="screen" >
+
+	<!-- Scriptz -->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	$('#loginlink').click(function(e) {
