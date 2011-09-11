@@ -2,28 +2,16 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title><?php include 'admin/config.php';$connect = mysql_connect("$DB_LOCA", "$DB_USER", "$DB_PASS");
-if (!$connect)
-{
-   die('Could not connect: ' . mysql_error());
-}
+<title><?php include 'admin/config.php';
+include ('inc/pagevar.php');
 
-mysql_select_db($DB_NAME, $connect);
-$query = mysql_query("SELECT value FROM settings WHERE name='name'");
-$objResult = mysql_fetch_object($query);
-$PGNAME = $objResult->value;
-$query = mysql_query("SELECT value FROM settings WHERE name='desc'");
-$objResult = mysql_fetch_object($query);
-$PGDSC = $objResult->value;
-$query = mysql_query("SELECT value FROM settings WHERE name='lang'");
-$objResult = mysql_fetch_object($query);
-$PGLANG = $objResult->value;
-mysql_close($connect);
 echo $PGNAME; ?> - Impressum</title>
-<link rel="stylesheet" href="style.css" type="text/css" media="screen" >
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" >
 <meta http-equiv="content-language" content="<?php echo $PGLANG; ?>">
-<script type="text/javascript" src="jquery-1.6.1.min.js"></script>
+
+<link rel="stylesheet" href="style.css" type="text/css" media="screen" >
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {	
 	$('#loginlink').click(function(e) {
@@ -33,6 +21,7 @@ $(document).ready(function() {
 	});
 });
 </script>
+
 </head>
 <body>
 <div id="topnav"><form method="POST" id="loginform" style="display:none;" action="admin/check.php">Username:<input type="text" name="name"/> | Password:<input type="password" name="passwort"/> <input type="submit" value="Log in"></form><a id="loginlink" href="admin/login.php">Log in</a> | <a href="index.php">Home</a></div>
