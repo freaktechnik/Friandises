@@ -1,31 +1,10 @@
 <?php
-include 'config.php';
-date_default_timezone_set('Europe/Paris');
-$connect = mysql_connect("$DB_LOCA", "$DB_USER", "$DB_PASS");
-if (!$connect)
-{
-   die('Could not connect: ' . mysql_error());
-}
+include ('config.php');
+include ($_SERVER['DOCUMENT_ROOT'].'inc/pagevar.php');
+include ($_SERVER['DOCUMENT_ROOT'].'inc/items.php');
+include ($_SERVER['DOCUMENT_ROOT'].'inc/users.php');
 
-mysql_select_db($DB_NAME, $connect);
-$query = mysql_query("SELECT value FROM settings WHERE name='name'");
-$objResult = mysql_fetch_object($query);
-$PGNAME = $objResult->value;
-$query = mysql_query("SELECT value FROM settings WHERE name='url'");
-$objResult = mysql_fetch_object($query);
-$PGURL = $objResult->value;
-$query = mysql_query("SELECT value FROM settings WHERE name='img'");
-$objResult = mysql_fetch_object($query);
-$PGIMG = $objResult->value;
-$query = mysql_query("SELECT value FROM settings WHERE name='desc'");
-$objResult = mysql_fetch_object($query);
-$PGDSC = $objResult->value;
-$query = mysql_query("SELECT value FROM settings WHERE name='owner'");
-$objResult = mysql_fetch_object($query);
-$PGOWN = $objResult->value;
-$query = mysql_query("SELECT value FROM settings WHERE name='lang'");
-$objResult = mysql_fetch_object($query);
-$PGLANG = $objResult->value;
+date_default_timezone_set('Europe/Paris');
 
 function dateConvertTimestamp($mysqlDate) {
     $rawdate=strtotime($mysqlDate);
@@ -38,87 +17,42 @@ function dateConvertTimestamp($mysqlDate) {
 	return $convertedDate;
 }
 
-$query = mysql_query("SELECT name, url, caption, thumbnail, hello, category, creator, added FROM content WHERE id='1'");
-$objResult = mysql_fetch_object($query);
-$creator=$objResult->creator;
-$query = mysql_query("SELECT email,showemail FROM logins WHERE user='$creator'");
-$result = mysql_fetch_object($query);
-if($result->showemail==1) {
-	$author= "
-        <author>".$result->email."</author>";
-}
-else {
-	$author = "";
-}
-$newPubDate = dateConvertTimestamp("$objResult->added");
-$filec="
-    <item>
-        <title>".$objResult->name."</title>
-        <description><![CDATA[<img src='".$objResult->thumbnail."' alt='".$objResult->name." /><p>".$objResult->caption."</p>]]></description>
-        <link>".$PGURL."/video.php?id=1</link>
-        <pubDate>".$newPubDate."</pubDate>
-        <category>".$objResult->category."</category>".$author."
-        <enclosure url='".$objResult->url."' type='application/x-shockwave-flash' />
-        <guid isPermaLink='true'>".$PGURL."/video.php?id=1</guid>
-	    <media:content url='".$objResult->url."' type='application/x-shockwave-flash' expression='full' medium='video' isDefault='true' lang='".$PGLANG."' />
-        <media:thumbnail url='".$objResult->thumbnail."' />
-        <media:description type='html'><img src='".$objResult->thumbnail."' alt='".$objResult->name."'/>".$objResult->caption."</media:description>
-        <media:title>".$objResult->name."</media:title>
-        <media:keywords>".$objResult->category."</media:keywords>
-        <media:embed url='".$objResult->url."' width='512' height='323' >
-            <media:param name='type'>application/x-shockwave-flash</media:param>
-            <media:param name='width'>512</media:param>
-            <media:param name='height'>323</media:param>
-            <media:param name='allowFullScreen'>true</media:param>
-            <media:param name='movie'>".$objResult->url."</media:param>
-        </media:embed>
-    </item>
-</channel>
+$filec = "</channel>
 </rss>";
-$c=2;
+$newPubDate = dateConvertTimestamp("$objResult->added");
+for($fad=1;$fad<$items_length;$fad++) {
 
-$query = mysql_query("SELECT name, url, caption, thumbnail, hello, category, creator, added FROM content WHERE id='$c'");
-$objResult = mysql_fetch_object($query);
-do {
-	if($objResult!=NULL) {
-		$creator=$objResult->creator;
-		$query = mysql_query("SELECT email,showemail FROM logins WHERE user='$creator'");
-		$result = mysql_fetch_object($query);
-		if($result->showemail==1) {
-			$author= "
-				<author>".$result->email."</author>";
-		}
-		else {
-			$author = "";
-		}
-		$newPubDate = dateConvertTimestamp("$objResult->added");
-		$filec="
+	if($users[$items[$fad]["creator"]]["showemail"]==1) {
+		$author= "
+			<author>".$users[$items[$fad]["creator"]]["email"]."</author>";
+	}
+	else {
+		$author = "";
+	}
+	$filec="
     <item>
-        <title>".$objResult->name."</title>
-        <description><![CDATA[<img src='".$objResult->thumbnail."' alt='".$objResult->name." /><p>".$objResult->caption."</p>]]></description>
-        <link>".$PGURL."/video.php?id=".$c."</link>
-        <pubDate>".$newPubDate."</pubDate>
-        <category>".$objResult->category."</category>".$author."
-        <enclosure url='".$objResult->url."' type='application/x-shockwave-flash' />
-        <guid isPermaLink='true'>".$PGURL."/video.php?id=".$c."</guid>
-        <media:content url='".$objResult->url."' type='application/x-shockwave-flash' expression='full' medium='video' isDefault='true' lang='".$PGLANG."' />
-        <media:thumbnail url='".$objResult->thumbnail."' />
-        <media:description type='html'><img src='".$objResult->thumbnail."' alt='".$objResult->name."'/>".$objResult->caption."</media:description>
-        <media:title>".$objResult->name."</media:title>
-        <media:keywords>".$objResult->category."</media:keywords>
-        <media:embed url='".$objResult->url."' width='512' height='323' >
+        <title>".$items[$fad]["name"]."</title>
+        <description><![CDATA[<img src='".$items[$fad]["thumbnail"]."' alt='".$items[$fad]["name"]." /><p>".$items[$fad]["caption"]."</p>]]></description>
+        <link>".$PGURL."/video.php?id=".$fad."</link>
+        <pubDate>".dateConvertTimestamp("$items[$fad]['added']")."</pubDate>
+        <category>".$items[$fad]["category"]."</category>".$author."
+        <enclosure url='".$items[$fad]["url"]."' type='application/x-shockwave-flash' />
+        <guid isPermaLink='true'>".$PGURL."/video.php?id=".$fad."</guid>
+	    <media:content url='".$items[$fad]["url"]."' type='application/x-shockwave-flash' expression='full' medium='video' isDefault='true' lang='".$PGLANG."' />
+        <media:thumbnail url='".$items[$fad]["thumbnail"]."' />
+        <media:description type='html'><img src='".$items[$fad]["thumbnail"]."' alt='".$items[$fad]["name"]."'/>".$items[$fad]["caption"]."</media:description>
+        <media:title>".$items[$fad]["name"]."</media:title>
+        <media:keywords>".$items[$fad]["category"]."</media:keywords>
+        <media:embed url='".$items[$fad]["url"]."' width='512' height='323' >
             <media:param name='type'>application/x-shockwave-flash</media:param>
             <media:param name='width'>512</media:param>
             <media:param name='height'>323</media:param>
             <media:param name='allowFullScreen'>true</media:param>
-            <media:param name='movie'>".$objResult->url."</media:param>
+            <media:param name='movie'>".$items[$fad]["url"]."</media:param>
         </media:embed>
     </item>".$filec;
-	}
-	$c=$c+1;
-	$query = mysql_query("SELECT name, url, caption, thumbnail, hello, category FROM content WHERE id='$c'");
-	$objResult = mysql_fetch_object($query);
-} while($objResult->hello==1);
+}
+
 
 $filec ='<?xml version="1.0" encoding="utf-8" ?>
 <rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/">
@@ -135,7 +69,7 @@ $filec ='<?xml version="1.0" encoding="utf-8" ?>
         <link>'.$PGURL.'</link>
     </image>'.$filec;
 
-$file = fopen('feed.rss','w');
+$file = fopen($_SERVER['DOCUMENT_ROOT'].'feeds/feed.rss','w+');
 fwrite($file, $filec);
 fclose($file);
 ?>

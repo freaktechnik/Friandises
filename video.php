@@ -1,7 +1,7 @@
 <?php
-include 'admin/config.php';
-include 'inc/pagevar.php';
-include 'inc/items.php';
+include ('admin/config.php');
+include ('inc/pagevar.php');
+include ('inc/items.php');
 
 $id = (int)$_GET['id'];
 $categories[0]=placeholder;
@@ -17,7 +17,7 @@ $share = '<!-- AddThis Button BEGIN -->
 <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid='."'".$ADD_PUBID."'".'"></script>
 <!-- AddThis Button END -->';
 
-if($id<$items_length)  {
+if($id<$items_length) {
 	$namez = $items[$id]["name"];
 	$left="";
 	$right="";
@@ -112,6 +112,6 @@ else if($PGTITLE==2) {
 <?php echo $inshtml; ?>
 </div>
 <div id="bottom">
-<div id="footer"><a href="impressum.php">Impressum</a> | <a href="<?php echo $PGURL; ?>/admin/feed.rss" title="RSS Feed"><img src="images/rss.png" alt="RSS Feed" /></a></div></div>
+<div id="footer"><a href="impressum.php">Impressum</a> | <a href="<?php echo $PGURL; ?>/feeds/feed.rss" title="RSS Feed"><img src="images/rss.png" alt="RSS Feed" /></a></div></div>
 </body>
 </html>

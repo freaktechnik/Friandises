@@ -26,6 +26,8 @@ while ($objResult = mysql_fetch_object($result)) {
 	$items[$i]["thumbnail"]=$objResult->thumbnail;
 	$items[$i]["category"]=$objResult->category;
 	$items[$i]["date"]=$objResult->date;
+	$items[$i]["added"]=$objResult->added;
+	$items[$i]["creator"]=$objResult->creator;
 	
 	$i=$i+1;
 }
