@@ -1,8 +1,8 @@
 <?php
 include ('config.php');
-include ($_SERVER['DOCUMENT_ROOT'].'inc/pagevar.php');
-include ($_SERVER['DOCUMENT_ROOT'].'inc/items.php');
-include ($_SERVER['DOCUMENT_ROOT'].'inc/users.php');
+include ($_SERVER['DOCUMENT_ROOT'].$PG_LOCA.'inc/pagevar.php');
+include ($_SERVER['DOCUMENT_ROOT'].$PG_LOCA.'inc/items.php');
+include ($_SERVER['DOCUMENT_ROOT'].$PG_LOCA.'inc/users.php');
 
 date_default_timezone_set('Europe/Paris');
 
@@ -69,7 +69,7 @@ $filec ='<?xml version="1.0" encoding="utf-8" ?>
         <link>'.$PGURL.'</link>
     </image>'.$filec;
 
-$file = fopen($_SERVER['DOCUMENT_ROOT'].'feeds/feed.rss','w+');
+$file = fopen($_SERVER['DOCUMENT_ROOT'].$PG_LOCA.'feeds/feed.rss','w+');
 fwrite($file, $filec);
 fclose($file);
 ?>
