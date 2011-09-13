@@ -30,7 +30,7 @@ $(document).ready(function() {
 <?php echo $PGDSC; ?><br>
 <?php echo $PGNAME; ?> is a link collection of videos. You can watch those videos directly on the page. This page supports youtube and sf videoportal videos, more to come. The page is built to be simple, for user and owner. It is very simple to add a video.
 Neither page owner nor author are responsible for the video content.<br>
-This page uses <a href="http://jquery.com">jQuery</a> and <a href="http://fancybox.net">fancybox</a>.<br>
+This page uses <a href="http://jquery.com">jQuery</a>.<br>
 Visit the Friandises project (which this website runs) on Github: <a href="https://github.com/freaktechnik/Friandises">Friandises on Github</a>.<br>
 Flash may be required.<br>
 Thx for reading.
