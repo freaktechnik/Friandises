@@ -5,6 +5,7 @@ include ('inc/items.php');
 
 $id = (int)$_GET['id'];
 $categories[0]=placeholder;
+$d=1;
 
 $suffix="&fs=1&hd=1";
 $share = '<!-- AddThis Button BEGIN -->

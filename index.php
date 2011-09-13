@@ -28,7 +28,7 @@ $inshtml="";
 
 for($inde=0;$inde<$items_length;$inde=$inde+1) {
 	if(($items[$inde]["category"]==$quat&&$cnt<$PGITMS)||(!$quat&&(($cnt<$PGITMS&&$page*$PGITMS>=$inde&&$inde>=($page-1)*$PGITMS)||$PGITMS==0))) {
-		$inshtml=$inshtml."<li><a href='".$items[$inde]["url"]."' title='".$items[$inde]["caption"]."'><span class='title'>".$items[$inde]["name"]."</span><img src='".$items[$inde]["thumbnail"]."' alt='".$items[$inde]["name"]."'></a></li>";
+		$inshtml=$inshtml."<li><a href='/video.php?id=".$inde."' title='".$items[$inde]["caption"]."'><span class='title'>".$items[$inde]["name"]."</span><img src='".$items[$inde]["thumbnail"]."' alt='".$items[$inde]["name"]."'></a></li>";
 		$cnt=$cnt+1;
 	}
 	
@@ -44,37 +44,12 @@ for($inde=0;$inde<$items_length;$inde=$inde+1) {
 <meta name="keywords" content="<?php echo $PGTGS; ?>">
 <meta http-equiv="content-language" content="<?php echo $PGLANG; ?>">
 
-<link rel="stylesheet" href="/fancybox/jquery.fancybox-1.3.4.css" type="text/css" media="screen" >
 <link rel="stylesheet" href="style.css" type="text/css" media="screen" >
 <link rel="alternate" type="application/rss+xml" title="feed" href="<?php echo $PGURL; ?>/feeds/feed.rss" >
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
-<script type="text/javascript" src="jquery.fancybox-1.3.4.pack.js"></script>
 <script type="text/javascript">
-$(document).ready(function() {	$('#videos a')	.attr('rel', 'gallery')	.fancybox({'type':'swf','padding':'0','swf': {'wmode':'transparent','allowfullscreen':'true'}});
-	$('#videos img').load(function() {
-		$('#videos img').each(function(i) {
-			var height = $(this).height();
-			if(height<139&&height>100) {
-				var margin=(140-height)/2;
-				$(this).css('marginTop',margin);
-			}
-			else if(height<=0.1) {
-				var path = $(this).attr('src');
-				var imag = new Image();
-				var width;
-				imag.src = path;
-				imag.onload = function() {
-					width = imag.width;
-					height = imag.height;
-					var factor = width/187;
-					height = height * factor;
-					var margin = (140-height)/2;
-					console.info(margin);
-					$(this).css('marginTop',margin);
-				};
-			}
-		});	});
+$(document).ready(function() {
 	$('#loginlink').click(function(e) {
 		e.preventDefault();
 		$(this).hide();
