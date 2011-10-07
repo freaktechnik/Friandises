@@ -24,7 +24,6 @@ else {
 	$page=1;
 }
 
-$inshtml="";
 
 for($inde=0;$inde<$items_length;$inde=$inde+1) {
 	if(($items[$inde]["category"]==$quat&&$cnt<$PGITMS)||(!$quat&&(($cnt<$PGITMS&&$page*$PGITMS>=$inde&&$inde>=($page-1)*$PGITMS)||$PGITMS==0))) {
