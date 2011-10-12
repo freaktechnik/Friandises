@@ -58,7 +58,7 @@ for($f=1;$f<$d;$f=$f+1) {
 	else {
 		$class='';
 	}
-	$cat=$cat."<li><a href='?cat=".$categories[$f]."' class='".$class."' title='".$categories[$f]."'>".$categories[$f]."</a></li>";
+	$cat=$cat."<li><a href='index.php?cat=".$categories[$f]."' class='".$class."' title='".$categories[$f]."'>".$categories[$f]."</a></li>";
 }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"

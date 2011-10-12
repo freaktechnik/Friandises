@@ -44,12 +44,21 @@ for($inde=0;$inde<$items_length;$inde=$inde+1) {
 if($quatcount>0) {
 	for($i=0;$i<$quatcount;$i=$i+1) {
 		if(($cnt<$PGITMS&&$page*$PGITMS>=$i&&$i>=($page-1)*$PGITMS)||$PGITMS==0) {
-			$inshtml=$inshtml."<li><a href='/video.php?id=".$i."' title='".$items[$quata[$i]]["caption"]."'><span class='title'>".$items[$quata[$i]]["name"]."</span><img src='".$items[$quata[$i]]["thumbnail"]."' alt='".$items[$quata[$i]]["name"]."'></a></li>";
+			$inshtml=$inshtml."<li><a href='/video.php?id=".$quata[$i]."' title='".$items[]["caption"]."'><span class='title'>".$items[$quata[$i]]["name"]."</span><img src='".$items[$quata[$i]]["thumbnail"]."' alt='".$items[$quata[$i]]["name"]."'></a></li>";
 			$cnt=$cnt+1;
 		}
 	}
 }
-for($f=1;$f<$d;$f=$f+1) {	if($quat==$categories[$f]) {		$class='actual';	}	else {		$class='';	}	$cat=$cat."<li><a href='?cat=".$categories[$f]."' class='".$class."' title='".$categories[$f]."'>".$categories[$f]."</a></li>";}?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd"><html><head>
+for($f=1;$f<$d;$f=$f+1) {
+	if($quat==$categories[$f]) {
+		$class='actual';
+	}
+	else {
+		$class='';
+	}
+	$cat=$cat."<li><a href='?cat=".$categories[$f]."' class='".$class."' title='".$categories[$f]."'>".$categories[$f]."</a></li>";
+}
+?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd"><html><head>
 <title><?php echo $PGNAME; ?> <?php if($_GET['cat']) { echo "- ".$_GET['cat']; } else {  echo "- ".$PGTEA; } ?></title>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" >
 <meta name="description" content="<?php echo $PGDSC; ?>" >
