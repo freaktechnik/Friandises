@@ -44,7 +44,7 @@ for($inde=0;$inde<$items_length;$inde=$inde+1) {
 if($quatcount>0) {
 	for($i=0;$i<$quatcount;$i=$i+1) {
 		if(($cnt<$PGITMS&&$page*$PGITMS>=$i&&$i>=($page-1)*$PGITMS)||$PGITMS==0) {
-			$inshtml=$inshtml."<li><a href='/video.php?id=".$quata[$i]."' title='".$items[]["caption"]."'><span class='title'>".$items[$quata[$i]]["name"]."</span><img src='".$items[$quata[$i]]["thumbnail"]."' alt='".$items[$quata[$i]]["name"]."'></a></li>";
+			$inshtml=$inshtml."<li><a href='/video.php?id=".$quata[$i]."' title='".$items[$quata[$i]]["caption"]."'><span class='title'>".$items[$quata[$i]]["name"]."</span><img src='".$items[$quata[$i]]["thumbnail"]."' alt='".$items[$quata[$i]]["name"]."'></a></li>";
 			$cnt=$cnt+1;
 		}
 	}
