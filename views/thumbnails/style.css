@@ -1,0 +1,24 @@
+#videos li:hover {
+	-moz-box-shadow:1px 1px 10px #000000;
+	-webkit-box-shadow:1px 1px 10px #000000;
+	box-shadow:1px 1px 10px #000000;
+	
+	margin-top:-11px;
+	height: 156px;
+}
+
+#videos li {
+	border: 5px solid white;
+	background: white;
+	
+	height: 140px;
+	width: 187px;
+	margin: 5px;
+	padding: 0;
+}
+
+#videos img {
+	max-height: 140px;
+	width: 187px;
+	margin: 0 auto;
+}

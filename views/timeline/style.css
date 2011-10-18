@@ -1,0 +1,9 @@
+/* Timeline CSS */
+
+#my-timeline {
+	color: black !important;
+}
+
+div.timeline-event-icon img {
+	width: 50px;
+}

@@ -1,10 +1,10 @@
 body {
 	background: #1C1C1C;
-	color: white;
 	font-family:Arial,Helvetica,sans-serif;
 	font-size: 14px;
 	padding: 0;
 	margin: 0;
+	color: white;
 }
 
 #topnav {
@@ -76,30 +76,6 @@ a:hover {
 #navigation li:hover a, .actual {
 	background-color: #780014;
 	text-decoration: none;
-}
-
-#videos li:hover {
-	-moz-box-shadow:1px 1px 10px #000000;
-	-webkit-box-shadow:1px 1px 10px #000000;
-	box-shadow:1px 1px 10px #000000;
-	margin-top:-11px;
-	height: 156px;
-	
-}
-
-#videos li {
-	height: 140px;
-	width: 187px;
-	border: 5px solid white;
-	margin: 5px;
-	padding: 0;
-	background: white;
-}
-
-#videos img {
-	max-height: 140px;
-	width: 187px;
-	margin: 0 auto;
 }
 
 .title {
