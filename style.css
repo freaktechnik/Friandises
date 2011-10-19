@@ -78,6 +78,12 @@ a:hover {
 	text-decoration: none;
 }
 
+#navigation select {
+	margin-top: 2px;
+	float: right;
+	margin-right: 4px;
+}
+
 .title {
 	display: none;
 	color: black;

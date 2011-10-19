@@ -2,8 +2,17 @@
 include ('admin/config.php');
 include ('inc/pagevar.php');
 include ('inc/items.php');
+include ('inc/views.php');
+
+$connect = mysql_connect("$DB_LOCA", "$DB_USER", "$DB_PASS");
+if (!$connect)
+{
+   die('Could not connect: ' . mysql_error());
+}
+
+mysql_select_db($DB_NAME, $connect);
 $urlcatsuffix="";
-$view = "thumbnails";
+$view = new View();
 
 if($_GET['cat']) {
 	$quat=$_GET['cat'];
@@ -18,12 +27,19 @@ else {
 }
 
 if($_GET['view']) {
-	$view = $_GET['view'];
+	$view->setView($_GET['view']);
+	if($urlcatsuffix!="") {
+		$urlcatsuffix=$urlcatsuffix."&view=".$view->getView();
+	}
+	else {
+		$urlcatsuffix = "?view=".$view->getView();
+	}
 }
 
-include ('views/'.$view.'/'.$view.'.php');
+include ('views/'.$view->getView().'/'.$view->getView().'.php');
 
 $reta = generate();
+$viewselect = $view->getSelects();
 
 $categories = $reta->cats;
 $numCat = $reta->noc;
@@ -45,7 +61,7 @@ $numCat = $reta->noc;
 <meta http-equiv="content-language" content="<?php echo $PGLANG; ?>">
 
 <link rel="stylesheet" href="style.css" type="text/css" media="screen" >
-<link rel="stylesheet" href="views/<?php echo $view;?>/style.css" type="text/css" media="screen" >
+<link rel="stylesheet" href="views/<?php echo $view->getView(); ?>/style.css" type="text/css" media="screen" >
 <link rel="alternate" type="application/rss+xml" title="feed" href="<?php echo $PGURL; ?>/feeds/feed.rss" >
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
@@ -55,6 +71,19 @@ $(document).ready(function() {
 		e.preventDefault();
 		$(this).hide();
 		$('#loginform').show();
+	});
+	
+	$('#view-select').change(function() {
+		var args = "<?php echo $_SERVER['QUERY_STRING']; ?>";
+		if(args.match(/view=/)) {
+			args = args.replace(/view=[a-z]*&?/,'');
+		}
+		var presuff = "&view="
+		if (args!="") {
+			presuff="view=";
+		}
+		
+		location.href = "index.php?"+args+presuff+$(this).find(":selected").html();
 	});});</script>
 <?php
 if($reta->script) {
@@ -86,6 +115,6 @@ if($retu->onresize) {
 <div id="topnav"><form method="POST" id="loginform" style="display:none;" action="admin/check.php">Username:<input type="text" name="name"/> | Password:<input type="password" name="passwort"/> <input type="submit" value="Log in"></form><a id="loginlink" href="admin/login.php">Log in</a> | <a href="<?php echo $PGURL; ?>/feeds/feed.rss" title="RSS Feed"><img src="images/rss.png" alt="RSS Feed" /></a></div>
 <div id="head"><a href="<?php echo $PGURL; ?>" style="text-decoration:none;"><?php if($PGTITLE==1) {	echo "<h1>".$PGNAME."</h1>";}else if($PGTITLE==2) {	echo "<img src='".$PGIMG."' alt='".$PGNAME."'>";}?></a>
 <p><?php echo $PGTEA; ?></p></div>
-<div id="navigation"><ul><li><a href="<?php echo $PGURL; ?>" class="<?php if(!($_GET['cat'])) { echo 'actual'; } ?>">Home</a></li><?php echo $cat; ?></ul></div><br>
+<div id="navigation"><ul><li><a href="<?php echo $PGURL; ?>" class="<?php if(!($_GET['cat'])) { echo 'actual'; } ?>">Home</a></li><?php echo $cat; ?></ul><select name="view" id="view-select"><?php echo $viewselect; ?></select></div><br>
 <?php echo $reta->data; ?>
 <div id="footer"><a href="impressum.php">Impressum</a> | <a href="<?php echo $PGURL; ?>/feeds/feed.rss" title="RSS Feed"><img src="images/rss.png" alt="RSS Feed" /></a></div></div></body></html>
