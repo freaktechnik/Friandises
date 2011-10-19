@@ -191,7 +191,7 @@ else if($what=="newu") {
 	if (!(filter_var($email, FILTER_VALIDATE_EMAIL))) {
 		die("e-Mail adress not valid!");
 	}
-	$sql = "INSERT INTO logins (user, password, admin, email) VALUES ('$name', '$password', '$admin', '$email');";
+	$sql = "INSERT INTO logins (user, password, admin, email) VALUES ('$name', '$password', '$admin', '$email')";
 	$results = mysql_query($sql);
 	$subject = "Your new account on ".$PGNAME."";
 	$body = "Hi ".$name."\n\nSomeone just created a new account on ".$PGNAME." for you. You can find ".$PGNAME." under ".$PGURL.". \nYour login informations:\nUsername: ".$name."\nPassword: ".$password."\nYou can edit your e-mail adress and password when you are logged in.";
@@ -201,6 +201,41 @@ else if($what=="newu") {
 	else {
 		die("Error.");
 	}
+}
+
+else if($what=="views") {
+	$num=(int)$_POST['number'];
+	$view = $_POST['view'];
+	$standard = $_POST['standard'];
+	
+	foreach($standard as &$std) {
+		if($std!=1) {
+			$std=0;
+		}
+	}
+	
+	$a=0;
+	
+	$actualViews = array();
+	
+	$result = mysql_query("SELECT * FROM views");
+	while ($objResult = mysql_fetch_object($result)) {
+		$actualViews[$a]=$objResult->name;
+		$a=$a+1;
+	}
+	
+	foreach($view as $b => $viw) {
+		if($viw&&!(array_search($viw,$actualViews))) {
+			$query = mysql_query("INSERT INTO views ( name,standard ) VALUES ('$viw','$standard[$b]' )");
+		}
+	}
+	foreach($actualViews as $act) {
+		if(!(array_search($act,$view))) {
+			$query = mysql_query("DELETE FROM views WHERE name='$act'");
+		}
+	}
+	
+	header("Location: views.php?suc=1");
 }
 
 mysql_close($connect);

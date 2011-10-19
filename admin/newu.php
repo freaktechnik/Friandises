@@ -33,7 +33,7 @@ $PGNAME = $objResult->value;
 <body>
 <div id="topnav"><a href="logout.php">Log out</a></div>
 <h2 id="head">Benutzer erstellen</h2>
-<div id="navigation"><ul><li><a href="intern.php">Video hinzufügen</a></li><li><a href="edits.php">Videodetails Bearbeiten</a></li><?php if($_SESSION['admin']==1) {echo '<li><a href="settings.php">Einstellungen</a></li><li><a href="#" class="actual">Benutzer hinzufügen</a></li>';} ?><li style="text-align: right;"><a href="user.php">Benutzername: <?php echo $_SESSION['username']; ?></a></li></ul></div>
+<?php include 'menu.php'; ?>
 <div id="intern">
 <form method="POST" action="write.php">
 	<p>Benutzername: <input type="text" name="name" class="textfield"></p>

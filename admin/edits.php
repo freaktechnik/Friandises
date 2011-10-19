@@ -55,7 +55,7 @@ mysql_close($connect);
 <body>
 <div id="topnav"><a href="logout.php">Log out</a></div>
 <h2 id="head">Videoinfos Bearbeiten</h2>
-<div id="navigation"><ul><li><a href="intern.php">Video hinzufügen</a></li><li><a href="#" class="actual">Videodetails Bearbeiten</a></li><?php if($_SESSION['admin']==1) {echo '<li><a href="settings.php">Einstellungen</a></li><li><a href="newu.php">Benutzer hinzufügen</a></li>';} ?><li style="text-align: right;"><a href="user.php">Benutzername: <?php echo $_SESSION['username']; ?></a></li></ul></div><br>
+<?php include 'menu.php'; ?>
 <div id="edits"><ul><?php echo $inshtml; ?></ul></div>
 </body>
 </html>
