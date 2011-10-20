@@ -12,6 +12,7 @@ if (!$connect)
 
 mysql_select_db($DB_NAME, $connect);
 $urlcatsuffix="";
+$urlviewsuffix="";
 $view = new View();
 
 if($_GET['cat']) {
@@ -28,6 +29,8 @@ else {
 
 if($_GET['view']) {
 	$view->setView($_GET['view']);
+	$urlviewssuffix="&view=".$view->getView();
+	$urlviewsuffix="?view=".$view->getView();
 	if($urlcatsuffix!="") {
 		$urlcatsuffix=$urlcatsuffix."&view=".$view->getView();
 	}
@@ -50,7 +53,7 @@ $numCat = $reta->noc;
 	else {
 		$class='';
 	}
-	$cat=$cat."<li><a href='?cat=".$categories[$f]."' class='".$class."' title='".$categories[$f]."'>".$categories[$f]."</a></li>";
+	$cat=$cat."<li><a href='?cat=".$categories[$f].$urlviewssuffix."' class='".$class."' title='".$categories[$f]."'>".$categories[$f]."</a></li>";
 }
 
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd"><html><head>
@@ -78,12 +81,15 @@ $(document).ready(function() {
 		if(args.match(/view=/)) {
 			args = args.replace(/view=[a-z]*&?/,'');
 		}
+		if(args.match(/page=/)) {
+			args = args.replace(/page=[1-9]*&?/,'');
+		}
 		var presuff = "&view="
-		if (args!="") {
+		if (args=="") {
 			presuff="view=";
 		}
 		
-		location.href = "index.php?"+args+presuff+$(this).find(":selected").html();
+		location.href = "index.php?"+args+presuff+($(this).find(":selected").html()).toLowerCase();
 	});});</script>
 <?php
 if($reta->script) {
@@ -113,8 +119,8 @@ if($retu->onresize) {
 	echo "onresize='".$retu->onresize."' ";
 }?>>
 <div id="topnav"><form method="POST" id="loginform" style="display:none;" action="admin/check.php">Username:<input type="text" name="name"/> | Password:<input type="password" name="passwort"/> <input type="submit" value="Log in"></form><a id="loginlink" href="admin/login.php">Log in</a> | <a href="<?php echo $PGURL; ?>/feeds/feed.rss" title="RSS Feed"><img src="images/rss.png" alt="RSS Feed" /></a></div>
-<div id="head"><a href="<?php echo $PGURL; ?>" style="text-decoration:none;"><?php if($PGTITLE==1) {	echo "<h1>".$PGNAME."</h1>";}else if($PGTITLE==2) {	echo "<img src='".$PGIMG."' alt='".$PGNAME."'>";}?></a>
+<div id="head"><a href="<?php echo $PGURL.$urlviewsuffix; ?>" style="text-decoration:none;"><?php if($PGTITLE==1) {	echo "<h1>".$PGNAME."</h1>";}else if($PGTITLE==2) {	echo "<img src='".$PGIMG."' alt='".$PGNAME."'>";}?></a>
 <p><?php echo $PGTEA; ?></p></div>
-<div id="navigation"><ul><li><a href="<?php echo $PGURL; ?>" class="<?php if(!($_GET['cat'])) { echo 'actual'; } ?>">Home</a></li><?php echo $cat; ?></ul><select name="view" id="view-select"><?php echo $viewselect; ?></select></div><br>
+<div id="navigation"><ul><li><a href="<?php echo $PGURL.$urlviewsuffix; ?>" class="<?php if(!($_GET['cat'])) { echo 'actual'; } ?>">Home</a></li><?php echo $cat; ?></ul><select name="view" id="view-select"><?php echo $viewselect; ?></select></div><br>
 <?php echo $reta->data; ?>
 <div id="footer"><a href="impressum.php">Impressum</a> | <a href="<?php echo $PGURL; ?>/feeds/feed.rss" title="RSS Feed"><img src="images/rss.png" alt="RSS Feed" /></a></div></div></body></html>

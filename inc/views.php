@@ -26,7 +26,7 @@ class View {
 		while ($objResult = mysql_fetch_object($query)) {
 			$selected = "";
 			if($objResult->name==$this->actualView) { $selected =  ' selected'; }
-			$reta = $reta."<option value='".$objResult->name."'".$selected.">".$objResult->name."</option>";
+			$reta = $reta."<option value='".$objResult->name."'".$selected.">".ucwords($objResult->name)."</option>";
 		}
 		
 		return $reta;
