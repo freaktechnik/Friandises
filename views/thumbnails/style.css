@@ -23,3 +23,20 @@
 	width: 187px;
 	margin: 0 auto;
 }
+
+#videos ul {
+	margin: 5px;
+}
+
+.title {
+	display: none;
+	color: black;
+	height: 16px;
+	width: 187px;
+	overflow: hidden;
+	/*overflow: ellipsis ;*/
+}
+
+#videos li:hover .title {
+	display: block;
+}

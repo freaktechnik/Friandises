@@ -13,7 +13,7 @@ function generate() {
 	
 	for($inde=0;$inde<$items_length;$inde=$inde+1) {
 		if(!$quat&&(($cnt<$PGITMS&&$page*$PGITMS>$inde&&$inde>=($page-1)*$PGITMS)||$PGITMS==0)) {
-			$inshtml=$inshtml."<li><a href='/video.php?id=".$inde."' title='".$items[$inde]["caption"]."'><span class='title'>".$items[$inde]["name"]."</span><img src='".$items[$inde]["thumbnail"]."' alt='".$items[$inde]["name"]."'></a></li>";
+			$inshtml=$inshtml."<li><a href='/video.php?id=".$inde."' title='".$items[$inde]["caption"]."'><img src='".$items[$inde]["thumbnail"]."' alt='".$items[$inde]["name"]."'><span class='title'>".$items[$inde]["name"]."</span> ".$items[$inde]["caption"]."</a></li>";
 			$cnt=$cnt+1;
 		}
 		else if($items[$inde]["category"]==$quat) {
@@ -30,7 +30,7 @@ function generate() {
 	if($quatcount>0) {
 		for($i=0;$i<$quatcount;$i=$i+1) {
 			if(($cnt<$PGITMS&&$page*$PGITMS>=$i&&$i>=($page-1)*$PGITMS)||$PGITMS==0) {
-				$inshtml=$inshtml."<li><a href='/video.php?id=".$quata[$i]."' title='".$items[$quata[$i]]["caption"]."'><span class='title'>".$items[$quata[$i]]["name"]."</span><img src='".$items[$quata[$i]]["thumbnail"]."' alt='".$items[$quata[$i]]["name"]."'></a></li>";
+				$inshtml=$inshtml."<li><a href='/video.php?id=".$quata[$i]."' title='".$items[$quata[$i]]["caption"]."'><img src='".$items[$quata[$i]]["thumbnail"]."' alt='".$items[$quata[$i]]["name"]."'><span class='title'>".$items[$quata[$i]]["name"]."</span></a></li>";
 				$cnt=$cnt+1;
 			}
 		}
@@ -64,7 +64,6 @@ function generate() {
 <div id="bottom"><div id="pagination">'.$pagination.'</div>';
 	$retu->cats = $categories;
 	$retu->noc = $d;
-	$retu->script = "views/thumbnails/script.js";
 	
 	return $retu;
 }

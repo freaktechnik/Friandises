@@ -1,0 +1,43 @@
+#videos li{
+	height: 70px;
+	padding: 5px;
+	margin:0;
+	border-bottom: 1px solid black;
+	overflow: ellipsis;
+}
+
+#videos li:nth-child(2n) {
+	background-color: #454545;
+}
+
+#videos li:hover {
+	background-color: grey !important;
+}
+
+#videos li:hover a .title {
+	text-decoration: underline;
+}
+
+#videos li:hover a {
+	text-decoration: none !important;
+}
+
+.title {
+	text-decoration: none;
+	font-weight: bold;
+}
+
+#videos img {
+	border: 3px solid white;
+	background: white;
+	
+	-moz-box-shadow:1px 1px 10px #000000;
+	-webkit-box-shadow:1px 1px 10px #000000;
+	box-shadow:1px 1px 10px #000000;
+
+	max-height: 60px;
+	min-width: 80px;
+	margin: 1px auto;
+	margin-right: 5px;
+	float: left;
+}

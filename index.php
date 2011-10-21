@@ -31,12 +31,6 @@ if($_GET['view']) {
 	$view->setView($_GET['view']);
 	$urlviewssuffix="&view=".$view->getView();
 	$urlviewsuffix="?view=".$view->getView();
-	if($urlcatsuffix!="") {
-		$urlcatsuffix=$urlcatsuffix."&view=".$view->getView();
-	}
-	else {
-		$urlcatsuffix = "?view=".$view->getView();
-	}
 }
 
 include ('views/'.$view->getView().'/'.$view->getView().'.php');
