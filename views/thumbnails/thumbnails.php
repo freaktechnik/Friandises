@@ -12,7 +12,7 @@ function generate() {
 	$pagination = "";
 	
 	for($inde=0;$inde<$items_length;$inde=$inde+1) {
-		if(!$quat&&(($cnt<$PGITMS&&$page*$PGITMS>=$inde&&$inde>=($page-1)*$PGITMS)||$PGITMS==0)) {
+		if(!$quat&&(($cnt<$PGITMS&&$page*$PGITMS>$inde&&$inde>=($page-1)*$PGITMS)||$PGITMS==0)) {
 			$inshtml=$inshtml."<li><a href='/video.php?id=".$inde."' title='".$items[$inde]["caption"]."'><span class='title'>".$items[$inde]["name"]."</span><img src='".$items[$inde]["thumbnail"]."' alt='".$items[$inde]["name"]."'></a></li>";
 			$cnt=$cnt+1;
 		}
@@ -64,6 +64,7 @@ function generate() {
 <div id="bottom"><div id="pagination">'.$pagination.'</div>';
 	$retu->cats = $categories;
 	$retu->noc = $d;
+	$retu->script = "views/thumbnails/script.js";
 	
 	return $retu;
 }
