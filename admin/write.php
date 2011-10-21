@@ -204,13 +204,16 @@ else if($what=="newu") {
 }
 
 else if($what=="views") {
-	$num=(int)$_POST['number'];
 	$view = $_POST['view'];
 	$standard = $_POST['standard'];
+	$stda = array();
 	
-	foreach($standard as &$std) {
-		if($std!=1) {
-			$std=0;
+	foreach($view as $c => $std) {
+		if($std==$standard) {
+			$stda[$c]=1;
+		}
+		else {
+			$stda[$c]=0;
 		}
 	}
 	
@@ -218,19 +221,23 @@ else if($what=="views") {
 	
 	$actualViews = array();
 	
-	$result = mysql_query("SELECT * FROM views");
+	$result = mysql_query("SELECT * FROM views ORDER BY id");
 	while ($objResult = mysql_fetch_object($result)) {
 		$actualViews[$a]=$objResult->name;
+		$actualStandard[$a]=(int)$objResult->standard;
 		$a=$a+1;
 	}
 	
 	foreach($view as $b => $viw) {
-		if($viw&&!(array_search($viw,$actualViews))) {
-			$query = mysql_query("INSERT INTO views ( name,standard ) VALUES ('$viw','$standard[$b]' )");
+		if(FALSE === array_search($viw,$actualViews)) {
+			$query = mysql_query("INSERT INTO views ( name,standard ) VALUES ('$viw','$stda[$b]' )");
+		}
+		if($actualStandard[$b]!=$stda[$b]&&$viw==$standard) {
+			$query = mysql_query("UPDATE views SET standard='$stda[$b]' WHERE name='$viw'");
 		}
 	}
 	foreach($actualViews as $act) {
-		if(!(array_search($act,$view))) {
+		if(FALSE === array_search($act,$view)) {
 			$query = mysql_query("DELETE FROM views WHERE name='$act'");
 		}
 	}

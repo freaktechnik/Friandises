@@ -22,13 +22,10 @@ mysql_select_db($DB_NAME, $connect);
 $actualViewsNames = array();
 $actualViewsStd = array();
 
-$a = 1; //This needs to be one, else the first item is not working with array search. Whyever.
-
-$result = mysql_query("SELECT * FROM views ORDER BY name");
+$result = mysql_query("SELECT * FROM views ORDER BY id");
 while ($objResult = mysql_fetch_object($result)) {
-	$actualViewsNames[$a]=$objResult->name;
-	$actualViewsStd[$a]=$objResult->standard;
-	$a = $a+1;
+	$actualViewsNames[$objResult->id]=$objResult->name;
+	$actualViewsStd[$objResult->id]=$objResult->standard;
 }
 
 mysql_close($connect);
@@ -54,23 +51,21 @@ mysql_close($connect);
 	<?php
 		$dir = $_SERVER['DOCUMENT_ROOT'].$PG_LOCA.'views';
 		$files = scandir($dir);
-		$num = 0;
 		
 		foreach($files as $file) {
 			if(strpos($file,'.')===false) {
 				$stdCheck="";
 				$exCheck="";
-				if(array_search($file,$actualViewsNames)) {
+				if(FALSE !== array_search($file,$actualViewsNames)) {
 					if($actualViewsStd[array_search($file,$actualViewsNames)]=="1") {
 						$stdCheck="checked";
 					}
 					$exCheck="checked";
 				}
-				echo "<p><input type='checkbox' name='view[]' value='".$file."' ".$exCheck."> ".$file." | standard:<input type='radio' name='standard[]' value='1'".$stdCheck."></p>";
-				$num = $num +1;
+				echo "<p><input type='checkbox' name='view[]' value='".$file."' ".$exCheck."> ".$file." | standard:<input type='radio' name='standard' value='".$file."'".$stdCheck."></p>";
 			}
 		}
-	?>	<input type="text" name="number" style="display:none;" value="<?php echo $num; ?>">
+	?>
 	<input type="text" name="what" style="display:none;" value="views">
 	<input type="submit" value="speichern" style="text-align:right;"><img class="sym" src="<?php if($_GET['suc']==1) {
 		echo "images/ok.png";

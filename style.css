@@ -46,7 +46,6 @@ a:hover {
 #videos {
 	display: block;
 	position: relative;
-	float: left;
 }
 
 #navigation li, #videos li {

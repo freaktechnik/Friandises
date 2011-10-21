@@ -8,7 +8,7 @@ function generate() {
 	$cnt = 0; // items on this page
 	$quatcount = 0; // items in this category (usually 0)
 	$categories[0] = "placeholder";
-	$d = 1; //number of categorys
+	$d = 1; //number of categories
 	$pagination = "";
 	
 	for($inde=0;$inde<$items_length;$inde=$inde+1) {
