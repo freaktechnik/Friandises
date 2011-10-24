@@ -34,7 +34,7 @@
 	height: 16px;
 	width: 187px;
 	overflow: hidden;
-	/*overflow: ellipsis ;*/
+	overflow: ellipsis;
 }
 
 #videos li:hover .title {
