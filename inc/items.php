@@ -14,15 +14,16 @@ $i=0;
 $result = mysql_query("SELECT * FROM content ORDER BY id");
 while ($objResult = mysql_fetch_object($result)) {
 	if($objResult->caption!=NULL) {
-		$objcap=" - ".$objResult->caption;
+		$objcap=$objResult->name." - ".$objResult->caption;
 	}
 	else {
-		$objcap="";
+		$objcap=$objResult->name;
 	}
 	
     $items[$i]["url"]=$objResult->url;
 	$items[$i]["name"]=$objResult->name;
-	$items[$i]["caption"]=$objResult->name.$objcap;
+	$items[$i]["caption"]=preg_replace("/'/",'"',$objcap);
+	$items[$i]["description"]=$objResult->caption;
 	$items[$i]["thumbnail"]=$objResult->thumbnail;
 	$items[$i]["category"]=$objResult->category;
 	$items[$i]["date"]=$objResult->date;

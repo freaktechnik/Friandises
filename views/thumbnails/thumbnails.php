@@ -60,8 +60,8 @@ function generate() {
 	}
 	
 	
-	$retu->data ='<div id="videos"><ul>'.$inshtml.'</ul></div>
-<div id="bottom"><div id="pagination">'.$pagination.'</div>';
+	$retu->data ='<div id="videos"><ul>'.$inshtml.'</ul></div>';
+	$retu->pagination = '<div id="pagination">'.$pagination.'</div>';
 	$retu->cats = $categories;
 	$retu->noc = $d;
 	$retu->script = "views/thumbnails/script.js";

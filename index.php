@@ -92,7 +92,7 @@ if($reta->script) {
 if($reta->head) {
 	echo $reta->head;
 }
-if(!($_GET['cat'])) { echo "<script type='text/javascript'>
+echo "<script type='text/javascript'>
 
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', '".$G_ANALYTICS."']);
@@ -105,16 +105,17 @@ if(!($_GET['cat'])) { echo "<script type='text/javascript'>
   })();
 
 </script>";
-}
 ?></head><body <?php if($reta->onload) {
 	echo "onload='".$reta->onload."' ";
 }
 if($retu->onresize) {
 	echo "onresize='".$retu->onresize."' ";
 }?>>
-<div id="topnav"><form method="POST" id="loginform" style="display:none;" action="admin/check.php">Username:<input type="text" name="name"/> | Password:<input type="password" name="passwort"/> <input type="submit" value="Log in"></form><a id="loginlink" href="admin/login.php">Log in</a> | <a href="<?php echo $PGURL; ?>/feeds/feed.rss" title="RSS Feed"><img src="images/rss.png" alt="RSS Feed" /></a></div>
+<div id="topnav"><form method="POST" id="loginform" style="display:none;" action="admin/check.php">Username:<input type="text" name="name" > | Password:<input type="password" name="passwort" > <input type="submit" value="Log in"></form><a id="loginlink" href="admin/login.php">Log in</a> | <a href="<?php echo $PGURL; ?>/feeds/feed.rss" title="RSS Feed"><img src="images/rss.png" alt="RSS Feed" ></a></div>
 <div id="head"><a href="<?php echo $PGURL.$urlviewsuffix; ?>" style="text-decoration:none;"><?php if($PGTITLE==1) {	echo "<h1>".$PGNAME."</h1>";}else if($PGTITLE==2) {	echo "<img src='".$PGIMG."' alt='".$PGNAME."'>";}?></a>
 <p><?php echo $PGTEA; ?></p></div>
 <div id="navigation"><ul><li><a href="<?php echo $PGURL.$urlviewsuffix; ?>" class="<?php if(!($_GET['cat'])) { echo 'actual'; } ?>">Home</a></li><?php echo $cat; ?></ul><select name="view" id="view-select"><?php echo $viewselect; ?></select></div><br>
 <?php echo $reta->data; ?>
-<div id="footer"><a href="impressum.php">Impressum</a> | <a href="<?php echo $PGURL; ?>/feeds/feed.rss" title="RSS Feed"><img src="images/rss.png" alt="RSS Feed" /></a></div></div></body></html>
+<div id="bottom">
+<?php echo $reta->pagination; ?>
+<div id="footer"><a href="impressum.php">Impressum</a> | <a href="<?php echo $PGURL; ?>/feeds/feed.rss" title="RSS Feed"><img src="images/rss.png" alt="RSS Feed" ></a></div></div></body></html>

@@ -15,7 +15,7 @@ $d=1; //number of categorys
 for($inde=0;$inde<$items_length;$inde=$inde+1) {
 
 	if(!$quat||$items[$inde]["category"]==$quat) {
-		$descre=str_replace("'","\"",$items[$id]["caption"]);echo $descre;
+		$descre=str_replace("'","\"",$items[$id]["description"]);echo $descre;
 
 		if(substr($items[$inde]["date"],-5,2)=="00") {	
 			$objact = $objact."{'start':'".substr($items[$inde]["date"],0,4)."-01-01T00:00:00+01:00','end':'".substr($items[$inde]["date"],0,4)."-12-31T00:00:00+01:00','durationEvent':true,'title':'".$items[$inde]["name"]."','caption':'".$descre."','icon':'".$items[$inde]["thumbnail"]."','link':'".$PGURL."/video.php?id=".$inde."'},";

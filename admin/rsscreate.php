@@ -29,7 +29,7 @@ for($fad=1;$fad<$items_length;$fad++) {
 	}
 	$filec="<item>
 <title>".$items[$fad]["name"]."</title>
-<description><![CDATA[<img src='".$items[$fad]["thumbnail"]."' alt='".$items[$fad]["name"]."'/> ".$items[$fad]["caption"]."]]></description>
+<description><![CDATA[<img src='".$items[$fad]["thumbnail"]."' alt='".$items[$fad]["name"]."'/> ".$items[$fad]["description"]."]]></description>
 <link>".$PGURL."/video.php?id=".$fad."</link>
 <pubDate>".dateConvertTimestamp("$items[$fad]['added']")."</pubDate>
 <category>".$items[$fad]["category"]."</category>
@@ -38,7 +38,7 @@ for($fad=1;$fad<$items_length;$fad++) {
 <guid isPermaLink='true'>".$PGURL."/video.php?id=".$fad."</guid>
 <media:content url='".$items[$fad]["url"]."' type='application/x-shockwave-flash' expression='full' medium='video' isDefault='true' lang='".$PGLANG."' />
 <media:thumbnail url='".$items[$fad]["thumbnail"]."' />
-<media:text type='html'>&lt;img src='".$items[$fad]["thumbnail"]."' alt='".$items[$fad]["name"]."'/&gt;&lt;p&gt;".$items[$fad]["caption"]."&lt;/p&gt;</media:text>
+<media:text type='html'>&lt;img src='".$items[$fad]["thumbnail"]."' alt='".$items[$fad]["name"]."'/&gt;&lt;p&gt;".$items[$fad]["description"]."&lt;/p&gt;</media:text>
 <media:title>".$items[$fad]["name"]."</media:title>
 <media:keywords>".$items[$fad]["category"]."</media:keywords>
 <media:embed url='".$items[$fad]["url"]."' width='512' height='323'>

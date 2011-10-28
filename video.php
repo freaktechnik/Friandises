@@ -29,14 +29,14 @@ if($id<$items_length) {
 		$right ="<a href='?id=".($id+1)."' class='right'>Next &gt;</a>";
 	}
 	$inshtml= "<object width='720' height='450'>
-<param name='allowFullScreen' value='true'></param>
-<param name='movie' value='".$items[$id]["url"].$suffix."'></param>
+<param name='allowFullScreen' value='true'>
+<param name='movie' value='".$items[$id]["url"].$suffix."'>
 <embed allowfullscreen='true' width='750' height='450' type='application/x-shockwave-flash' src='".$items[$id]["url"].$suffix."'></embed>
 </object>
 <div id='footline'>
 	".$left."<div class='center'>".$share."</div>".$right."
 </div><br>
-<p>".$items[$id]["caption"]."</p>";
+<p>".$items[$id]["description"]."</p>";
 	$quat=$items[$id]["category"];
 }
 
@@ -78,7 +78,7 @@ for($f=1;$f<$d;$f=$f+1) {
     <meta property="og:url" content="<?php echo $PGURL."/video.php?id=".$id; ?>">
     <meta property="og:image" content="<?php echo $items[$id]["thumbnail"]; ?>">
     <meta property="og:description"
-          content="<?php $descre=str_replace("\"","'",$items[$id]["caption"]);echo $descre; ?>">
+          content="<?php echo $items[$id]["description"]; ?>">
     <meta property="og:video" content="<?php echo $items[$id]["url"]; ?>">
 	<meta property="og:video:type" content="application/x-shockwave-flash">
 
@@ -96,9 +96,24 @@ $(document).ready(function() {
 	});
 });
 </script>
+<?php 
+echo "<script type='text/javascript'>
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', '".$G_ANALYTICS."']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>";
+?>
 </head>
 <body>
-<div id="topnav"><form method="POST" id="loginform" style="display:none;" action="admin/check.php">Username:<input type="text" name="name"/> | Password:<input type="password" name="passwort"/> <input type="submit" value="Log in"></form><a id="loginlink" href="admin/login.php">Log in</a></div>
+<div id="topnav"><form method="POST" id="loginform" style="display:none;" action="admin/check.php">Username:<input type="text" name="name" > | Password:<input type="password" name="passwort" > <input type="submit" value="Log in"></form><a id="loginlink" href="admin/login.php">Log in</a></div>
 <div id="head"><a href="<?php echo $PGURL; ?>" style="text-decoration:none;"><?php 
 if($PGTITLE==1) {
 	echo "<h1>".$PGNAME."</h1>";
@@ -113,6 +128,6 @@ else if($PGTITLE==2) {
 <?php echo $inshtml; ?>
 </div>
 <div id="bottom">
-<div id="footer"><a href="impressum.php">Impressum</a> | <a href="<?php echo $PGURL; ?>/feeds/feed.rss" title="RSS Feed"><img src="images/rss.png" alt="RSS Feed" /></a></div></div>
+<div id="footer"><a href="impressum.php">Impressum</a> | <a href="<?php echo $PGURL; ?>/feeds/feed.rss" title="RSS Feed"><img src="images/rss.png" alt="RSS Feed" ></a></div></div>
 </body>
 </html>
