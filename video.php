@@ -14,7 +14,7 @@ $share = '<!-- AddThis Button BEGIN -->
 <a class="addthis_button_tweet"></a>
 <a class="addthis_counter addthis_pill_style"></a>
 </div>
-<script type="text/javascript">var addthis_config = {"data_track_clickback":true,"swfurl":'.$url.'};</script>
+<script type="text/javascript">var addthis_config = {"data_track_clickback":true,"swfurl":"'.$url.'","data_ga_property": "'.$G_ANALYTICS.'","data_ga_social" : true};</script>
 <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid='."'".$ADD_PUBID."'".'"></script>
 <!-- AddThis Button END -->';
 
