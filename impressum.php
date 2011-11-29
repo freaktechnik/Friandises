@@ -42,7 +42,7 @@ echo "<script type='text/javascript'>
 <h1 id="head">Impressum</h1>
 <div id="text">
 <?php echo $PGDSC; ?><br>
-<?php echo $PGNAME; ?> is a link collection of videos. You can watch those videos directly on the page. This page supports youtube and sf videoportal, dailymotion and vimeo videos. The page is built to be simple, for user and owner. It is very simple to add a video.
+<?php echo $PGNAME; ?> is a link collection of videos. You can watch those videos directly on the page. This page supports youtube, sf videoportal, dailymotion and vimeo videos. The page is built to be simple, for user and owner. It is very simple to add a video.
 Neither page owner nor author are responsible for the video content.<br>
 This page uses <a href="http://jquery.com">jQuery</a>.<br>
 Visit the Friandises project (which this website runs) on Github: <a href="https://github.com/freaktechnik/Friandises">Friandises on Github</a>.<br>

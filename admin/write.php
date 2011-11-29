@@ -60,6 +60,11 @@ if($what=="video") {
 		$url = preg_replace('#http://.+vimeo.com/#','http://player.vimeo.com/video/',$url);
 		$thumbnail ="Vimeo is complicated."; // why do I need sockets :(
 		$url = $url.?"title=0&amp;byline=0&amp;portrait=0&amp;color=ff9933";
+		$type="html";
+	}
+	else {
+		$thumbnail = "http://www.iwebtool2.com/img/?domain=".$url;
+		$type = "html";
 	}
 	
 	if(is_numeric($year)) {
