@@ -31,24 +31,36 @@ if($what=="video") {
 
 	if(preg_match('#http://.+youtube.com/#',$url)) {
 		$url = preg_replace('#http://.+youtube.com/.+watch#','watch',$url);
-		$url = preg_replace('#watch\?v=#','http://www.youtube.com/v/',$url);
+		$url = preg_replace('#watch\?v=#','http://www.youtube.com/embed/',$url);
 		$url = preg_replace('#&.+$#','',$url);
-		$thumbnail= preg_replace('#http://www.youtube.com/v/#','http://img.youtube.com/vi/',$url);
+		$thumbnail= preg_replace('#http://www.youtube.com/embed/#','http://img.youtube.com/vi/',$url);
 		$thumbnail.=$suffix;
+		$type="html";
 	}
 	else if(preg_match('#http://www.videoportal.sf.tv/#',$url)) {
 		$url = preg_replace('#http://www.videoportal.sf.tv/video\?id=#','http://www.sf.tv/videoplayer/embed/',$url);
 		$thumbnail= preg_replace('#http://www.sf.tv/videoplayer/embed/#','http://www.videoportal.sf.tv/cvis/segment/thumbnail/',$url);
+		$type="swf";
 	}
 	else if(preg_match('#http://.+youtu.be/#',$url)) {
-		$url = preg_replace('#http://.+youtu.be/#','http://www.youtube.com/v/',$url);
-		$thumbnail= preg_replace('#http://www.youtube.com/v/#','http://img.youtube.com/vi/',$url);
+		$url = preg_replace('#http://.+youtu.be/#','http://www.youtube.com/embed/',$url);
+		$thumbnail= preg_replace('#http://www.youtube.com/embed/#','http://img.youtube.com/vi/',$url);
 		$thumbnail.=$suffix;
+		$type="html";
 	}
-	/*else if(preg_match('#http://vimeo.com#',$url)) {
-		$url = preg_replace('#http://www.youtu.be/#','http://www.youtube.com/v/',$url);
-		$thumbnail= preg_replace('#http://www.youtube.com/v/#','http://i1.ytimg.com/vi/',$url);
-	} neesds HTML Player.*/
+	else if(preg_match('#http://.+dailymotion.com/#',$url)) {
+		$url = preg_replace('#http://.+dailymotion.com/video/#','',$url);
+		$url = substr($url,6);
+		$url = 'http://dailymotion.com/embed/video/'.$url;
+		$thumbnail= preg_replace('#http://dailymotion.com/embed/video/#','http://dailymotion.com/thumbnail/video/',$url);
+		$thumbnail.=$suffix;
+		$type="html";
+	}
+	else if(preg_match('#http://.+vimeo.com#',$url)) {
+		$url = preg_replace('#http://.+vimeo.com/#','http://player.vimeo.com/video/',$url);
+		$thumbnail ="Vimeo is complicated."; // why do I need sockets :(
+		$url = $url.?"title=0&amp;byline=0&amp;portrait=0&amp;color=ff9933";
+	}
 	
 	if(is_numeric($year)) {
 		$date=$year."-".$month."-".$day;
@@ -57,7 +69,7 @@ if($what=="video") {
 		die("Please enter a proper year");
 	}
 
-	$sql = "INSERT INTO content (url, name, caption, category, thumbnail, date, creator) VALUES ('$url', '$name', '$caption', '$category', '$thumbnail', '$date', '$creator');";
+	$sql = "INSERT INTO content (url, name, caption, category, thumbnail, date, creator, type) VALUES ('$url', '$name', '$caption', '$category', '$thumbnail', '$date', '$creator', '$type');";
 	$results = mysql_query($sql);
 	include "rsscreate.php";
 	header("Location: intern.php?suc=1");
@@ -127,9 +139,6 @@ else if($what=="user") {
 	$npw=$_POST['newpw'];
 	$npw2=$_POST['newpw2'];
 	$un=$_POST['username'];
-	$query = mysql_query("SELECT password FROM logins WHERE user='$un'");
-	$objResult = mysql_fetch_object($query);
-	$pdbpw = $objResult->password;
 	if($opw==$pdbpw&&$npw==$npw2&&oldpw!=newpw) {
 		$sql = "UPDATE logins SET password='$npw' WHERE user='$un'";
 		$results = mysql_query($sql);

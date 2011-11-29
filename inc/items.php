@@ -29,6 +29,7 @@ while ($objResult = mysql_fetch_object($result)) {
 	$items[$i]["date"]=$objResult->date;
 	$items[$i]["added"]=$objResult->added;
 	$items[$i]["creator"]=$objResult->creator;
+	$items[$i]["type"]=$objResult->type;
 	
 	$i=$i+1;
 }

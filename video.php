@@ -28,12 +28,16 @@ if($id<$items_length) {
 	if($id<$items_length-1) {
 		$right ="<a href='?id=".($id+1)."' class='right'>Next &gt;</a>";
 	}
-	$inshtml= "<object width='720' height='450'>
+	switch($items[$id]["type"]) {
+		case "html": $inshtml = "<object type='text/html' width='750' height='450' data='".$items[$id]["url"]."?hd=1' mozallowfullscreen webkitAllowFullScreen allowfullscreen></object>"; break;
+		default: $inshtml= "<object width='720' height='450'>
 <param name='allowFullScreen' value='true'>
 <param name='movie' value='".$items[$id]["url"].$suffix."'>
 <embed allowfullscreen='true' width='750' height='450' type='application/x-shockwave-flash' src='".$items[$id]["url"].$suffix."'></embed>
-</object>
-<div id='footline'>
+</object>";
+		break;
+	}
+	$inshtml = $inshtml."<div id='footline'>
 	".$left."<div class='center'>".$share."</div>".$right."
 </div><br>
 <p>".$items[$id]["description"]."</p>";
