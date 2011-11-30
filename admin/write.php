@@ -28,43 +28,51 @@ if($what=="video") {
 	$month=$_POST['month'];
 	$year=$_POST['year'];
 	$creator=$_SESSION['username'];
+	
+	$purl = parse_url ($url);
 
-	if(preg_match('#http://.+youtube.com/#',$url)) {
-		$url = preg_replace('#http://.+youtube.com/.+watch#','watch',$url);
-		$url = preg_replace('#watch\?v=#','http://www.youtube.com/embed/',$url);
-		$url = preg_replace('#&.+$#','',$url);
-		$thumbnail= preg_replace('#http://www.youtube.com/embed/#','http://img.youtube.com/vi/',$url);
+	if($purl["host"]=="youtube.com"||$purl["host"]=="www.youtube.com") {
+		$vid = preg_replace('#.+v=#','',$purl["query"]);
+		$vid = preg_replace('#&.+$#','',$vid);
+		$vurl = 'http://www.youtube.com/embed/'.$vid;
+		$thumbnail= 'http://img.youtube.com/vi/'.$vid
 		$thumbnail.=$suffix;
-		$type="html";
+		$type = "html";
 	}
-	else if(preg_match('#http://www.videoportal.sf.tv/#',$url)) {
-		$url = preg_replace('#http://www.videoportal.sf.tv/video\?id=#','http://www.sf.tv/videoplayer/embed/',$url);
-		$thumbnail= preg_replace('#http://www.sf.tv/videoplayer/embed/#','http://www.videoportal.sf.tv/cvis/segment/thumbnail/',$url);
+	else if($purl["host"]=="videoportal.sf.tv"||$purl["host"]=="www.videoportal.sf.tv") {
+		$vid = preg_replace('#.+id=#','',$purl["query"]);
+		$vurl = 'http://www.sf.tv/videoplayer/embed/'.$vid;
+		$thumbnail= 'http://www.videoportal.sf.tv/cvis/segment/thumbnail/'.$vid;
 		$type="swf";
 	}
-	else if(preg_match('#http://.+youtu.be/#',$url)) {
-		$url = preg_replace('#http://.+youtu.be/#','http://www.youtube.com/embed/',$url);
-		$thumbnail= preg_replace('#http://www.youtube.com/embed/#','http://img.youtube.com/vi/',$url);
+	else if($purl["host"]=="youtu.be") {
+		$vid = preg_replace("#/#","",$purl["path"]);
+		$vurl = 'http://www.youtube.com/embed/'.$vid;
+		$thumbnail= 'http://img.youtube.com/vi/'.$vid
 		$thumbnail.=$suffix;
 		$type="html";
 	}
-	else if(preg_match('#http://.+dailymotion.com/#',$url)) {
-		$url = preg_replace('#http://.+dailymotion.com/video/#','',$url);
-		$url = substr($url,6);
-		$url = 'http://dailymotion.com/embed/video/'.$url;
-		$thumbnail= preg_replace('#http://dailymotion.com/embed/video/#','http://dailymotion.com/thumbnail/video/',$url);
-		$thumbnail.=$suffix;
+	else if($purl["host"]=="dailymotion.com"||$purl["host"]=="www.dailymotion.com") {
+		$vid = preg_replace('#/video/#','',$purl["path"]);
+		$vid = substr($vid,6);
+		$vurl = 'http://dailymotion.com/embed/video/'.$vid;
+		$thumbnail= 'http://dailymotion.com/thumbnail/video/'.$vid;
 		$type="html";
 	}
-	else if(preg_match('#http://.+vimeo.com#',$url)) {
-		$url = preg_replace('#http://.+vimeo.com/#','http://player.vimeo.com/video/',$url);
+	else if($purl["host"]=="vimeo.com"||$purl["host"]=="www.vimeo.com") {
+		$vid = preg_replace("#/#","",$purl["path"]);
+		$vurl = 'http://player.vimeo.com/video/'.$vid;
 		$thumbnail ="Vimeo is complicated."; // why do I need sockets :(
-		$url = $url.?"title=0&amp;byline=0&amp;portrait=0&amp;color=ff9933";
+		$vurl = $vurl."?title=0&amp;byline=0&amp;portrait=0&amp;color=ff9933";
 		$type="html";
 	}
-	else {
+	else if($purl) {
+		$vurl = $url;
 		$thumbnail = "http://www.iwebtool2.com/img/?domain=".$url;
 		$type = "html";
+	}
+	else {
+		die('Error parsing URL');
 	}
 	
 	if(is_numeric($year)) {
@@ -74,7 +82,7 @@ if($what=="video") {
 		die("Please enter a proper year");
 	}
 
-	$sql = "INSERT INTO content (url, name, caption, category, thumbnail, date, creator, type) VALUES ('$url', '$name', '$caption', '$category', '$thumbnail', '$date', '$creator', '$type');";
+	$sql = "INSERT INTO content (url, name, caption, category, thumbnail, date, creator, type) VALUES ('$vurl', '$name', '$caption', '$category', '$thumbnail', '$date', '$creator', '$type');";
 	$results = mysql_query($sql);
 	include "rsscreate.php";
 	header("Location: intern.php?suc=1");
