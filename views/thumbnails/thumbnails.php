@@ -49,13 +49,13 @@ function generate() {
 			$pgs=$pgs-$diff+1;
 		}
 		if($page==1) {
-			$pagination = "<b>1</b> <a href='?page=2".$urlviewssuffix."'>2</a> <a href='?page=".($pgs).$urlviewssuffix."'>Letzte &gt;</a>";
+			$pagination = "<b>1</b> <a href='?page=2".$urlviewssuffix.$urlcatsuffix."'>2</a> <a href='?page=".($pgs).$urlviewssuffix.$urlcatsuffix."'>Letzte &gt;</a>";
 		}
 		else if($page<$pgs) {
-			$pagination = "<a href='?page=1".$urlviewssuffix."'>&lt; Erste</a> <a href='?page=".($page-1).$urlviewssuffix."'>".($page-1)."</a> <b>".$page."</b> <a href='?page=".($page+1).$urlviewssuffix."'>".($page+1)."</a> <a href='?page=".($pgs).$urlviewssuffix."'>Letzte &gt;</a>";
+			$pagination = "<a href='?page=1".$urlviewssuffix.$urlcatsuffix."'>&lt; Erste</a> <a href='?page=".($page-1).$urlviewssuffix.$urlcatsuffix."'>".($page-1)."</a> <b>".$page."</b> <a href='?page=".($page+1).$urlviewssuffix.$urlcatsuffix."'>".($page+1)."</a> <a href='?page=".($pgs).$urlviewssuffix.$urlcatsuffix."'>Letzte &gt;</a>";
 		}
 		else if($page==$pgs) {
-			$pagination = "<a href='?page=1".$urlviewssuffix."'>&lt; Erste</a> <a href='?page=".($page-1).$urlviewssuffix."'>".($page-1)."</a> <b>".$page."</b>";
+			$pagination = "<a href='?page=1".$urlviewssuffix.$urlcatsuffix."'>&lt; Erste</a> <a href='?page=".($page-1).$urlviewssuffix.$urlcatsuffix."'>".($page-1)."</a> <b>".$page."</b>";
 		}
 	}
 	
