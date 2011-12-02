@@ -35,7 +35,7 @@ if($what=="video") {
 		$vid = preg_replace('#.+v=#','',$purl["query"]);
 		$vid = preg_replace('#&.+$#','',$vid);
 		$vurl = 'http://www.youtube.com/embed/'.$vid;
-		$thumbnail= 'http://img.youtube.com/vi/'.$vid
+		$thumbnail= 'http://img.youtube.com/vi/'.$vid;
 		$thumbnail.=$suffix;
 		$type = "html";
 	}
@@ -48,7 +48,7 @@ if($what=="video") {
 	else if($purl["host"]=="youtu.be") {
 		$vid = preg_replace("#/#","",$purl["path"]);
 		$vurl = 'http://www.youtube.com/embed/'.$vid;
-		$thumbnail= 'http://img.youtube.com/vi/'.$vid
+		$thumbnail= 'http://img.youtube.com/vi/'.$vid;
 		$thumbnail.=$suffix;
 		$type="html";
 	}

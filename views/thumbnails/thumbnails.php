@@ -2,7 +2,7 @@
 
 function generate() {
 
-	global $items, $quat, $urlcatsuffix, $page, $PGITMS, $items_length;
+	global $items, $quat, $urlcatsuffix, $page, $PGITMS, $items_length, $urlviewssuffix;
 
 	$inshtml = "";
 	$cnt = 0; // items on this page
