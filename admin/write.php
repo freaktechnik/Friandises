@@ -54,7 +54,7 @@ if($what=="video") {
 	}
 	else if($purl["host"]=="dailymotion.com"||$purl["host"]=="www.dailymotion.com") {
 		$vid = preg_replace('#/video/#','',$purl["path"]);
-		$vid = substr($vid,6);
+		$vid = substr($vid,0,6);
 		$vurl = 'http://dailymotion.com/embed/video/'.$vid;
 		$thumbnail= 'http://dailymotion.com/thumbnail/video/'.$vid;
 		$type="html";
