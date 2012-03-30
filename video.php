@@ -22,11 +22,11 @@ if($id<$items_length) {
 	$namez = $items[$id]["name"];
 	$left="";
 	$right="";
-	if($id!=1) {
-		$left = "<a href='?id=".($id-1)."' class='left'>&lt; Previous</a>";
-	}
 	if($id<$items_length-1) {
-		$right ="<a href='?id=".($id+1)."' class='right'>Next &gt;</a>";
+		$left = "<a href='?id=".($id+1)."' class='left'>&lt; Previous</a>";
+	}
+	if($id>0) {
+		$right ="<a href='?id=".($id-1)."' class='right'>Next &gt;</a>";
 	}
 	switch($items[$id]["type"]) {
 		case "html": $inshtml = "<object type='text/html' width='750' height='450' data='".$items[$id]["url"]."?hd=1' mozallowfullscreen webkitAllowFullScreen allowfullscreen></object>"; break;
@@ -133,5 +133,6 @@ else if($PGTITLE==2) {
 </div>
 <div id="bottom">
 <div id="footer"><a href="impressum.php">Impressum</a> | <a href="<?php echo $PGURL; ?>/feeds/feed.rss" title="RSS Feed"><img src="images/rss.png" alt="RSS Feed" ></a></div></div>
+<script type="text/javascript" src="js/footer.js"></script>
 </body>
 </html>

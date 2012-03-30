@@ -118,4 +118,5 @@ if($retu->onresize) {
 <?php echo $reta->data; ?>
 <div id="bottom">
 <?php echo $reta->pagination; ?>
-<div id="footer"><a href="impressum.php">Impressum</a> | <a href="<?php echo $PGURL; ?>/feeds/feed.rss" title="RSS Feed"><img src="images/rss.png" alt="RSS Feed" ></a></div></div></body></html>
+<div id="footer"><a href="impressum.php">Impressum</a> | <a href="<?php echo $PGURL; ?>/feeds/feed.rss" title="RSS Feed"><img src="images/rss.png" alt="RSS Feed" ></a></div></div>
+<script type="text/javascript" src="js/footer.js"></script></body></html>

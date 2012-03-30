@@ -33,5 +33,7 @@ echo "<script type='text/javascript'>
 			<a href="impressum.php">Impressum</a> | <a href="<?php echo $PGURL; ?>/admin/feed.rss" title="RSS Feed"><img src="images/rss.png" alt="RSS Feed" ></a>
 		</div>
 	</div>
+	
+	<script type="text/javascript" src="js/footer.js"></script>
 </body>
 </html>

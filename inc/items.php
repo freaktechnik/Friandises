@@ -11,7 +11,7 @@ mysql_select_db($DB_NAME, $connect);
 $items;
 $i=0;
 
-$result = mysql_query("SELECT * FROM content ORDER BY id");
+$result = mysql_query("SELECT * FROM content ORDER BY id DESC");
 while ($objResult = mysql_fetch_object($result)) {
 	if($objResult->caption!=NULL) {
 		$objcap=$objResult->name." - ".$objResult->caption;

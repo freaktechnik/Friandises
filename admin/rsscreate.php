@@ -17,9 +17,25 @@ function dateConvertTimestamp($mysqlDate) {
 	return $convertedDate;
 }
 
-$filec = "</channel></rss>";
+$filec = '<?xml version="1.0" encoding="utf-8" ?>
+<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+<title>'.$PGNAME.'</title>
+<link>'.$PGURL.'</link>
+<atom:link href="'.$PGURL.'/feeds/feed.rss" rel="self" type="application/rss+xml" />
+<description>'.$PGDSC.'</description>
+<language>'.$PGLANG.'</language>
+<copyright>'.$PGOWN.'</copyright>
+<pubDate>'.date('r').'</pubDate>
+<generator>Friandises/php</generator>
+<image>
+<url>'.$PGURL."/".$PGIMG.'</url>
+<title>'.$PGNAME.'</title>
+<link>'.$PGURL.'</link>
+</image>
+';
 $newPubDate = dateConvertTimestamp("$objResult->added");
-for($fad=1;$fad<$items_length;$fad++) {
+for($fad=0;$fad<$items_length;$fad++) {
 
 	if($users[$items[$fad]["creator"]]["showemail"]==1) {
 		$author= "<author>".$users[$items[$fad]["creator"]]["email"]."</author>";
@@ -27,7 +43,7 @@ for($fad=1;$fad<$items_length;$fad++) {
 	else {
 		$author = "";
 	}
-	$filec="<item>
+	$filec=$filec."<item>
 <title>".$items[$fad]["name"]."</title>
 <description><![CDATA[<img src='".$items[$fad]["thumbnail"]."' alt='".$items[$fad]["name"]."'/> ".$items[$fad]["description"]."]]></description>
 <link>".$PGURL."/video.php?id=".$fad."</link>
@@ -47,27 +63,11 @@ for($fad=1;$fad<$items_length;$fad++) {
 <media:param name='allowFullScreen'>true</media:param>
 <media:param name='movie'>".$items[$fad]["url"]."</media:param>
 </media:embed>
-</item>".$filec;
+</item>";
 }
 
 
-$filec ='<?xml version="1.0" encoding="utf-8" ?>
-<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/" xmlns:atom="http://www.w3.org/2005/Atom">
-<channel>
-<title>'.$PGNAME.'</title>
-<link>'.$PGURL.'</link>
-<atom:link href="'.$PGURL.'/feeds/feed.rss" rel="self" type="application/rss+xml" />
-<description>'.$PGDSC.'</description>
-<language>'.$PGLANG.'</language>
-<copyright>'.$PGOWN.'</copyright>
-<pubDate>'.date('r').'</pubDate>
-<generator>Friandises/php</generator>
-<image>
-<url>'.$PGURL."/".$PGIMG.'</url>
-<title>'.$PGNAME.'</title>
-<link>'.$PGURL.'</link>
-</image>
-'.$filec;
+$filec = $filec."</channel></rss>";
 
 $file = fopen($_SERVER['DOCUMENT_ROOT'].$PG_LOCA.'feeds/feed.rss','w+');
 fwrite($file, $filec);

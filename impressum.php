@@ -51,5 +51,6 @@ Thx for reading.
 </div>
 <div id="bottom">
 <div id="footer"><b>Impressum</b> | <a href="<?php echo $PGURL; ?>/feeds/feed.rss" title="RSS Feed"><img src="images/rss.png" alt="RSS Feed" ></a></div></div>
+<script type="text/javascript" src="js/footer.js"></script>
 </body>
 </html>
