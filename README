@@ -1,5 +1,3 @@
 Friandises is optimized to work in the root directory of your server. Other locations may cause problems (rss feed directory, includes not found etc.).
 
 There is no "license" on this project at the moment. But if you redistribute code, refer to "http://github.com/freaktechnik/Friandises" as source of the code.
-
-Fancybox is licensed!
