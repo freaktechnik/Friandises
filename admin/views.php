@@ -1,4 +1,6 @@
 <?php session_start();
+include_once 'config.php';
+include_once ($_SERVER['DOCUMENT_ROOT'].$PG_LOCA.'inc/pagevar.php');
 if($_SESSION['access']!=allowd||$_SESSION['access']==NULL)
 {
     session_destroy(); 
@@ -8,8 +10,6 @@ if($_SESSION['access']!=allowd||$_SESSION['access']==NULL)
 else {
 	$_SESSION['access']=allowd;
 }
-include 'config.php';
-include ($_SERVER['DOCUMENT_ROOT'].$PG_LOCA.'inc/pagevar.php');
 
 $connect = mysql_connect("$DB_LOCA", "$DB_USER", "$DB_PASS");
 if (!$connect)
@@ -40,7 +40,8 @@ mysql_close($connect);
 <meta name="description" content="<?php echo $PGDSC; ?>" >
 <meta name="keywords" content="Geschichte,History,Videos,Filme,Geschichts Videos,Geschichts Filme">
 <meta http-equiv="content-language" content="en">
-<link rel="stylesheet" href="/style.css" type="text/css" media="screen" >
+<link rel="stylesheet" href="/<?php echo $PG_LOCA; ?>style.css" type="text/css" media="screen" >
+
 </head>
 <body>
 <div id="topnav"><a href="logout.php">Log out</a></div>
@@ -66,8 +67,8 @@ mysql_close($connect);
 			}
 		}
 	?>
-	<input type="text" name="what" style="display:none;" value="views">
-	<input type="submit" value="speichern" style="text-align:right;"><img class="sym" src="<?php if($_GET['suc']==1) {
+	<input type="text" name="action" value="views" style="display: none;">
+	<input type="submit" value="Save" style="text-align: right;"><img class="sym" src="<?php if($_GET['suc']==1) {
 		echo "images/ok.png";
 	}
 	else {

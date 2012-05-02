@@ -36,12 +36,27 @@ $PGNAME = $objResult->value;
 <?php include 'menu.php'; ?>
 <div id="intern">
 <form method="POST" action="write.php">
-	<p>Benutzername: <input type="text" name="name" class="textfield"></p>
-	<p>e-Mail: <input type="email" name="email" class="textfield"></p>
+	<p>Benutzername: <input type="text" name="name" class="textfield"><img class="sym" src="<?php if($_GET['suc']==3) {
+		echo "images/wrong.png";
+	}
+	else {
+		echo "images/clear.png";
+	}
+	?>"></p>
+	<p>e-Mail: <input type="email" name="email" class="textfield"><img class="sym" src="<?php if($_GET['suc']==4) {
+		echo "images/wrong.png";
+	}
+	else {
+		echo "images/clear.png";
+	}
+	?>"></p>
 	<p>Soll der Benutzer Adminrechte besitzen? <input type="radio" name="admin" value="0" checked> Nein <input type="radio" name="admin" value="1" > Ja</p>
-	<input type="text" name="what" value="newu" style="display:none;">
+	<input type="text" name="action" value="user" style="display:none;">
 	<input type="submit" value="Erstellen" style="text-align:right;"><img class="sym" src="<?php if($_GET['suc']==1) {
 		echo "images/ok.png";
+	}
+	else if($_GET['suc']==2) {
+		echo "images/wrong.png";
 	}
 	else {
 		echo "images/clear.png";

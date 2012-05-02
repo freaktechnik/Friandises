@@ -1,14 +1,14 @@
 <?php session_start();
+include 'config.php';
 if($_SESSION['access']!=allowd||$_SESSION['access']==NULL)
 {
     session_destroy(); 
-	header("Location: /error.php");
+	header("Location: /".$PG_LOCA."error.php");
     break;
 }
 else {
 	$_SESSION['access']=allowd;
 }
-include 'config.php';
 $connect = mysql_connect("$DB_LOCA", "$DB_USER", "$DB_PASS");
 if (!$connect)
 {
@@ -25,7 +25,7 @@ $PGNAME = $objResult->value;
 <html>
 <head>
 <title><?php echo $PGNAME; ?> - Video hinzufügen</title>
-<link rel="stylesheet" href="/style.css" type="text/css" media="screen" >
+<link rel="stylesheet" href="/<?php echo $PG_LOCA;?>style.css" type="text/css" media="screen" >
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" >
 <meta http-equiv="content-language" content="de">
 <meta name="generator" content="Martin Giger">
@@ -35,7 +35,6 @@ $PGNAME = $objResult->value;
 <h2 id="head">Video hinzufügen</h2>
 <?php include 'menu.php'; ?>
 <div id="intern">
-<form method="POST" action="write.php">
 	<p>Titel: <input type="text" name="name" class="textfield"></p>
 	<p>SWF URL: <input type="text" name="url" class="textfield"></p>
 	Beschreibung:<br/><textarea name="cap" cols="50" rows="10"></textarea><br/>
@@ -89,7 +88,7 @@ $PGNAME = $objResult->value;
 		<option value="11">November</option>
 		<option value="12">December</option>
 	</select> <input type="text" size="4" maxlength="4" name="year" class="textfield"></p>
-	<input type="text" name="what" value="video" style="display:none;">
+	<input type="text" name="action" value="video" style="display:none;">
 	<input type="submit" value="Hinzufügen" style="text-align:right;"><img class="sym" src="<?php if($_GET['suc']==1) {
 		echo "images/ok.png";
 	}

@@ -61,7 +61,7 @@ $numCat = $reta->noc;
 <link rel="stylesheet" href="views/<?php echo $view->getView(); ?>/style.css" type="text/css" media="screen" >
 <link rel="alternate" type="application/rss+xml" title="feed" href="<?php echo $PGURL; ?>/feeds/feed.rss" >
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	$('#loginlink').click(function(e) {

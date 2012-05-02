@@ -1,6 +1,6 @@
 body {
 	background: #1C1C1C;
-	font-family:Arial,Helvetica,sans-serif;
+	font-family:sans-serif;
 	font-size: 14px;
 	padding: 0;
 	margin: 0;
@@ -56,7 +56,7 @@ a:hover {
 
 #navigation {
 	background-color: #C70021;
-	height: 26px;
+	min-height: 26px;
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#C70021', endColorstr='#780014'); /* for IE */
 	background: -webkit-gradient(linear, left top, left bottom, from(#C70021), to(#780014)); /* for webkit browsers */
 	background: -moz-linear-gradient(top,  #C70021,  #780014); /* for firefox 3.6+ */
@@ -183,9 +183,10 @@ a img {
 	position: relative;
 	bottom: 0;
 	width: 100%;
-	/*background: #1c1c1c;*/
-	height: 100%;
+	max-height: 49px;
+	min-height: 22px;
 	float: left;
+	background: #1C1C1C;
 }
 
 #pagination {
@@ -200,6 +201,7 @@ a img {
 	color: #1C1C1C;
 	padding: 3px;
 	padding-bottom: 5px;
+	bottom: 0;
 }
 
 #footer a {
@@ -223,4 +225,18 @@ a img {
 .center {
 	float: left;
 	text-align: center;
+}
+
+/* styles for settings field status */
+
+.validate {
+	height: 16px;
+	width: 16px;
+	background-image: url(images/clear.png);
+	
+	display: inline-block;
+}
+
+.ok {
+	background-image: url(images/ok.png);
 }

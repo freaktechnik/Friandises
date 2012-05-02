@@ -11,7 +11,7 @@ echo $PGNAME; ?> - Impressum</title>
 
 <link rel="stylesheet" href="style.css" type="text/css" media="screen" >
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {	
 	$('#loginlink').click(function(e) {

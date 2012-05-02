@@ -1,5 +1,6 @@
 <?php
-include "config.php";
+include_once ("config.php");
+include_once ($_SERVER['DOCUMENT_ROOT'].$PG_LOCA.'inc/pagevar.php');
 $suffix = '/0.jpg';
 
 $connect = mysql_connect("$DB_LOCA", "$DB_USER", "$DB_PASS");
@@ -14,12 +15,6 @@ $email=$_POST['email'];
 $query = mysql_query("SELECT email FROM logins WHERE user='$name'");
 $objResult = mysql_fetch_object($query);
 if($email==$objResult->email&&filter_var($email, FILTER_VALIDATE_EMAIL)) {
-	$query = mysql_query("SELECT value FROM settings WHERE name='name'");
-	$objResult = mysql_fetch_object($query);
-	$PGNAME = $objResult->value;
-	$query = mysql_query("SELECT value FROM settings WHERE name='url'");
-	$objResult = mysql_fetch_object($query);
-	$PGURL = $objResult->value;
 	$length = 8;
 	$password = "";
 	$possible = "12346789bcdfghjkmnpqrtvwxyz -BCDFGHJKLMNPQRTVWXYZ";
@@ -40,7 +35,7 @@ if($email==$objResult->email&&filter_var($email, FILTER_VALIDATE_EMAIL)) {
 	$subject = "Your new password on ".$PGNAME."";
 	$body = "Hi ".$name."\n\nHere is your new password for ".$PGNAME.". You can find ".$PGNAME." under ".$PGURL.". \nYour login informations:\nUsername: ".$name."\nPassword: ".$password."\nYou can edit your password when you are logged in.";
 	if (mail($email, $subject, $body)&&$results===true) {
-		header("Location: newpw.php?fail=asdf");
+		header("Location: newpw.php?fail=false");
 	}
 	else {
 		header("Location: newpw.php?fail=true");

@@ -1,13 +1,13 @@
 <?php session_start();
+include 'config.php';
 if($_SESSION['access']!=allowd||$_SESSION['access']==NULL)
 {
     session_destroy(); 
-	header("Location: /error.php");
+	header("Location: ".$_SERVER['DOCUMENT_ROOT'].$PG_LOCA."/error.php");
 }
 else {
 	$_SESSION['access']=allowd;
 }
-include 'config.php';
 $connect = mysql_connect("$DB_LOCA", "$DB_USER", "$DB_PASS");
 if (!$connect)
 {
@@ -31,11 +31,11 @@ $showemail = $objResult->showemail;
 <html>
 <head>
 <title><?php echo $PGNAME; ?> - Benutzerinfos</title>
-<link rel="stylesheet" href="/style.css" type="text/css" media="screen" >
+<link rel="stylesheet" href="/<?php echo $PG_LOCA;?>style.css" type="text/css" media="screen" >
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" >
 <meta http-equiv="content-language" content="de">
 <meta name="generator" content="Martin Giger">
-<script type="text/javascript" src="/jquery-1.6.1.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 var oldpw="";
 var newpw="";
@@ -43,6 +43,11 @@ var newpw2="";
 var a1=0;
 var a2=0;
 var a3=0;
+
+var showrss = 1;
+if("a<?php if($showemail==0) echo "a";?>"=="aa")
+	showrss = 0;
+
 $(document).ready(function () {
 	$("#oldpw").keyup(function() {
 		oldpw=$("#oldpw").val();
@@ -61,7 +66,7 @@ $(document).ready(function () {
 			a2=0;
 			check();
 		}
-		//pseudocheck. Could use check.php (used for login) but needs sessions.
+		//pseudocheck. Could use check.php (used for login) but would make the load a lot higher, since I'm using keyup.
 		if(oldpw=="") {
 			a1=0;
 			check();
@@ -122,15 +127,47 @@ $(document).ready(function () {
 			check();
 		}
 	});
-});
+
 function check() {
 	if(a1==1&&a2==1&&a3==1) {
-		$("#s").removeAttr('disabled');
-	}
-	else {
-		$("#s").attr("disabled","true");
+		$.post('write.php',{action:"edit",name:"password",value:$("#newpw").val(),table:"logins",id:'<?php echo $_SESSION['username']; ?>'},function(data) {
+			if(data=="2") {	
+				$("#4").attr("src","images/wrong.png");
+			}
+			else {
+				$("#4").attr("src","images/ok.png");
+			}
+		});
 	}
 }
+
+/* E-Mail form scriptz */
+	$('#emailform input[type!="radio"]').blur(function() {
+		var namei = $(this).attr("name");
+		$.post('write.php',{action:"edit",name:namei,value:$(this).val(),table:"logins",id:'<?php echo $_SESSION['username']; ?>',rss:showrss},function() {
+			$("#"+namei+" .validate").addClass("ok");
+		});
+	});
+	
+	$('#emailform input[type="radio"]').change(function() {
+		var namei = $(this).attr("name");
+		$.post('write.php',{action:"edit",name:namei,value:$(this).val(),table:"logins",id:'<?php echo $_SESSION['username']; ?>',rss:1},function() {
+			$("#"+namei+" .validate").addClass("ok");
+			showrss = $(this).val();
+		});
+	});
+	
+	$("#emailform input").keypress(function(e) {
+        if(e.which == 13) {
+            jQuery(this).blur();
+		}
+	});
+
+
+	$("#emailform input").focus(function() {
+		$("#"+$(this).attr("name")+" .validate").removeClass("ok");
+	});
+});
 </script>
 </head>
 <body>
@@ -138,38 +175,15 @@ function check() {
 <h2 id="head">Benutzerinfos</h2>
 <?php include 'menu.php'; ?>
 <div id="intern">
-Passwort ändern:
-<form method="POST" action="write.php">
-	<p>Aktuelles Passwort <input id="oldpw" type="password" name="oldpw" value="" class="textfield"><img class="sym" id="1" src="images/clear.png"></p>
-	<p>Neues Passwort <input id="newpw" type="password" name="newpw" value="" class="textfield"><img class="sym" id="2" src="images/clear.png"></p>
-	<p>Passwort bestätigen <input id="newpw2" type="password" name="newpw2" value="" class="textfield"><img class="sym" id="3" src="images/clear.png"></p>
-	<input type="text" name="what" value="user" style="display:none;">
-	<input type="text" name="username" value="<?php echo $_SESSION['username']; ?>" style="display:none;">
-	<input type="submit" value="speichern" style="text-align:right;" disabled="true" id="s"><img class="sym" id="4" src="<?php if($_GET['suc']==1) {
-		echo "images/ok.png";
-	}
-	else if($_GET['suc']==2) {
-		echo "images/wrong.png";
-	}
-	else {
-		echo "images/clear.png";
-	}
-	?>">
-</form>
-E-Mail Einstellungen:
-<form method="POST" action="write.php">
-	<p>E-Mail Adresse: <input id="email" type="email" name="email" value="<?php echo $email ?>" class="textfield"></p>
-	<p>E-Mail Adresse im RSS-Feed anzeigen? <input type="radio" name="showemail" value="0" <?php if($showemail==0) { echo "checked";} ?>> Nein <input type="radio" name="showemail" value="1" <?php if($showemail==1) { echo "checked"; }?>> Ja</p>
-	<input type="text" name="what" value="email" style="display:none;">
-	<input type="text" name="username" value="<?php echo $_SESSION['username']; ?>" style="display:none;">
-	<input type="submit" value="speichern" style="text-align:right;"><img class="sym" src="<?php if($_GET['suc']==3) {
-		echo "images/ok.png";
-	}
-	else {
-		echo "images/clear.png";
-	}
-	?>">
-</form>
+	Passwort ändern: <img class="sym" id="4" src="images/clear.png">
+		<p>Aktuelles Passwort <input id="oldpw" type="password" name="oldpw" value="" class="textfield"><img class="sym" id="1" src="images/clear.png"></p>
+		<p>Neues Passwort <input id="newpw" type="password" name="newpw" value="" class="textfield"><img class="sym" id="2" src="images/clear.png"></p>
+		<p>Passwort bestätigen <input id="newpw2" type="password" name="newpw2" value="" class="textfield"><img class="sym" id="3" src="images/clear.png"></p>
+	E-Mail Einstellungen:
+	<div id="emailform">
+		<p id="email">E-Mail Adresse: <input type="email" name="email" value="<?php echo $email ?>" class="textfield"><span class="validate sym"></span></p>
+		<p id="showemail">E-Mail Adresse im RSS-Feed anzeigen? <input type="radio" name="showemail" value="0" <?php if($showemail==0) { echo "checked";} ?>> Nein <input type="radio" name="showemail" value="1" <?php if($showemail==1) { echo "checked"; }?>> Ja <span class="validate sym"></span></p>
+	</div>
 </div>
 </body>
 </html>

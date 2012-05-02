@@ -1,44 +1,18 @@
 <?php session_start();
+include ('config.php');
+include ($_SERVER['DOCUMENT_ROOT'].$PG_LOCA.'inc/items.php');
+include ($_SERVER['DOCUMENT_ROOT'].$PG_LOCA.'inc/pagevar.php');
 if($_SESSION['access']!=allowd||$_SESSION['access']==NULL)
 {
     session_destroy(); 
-	header("Location: /error.php");
+	header("Location: /".$PG_LOCA."error.php");
 }
 else {
 	$_SESSION['access']=allowd;
 }
-include 'config.php';
-$c=1;
-
-$connect = mysql_connect("$DB_LOCA", "$DB_USER", "$DB_PASS");
-if (!$connect)
-{
-   die('Could not connect: ' . mysql_error());
+for($inde=0;$inde<$items_length;$inde=$inde+1) {
+	$inshtml=$inshtml."<li><a href='edit.php?id=".$inde."' title='".$items[$inde]["name"]."'><img src='".$items[$inde]["thumbnail"]."' alt='".$items[$inde]["name"]."'>".$items[$inde]["name"]." - ".$items[$inde]["date"]."</a></li>";
 }
-
-mysql_select_db($DB_NAME, $connect);
-
-$query = mysql_query("SELECT value FROM settings WHERE name='name'");
-$objResult = mysql_fetch_object($query);
-$PGNAME = $objResult->value;
-$query = mysql_query("SELECT value FROM settings WHERE name='desc'");
-$objResult = mysql_fetch_object($query);
-$PGDSC = $objResult->value;
-
-$query = mysql_query("SELECT name, url, caption, thumbnail, hello, category, date FROM content WHERE id='1'");
-$objResult = mysql_fetch_object($query);
-$inshtml="<li><a href='edit.php?id=1' title='".$objResult->name."'><img src='".$objResult->thumbnail."' alt='".$objResult->name."'>".$objResult->name." - ".$objResult->date."</a></li>";
-$c=2;
-$query = mysql_query("SELECT name, url, caption, thumbnail, hello, category, date FROM content WHERE id='$c'");
-$objResult = mysql_fetch_object($query);
-do {
-	$inshtml=$inshtml."<li><a href='edit.php?id=".$c."' title='".$objResult->name."'><img src='".$objResult->thumbnail."' alt='".$objResult->name."'>".$objResult->name." - ".$objResult->date."</a></li>";
-	$c=$c+1;
-	$query = mysql_query("SELECT name, url, caption, thumbnail, hello, category, date FROM content WHERE id='$c'");
-	$objResult = mysql_fetch_object($query);
-} while($objResult->hello==1);
-
-mysql_close($connect);
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
@@ -50,7 +24,7 @@ mysql_close($connect);
 <meta name="keywords" content="Geschichte,History,Videos,Filme,Geschichts Videos,Geschichts Filme">
 <meta http-equiv="content-language" content="de">
 <meta name="generator" content="Martin Giger">
-<link rel="stylesheet" href="/style.css" type="text/css" media="screen" >
+<link rel="stylesheet" href="/<?php echo $PG_LOCA;?>style.css" type="text/css" media="screen" >
 </head>
 <body>
 <div id="topnav"><a href="logout.php">Log out</a></div>

@@ -1,5 +1,6 @@
 <?php session_start();
-include 'config.php';
+include_once ("config.php");
+include_once ($_SERVER['DOCUMENT_ROOT'].$PG_LOCA.'inc/pagevar.php');
 $connect = mysql_connect("$DB_LOCA", "$DB_USER", "$DB_PASS");
 if (!$connect)
 {
@@ -8,9 +9,6 @@ if (!$connect)
 
 mysql_select_db($DB_NAME, $connect);
 
-$query = mysql_query("SELECT value FROM settings WHERE name='name'");
-$objResult = mysql_fetch_object($query);
-$PGNAME = $objResult->value;
 if($_SESSION['access']==allowd) {
     header("Location: intern.php");
 }
@@ -21,7 +19,7 @@ mysql_close($connect);
 <html>
 <head>
 <title><?php echo $PGNAME; ?> - Forgot Password</title>
-<link rel="stylesheet" href="/style.css" type="text/css" media="screen" >
+<link rel="stylesheet" href="/<?php echo $PG_LOCA;?>style.css" type="text/css" media="screen" >
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" >
 <meta http-equiv="content-language" content="en">
 <meta name="generator" content="Martin Giger">
@@ -36,7 +34,7 @@ mysql_close($connect);
 	<tr><td></td><td style="text-align: right;"><img class="sym" src="<?php if($_GET['fail']=='true') {
 		echo "images/wrong.png";
 	}
-	else if($_GET['fail']=='asdf') {
+	else if($_GET['fail']=='false') {
 		echo "images/ok.png";
 	}
 	else {

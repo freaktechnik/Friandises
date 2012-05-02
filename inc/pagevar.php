@@ -41,6 +41,9 @@ $ADD_PUBID = $objResult->value;
 $query = mysql_query("SELECT value FROM settings WHERE name='lang'");
 $objResult = mysql_fetch_object($query);
 $PGLANG = $objResult->value;
+$query = mysql_query("SELECT value FROM settings WHERE name='owner'");
+$objResult = mysql_fetch_object($query);
+$PGOWN = $objResult->value;
 
 mysql_close($connect);
 

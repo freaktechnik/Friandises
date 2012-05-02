@@ -1,74 +1,102 @@
 <?php session_start();
+include ('config.php');
 if($_SESSION['access']!=allowd||$_SESSION['access']==NULL)
 {
     session_destroy(); 
-	header("Location: /error.php");
+	header("Location: /".$PG_LOCA."error.php");
     break;
 }
 else {
 	$_SESSION['access']=allowd;
 }
-include 'config.php';
+
+include ($_SERVER['DOCUMENT_ROOT'].$PG_LOCA.'inc/items.php');
+include ($_SERVER['DOCUMENT_ROOT'].$PG_LOCA.'inc/pagevar.php');
 $id=$_GET['id'];
 
-$connect = mysql_connect("$DB_LOCA", "$DB_USER", "$DB_PASS");
-if (!$connect)
-{
-   die('Could not connect: ' . mysql_error());
-}
 
-mysql_select_db($DB_NAME, $connect);
-
-$query = mysql_query("SELECT value FROM settings WHERE name='name'");
-$objResult = mysql_fetch_object($query);
-$PGNAME = $objResult->value;
-$query = mysql_query("SELECT value FROM settings WHERE name='desc'");
-$objResult = mysql_fetch_object($query);
-$PGDSC = $objResult->value;
-
-$query = mysql_query("SELECT name, url, caption, thumbnail, category,date FROM content WHERE id='$id'");
-$objResult = mysql_fetch_object($query);
-$name=$objResult->name;
-$url=$objResult->url;
-$caption=$objResult->caption;
-$thumbnailURL=$objResult->thumbnail;
-$category=$objResult->category;
-$date=$objResult->date;
 //  0000-00-00
 //  0123456789
 //-10987654321
-$year=substr($date,0,4);
-$month=substr($date,5,2);
-$day=substr($date,-2,2);
+$year=substr($items[$id]["date"],0,4);
+$month=substr($items[$id]["date"],5,2);
+$day=substr($items[$id]["date"],-2,2);
 
-mysql_close($connect);
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title><?php echo $PGNAME; ?> - Videoinfos von Video <?php echo $name; ?> bearbeiten</title>
+<title><?php echo $PGNAME; ?> - Videoinfos von Video <?php echo $items[$id]["name"]; ?> bearbeiten</title>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" >
 <meta name="description" content="<?php echo $PGDSC; ?>" >
 <meta name="keywords" content="Geschichte,History,Videos,Filme,Geschichts Videos,Geschichts Filme">
 <meta http-equiv="content-language" content="de">
-<meta name="generator" content="Martin Giger">
+
 <link rel="stylesheet" href="/style.css" type="text/css" media="screen" >
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+var videoid = <?php echo $items_length-$id;?>;
+$(document).ready(function() {
+	$("input").blur(function() {
+		var namei = $(this).attr("name");
+		if(!$("#"+namei+" .validate").hasClass("ok")&&namei!="year") { // prevent radios/selects form double submitting (not excluded with type!=radio in case the change handler won't work)
+			$.post('write.php',{action:"edit",name:namei,value:$(this).val(),table:"content",id:videoid},function() {
+				$("#"+namei+" .validate").addClass("ok");
+			});
+		}
+		else if(namei=="year") {
+			namei = "date";
+			$.post('write.php',{action:"edit",name:namei,value:createDate(),table:"content",id:videoid},function() {
+				$("#"+namei+" .validate").addClass("ok");
+			});
+		}
+	});
+	
+	$('input[type="select"]').change(function() {
+		var namei = "date";
+		$.post('write.php',{action:"edit",name:namei,value:createDate(),table:"content",id:videoid},function() {
+			$("#"+namei+" .validate").addClass("ok");
+		});
+	});
+	
+	$("input").keypress(function(e) {
+        if(e.which == 13) {
+            jQuery(this).blur();
+		}
+	});
+
+
+	$("input").focus(function() {
+		var namei = $(this).attr("name");
+		if(namei=="year"||namei=="month"||namei=="day")
+			namei = "date";
+		$("#"+namei+" .validate").removeClass("ok");
+	});
+	
+	function createDate() {
+		var year = parseInt($('input[name="year"]').val());
+		var month = $('input[name="month"]').val();
+		var day = $('input[name="day"]').val();
+		
+		return year+"-"+month+"-"+day;
+	}
+});
+</script>
 </head>
 <body>
 <div id="topnav"><a href="logout.php">Log out</a></div>
-<h2 id="head">Videoinfos Videoinfos von Video <?php echo $name; ?> bearbeiten</h2>
+<h2 id="head">Videoinfos Videoinfos von Video <?php echo $items[$id]["name"]; ?> bearbeiten</h2>
 <?php include 'menu.php'; ?>
 <div id="intern">
 <a href="edits.php">&lt; back</a>
-<form method="POST" action="write.php">
-	<p>Titel: <input type="text" name="name" value="<?php echo $name; ?>" class="textfield"></p>
-	<p>Seiten URL: <input type="text" name="url" value="<?php echo $url; ?>" class="textfield"></p>
-	<p>Thumbnail URL: <input type="text" name="thumbnail" value="<?php echo $thumbnailURL; ?>" class="textfield"></p>
-	<p>Beschreibung:</p>
-	<textarea name="desc" cols="50" rows="10"><?php echo $caption; ?></textarea><br/>
-	<p>Kategorie: <input type="text" name="category" value="<?php echo $category; ?>" class="textfield"></p>
-	<p>Datum : <select name="day">
+	<p id="name">Titel: <input type="text" name="name" value="<?php echo $items[$id]["name"]; ?>" class="textfield"><span class="validate sym"></span></p>
+	<p id="url">Seiten URL: <input type="text" name="url" value="<?php echo $items[$id]["url"]; ?>" class="textfield"><span class="validate sym"></span></p>
+	<p id="thumbnail">Thumbnail URL: <input type="text" name="thumbnail" value="<?php echo $items[$id]["thumbnail"]; ?>" class="textfield"><span class="validate sym"></span></p>
+	<p id="caption">Beschreibung: <span class="validate sym"></span></p>
+	<textarea name="caption" cols="50" rows="10"><?php echo $items[$id]["description"]; ?></textarea><br/>
+	<p id="category">Kategorie: <input type="text" name="category" value="<?php echo $items[$id]["category"]; ?>" class="textfield"><span class="validate sym"></span></p>
+	<p id="date">Datum : <select name="day">
 		<option <?php if($day=="00") echo 'selected="selected" ';?>value="00">Unknown</option>
 		<option <?php if($day=="01") echo 'selected="selected" ';?>value="01">01</option>
 		<option <?php if($day=="02") echo 'selected="selected" ';?>value="02">02</option>
@@ -116,17 +144,7 @@ mysql_close($connect);
 		<option <?php if($month=="10") echo 'selected="selected" ';?>value="10">October</option>
 		<option <?php if($month=="11") echo 'selected="selected" ';?>value="11">November</option>
 		<option <?php if($month=="12") echo 'selected="selected" ';?>value="12">December</option>
-	</select> <input type="text" maxlength="4" name="year" value="<?php echo $year; ?>" class="textfield"></p>
-	<input type="text" name="what" value="edit" style="display:none;">
-	<input type="text" name="id" value="<?php echo $id; ?>" style="display:none;">
-	<input type="submit" value="speichern" style="text-align:right;"><img class="sym" src="<?php if($_GET['suc']==1) {
-		echo "images/ok.png";
-	}
-	else {
-		echo "images/clear.png";
-	}
-	?>">
-</form>
+	</select> <input type="number" maxlength="4" name="year" value="<?php echo $year; ?>" class="textfield"> <span class="validate sym"></span></p>
 </div>
 </body>
 </html>
