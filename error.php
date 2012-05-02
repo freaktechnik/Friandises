@@ -4,7 +4,7 @@
     <head>
         <title><?php include 'admin/config.php';
 include ('inc/pagevar.php');
-echo $PGNAME; ?> - Error 401 Access denied</title>
+echo $PGNAME." - ".$_GET['error'];?></title>
         <link rel="stylesheet" href="style.css" type="text/css" media="screen" >
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" >
 	<meta http-equiv="content-language" content="en">
@@ -26,14 +26,12 @@ echo "<script type='text/javascript'>
 ?>
     </head>
 <body>
-   <h2 id="head">Error 401 Access denied</h2>
-   <div id="text"><a href="index.php">Home</a></div>
+   <h2 id="head"><?php echo $_GET['error']; ?></h2>
+   <div id="text"><a href="index.php">Frontpage</a></div>
    <div id="bottom">
 		<div id="footer">
 			<a href="impressum.php">Impressum</a> | <a href="<?php echo $PGURL; ?>/admin/feed.rss" title="RSS Feed"><img src="images/rss.png" alt="RSS Feed" ></a>
 		</div>
 	</div>
-	
-	<script type="text/javascript" src="js/footer.js"></script>
 </body>
 </html>

@@ -3,7 +3,7 @@ include ('config.php');
 if($_SESSION['access']!=allowd||$_SESSION['access']==NULL)
 {
     session_destroy(); 
-	header("Location: /".$PG_LOCA."error.php");
+	header("Location: /".$PG_LOCA."error.php?error=401 Access denied");
     break;
 }
 else {

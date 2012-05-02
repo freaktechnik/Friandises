@@ -6,7 +6,7 @@ $suffix = '/0.jpg';
 $connect = mysql_connect("$DB_LOCA", "$DB_USER", "$DB_PASS");
 if (!$connect)
 {
-   die('Could not connect: ' . mysql_error());
+   header("Location: /".$PG_LOCA."error.php?error=Could not connect to the Database.");
 }
 mysql_select_db($DB_NAME, $connect);
 $name=$_POST['name'];

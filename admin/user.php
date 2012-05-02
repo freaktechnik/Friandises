@@ -1,9 +1,10 @@
 <?php session_start();
-include 'config.php';
+include_once 'config.php';
+include_once ($_SERVER['DOCUMENT_ROOT'].$PG_LOCA.'inc/pagevar.php');
 if($_SESSION['access']!=allowd||$_SESSION['access']==NULL)
 {
     session_destroy(); 
-	header("Location: ".$_SERVER['DOCUMENT_ROOT'].$PG_LOCA."/error.php");
+	header("Location: /".$PG_LOCA."error.php?error=401 Access denied");
 }
 else {
 	$_SESSION['access']=allowd;
@@ -11,16 +12,10 @@ else {
 $connect = mysql_connect("$DB_LOCA", "$DB_USER", "$DB_PASS");
 if (!$connect)
 {
-   die('Could not connect: ' . mysql_error());
+   header("Location: /".$PG_LOCA."admin/error.php?error=Could not connect to the Database.");
 }
 $un =$_SESSION['username'];
 mysql_select_db($DB_NAME, $connect);
-$query = mysql_query("SELECT value FROM settings WHERE name='name'");
-$objResult = mysql_fetch_object($query);
-$PGNAME = $objResult->value;
-$query = mysql_query("SELECT value FROM settings WHERE name='desc'");
-$objResult = mysql_fetch_object($query);
-$PGDSC = $objResult->value;
 $query = mysql_query("SELECT email,showemail FROM logins WHERE user='$un'");
 $objResult = mysql_fetch_object($query);
 $email = $objResult->email;

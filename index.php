@@ -1,14 +1,8 @@
 <?php
-include ('admin/config.php');
-include ('inc/pagevar.php');
-include ('inc/items.php');
-include ('inc/views.php');
-
-$connect = mysql_connect("$DB_LOCA", "$DB_USER", "$DB_PASS");
-if (!$connect)
-{
-   die('Could not connect: ' . mysql_error());
-}
+include_once ('admin/config.php');
+include_once ('inc/pagevar.php');
+include_once ('inc/items.php');
+include_once ('inc/views.php');
 
 mysql_select_db($DB_NAME, $connect);
 $urlcatsuffix="";

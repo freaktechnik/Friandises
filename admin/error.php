@@ -6,7 +6,7 @@ include ($_SERVER['DOCUMENT_ROOT'].$PG_LOCA.'inc/pagevar.php');
 if($_SESSION['access']!=allowd||$_SESSION['access']==NULL)
 {
     session_destroy(); 
-	header("Location: /"$PG_LOCA."error.php");
+	header("Location: /"$PG_LOCA."error.php?error=401 Access denied");
 }
 else {
 	$_SESSION['access']=allowd;
