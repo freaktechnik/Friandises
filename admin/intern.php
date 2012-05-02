@@ -64,7 +64,7 @@ $(document).ready(function() {
 		<option value="swf">Flash file</option>
 		<option value="audio">Audio file</option>
 		<option value="video">Video file</option>
-		<option value="image">Image</option>
+		<option value="img">Image</option>
 		<option value="html">HTML code</option>
 		</select></p>
 	Beschreibung:<br/><textarea name="cap" cols="50" rows="10"></textarea><br/>

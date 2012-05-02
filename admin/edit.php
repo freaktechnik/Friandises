@@ -54,7 +54,9 @@ $(document).ready(function() {
 	});
 	
 	$('input[type="select"]').change(function() {
-		var namei = "date";
+		var namei = $(this).attr("name");
+		if(namei=="month"||namei=="day")
+			namei = "date";
 		$.post('write.php',{action:"edit",name:namei,value:createDate(),table:"content",id:videoid},function() {
 			$("#"+namei+" .validate").addClass("ok");
 		});
@@ -92,6 +94,14 @@ $(document).ready(function() {
 <a href="edits.php">&lt; back</a>
 	<p id="name">Titel: <input type="text" name="name" value="<?php echo $items[$id]["name"]; ?>" class="textfield"><span class="validate sym"></span></p>
 	<p id="url">Seiten URL: <input type="text" name="url" value="<?php echo $items[$id]["url"]; ?>" class="textfield"><span class="validate sym"></span></p>
+	<p id="type">Typ: <select name="type">
+		<option <?php if($items[$id]["type"]=="html") echo'selected="selected" ';?>value="html">URL to display</option>
+		<option <?php if($items[$id]["type"]=="swf") echo'selected="selected" ';?>value="swf">Flash file</option>
+		<option <?php if($items[$id]["type"]=="audio") echo'selected="selected" ';?>value="audio">Audio file</option>
+		<option <?php if($items[$id]["type"]=="video") echo'selected="selected" ';?>value="video">Video file</option>
+		<option <?php if($items[$id]["type"]=="img") echo'selected="selected" ';?>value="img">Image</option>
+		<option <?php if($items[$id]["type"]=="code") echo'selected="selected" ';?>value="code">HTML code</option>
+		</select><span class="validate sym"></span>
 	<p id="thumbnail">Thumbnail URL: <input type="text" name="thumbnail" value="<?php echo $items[$id]["thumbnail"]; ?>" class="textfield"><span class="validate sym"></span></p>
 	<p id="caption">Beschreibung: <span class="validate sym"></span></p>
 	<textarea name="caption" cols="50" rows="10"><?php echo $items[$id]["description"]; ?></textarea><br/>
