@@ -3,8 +3,6 @@ include_once ('admin/config.php');
 include_once ('inc/pagevar.php');
 include_once ('inc/items.php');
 include_once ('inc/views.php');
-
-mysql_select_db($DB_NAME, $connect);
 $urlcatsuffix="";
 $urlviewsuffix="";
 $view = new View();
