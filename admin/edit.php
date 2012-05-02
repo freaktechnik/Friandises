@@ -53,6 +53,13 @@ $(document).ready(function() {
 		}
 	});
 	
+	$("textarea").blur(function() {
+		var namei = $(this).attr("name");
+		$.post('write.php',{action:"edit",name:namei,value:$(this).val(),table:"content",id:videoid},function() {
+			$("#"+namei+" .validate").addClass("ok");
+		});
+	});
+	
 	$('input[type="select"]').change(function() {
 		var namei = $(this).attr("name");
 		if(namei=="month"||namei=="day")
@@ -73,6 +80,10 @@ $(document).ready(function() {
 		var namei = $(this).attr("name");
 		if(namei=="year"||namei=="month"||namei=="day")
 			namei = "date";
+		$("#"+namei+" .validate").removeClass("ok");
+	});
+	$("textarea").focus(function() {
+		var namei = $(this).attr("name");
 		$("#"+namei+" .validate").removeClass("ok");
 	});
 	

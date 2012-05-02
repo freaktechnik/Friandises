@@ -32,6 +32,12 @@ $(document).ready(function() {
 			});
 		}
 	});
+	$("textarea").blur(function() {
+		var namei = $(this).attr("name");
+		$.post('write.php',{action:"edit",name:namei,value:$(this).val(),table:"settings"},function() {
+			$("#"+namei+" .validate").addClass("ok");
+		});
+	});
 	
 	$('input[type="radio"]').change(function() {
 		var namei = $(this).attr("name");
@@ -50,6 +56,9 @@ $(document).ready(function() {
 	$("input").focus(function() {
 		$("#"+$(this).attr("name")+" .validate").removeClass("ok");
 	});
+	$("textarea").focus(function() {
+		$("#"+$(this).attr("name")+" .validate").removeClass("ok");
+	});
 });
 </script>
 </head>
@@ -64,12 +73,13 @@ $(document).ready(function() {
 	<p id="tmode">Titel-Modus: <input type="radio" name="tmode" value="1" <?php if($PGTITLE==1) { echo "checked";} ?>> Titel als Text 
 					<input type="radio" name="tmode" value="2" <?php if($PGTITLE==2) { echo "checked";} ?>> Bild anzeigen <span class="validate sym"></span><br/>
 	</p>
-	<p id="desc">Beschreibung: <span class="validate"></span></p>
-	<textarea name="desc" cols="50" rows="10"><?php echo $PGDSC; ?></textarea><br/>
+	<p id="desc">Beschreibung: <span class="validate sym"></span><br>
+	<textarea name="desc" cols="50" rows="10"><?php echo $PGDSC; ?></textarea></p>
 	<p id="tags">Meta Tags: <input type="text" name="tags" value="<?php echo $PGTGS; ?>" class="textfield"><span class="validate sym"></span></p>
 	<p id="teaser">Teaser: <input type="text" name="teaser" value="<?php echo $PGTEA; ?>" class="textfield"><span class="validate sym"></span></p>
 	<p id="items">Videos auf einer Seite (0 bedeutet alle): <input type="number" name="items" value="<?php echo $PGITMS; ?>" class="textfield"><span class="validate sym"></span></p>
 	<p id="owner">Seiteninhaber: <input type="text" name="owner" value="<?php echo $PGOWN; ?>" class="textfield"><span class="validate"></span></p>
+	<p id="imptxt">Impressum: <span class="validate sym"></span><br><textarea name="imptxt" cols="50" rows="10"><?php echo $PGIMP; ?></textarea></p>
 	<p id="lang">Page Language (de, en etc.): <input type="text" name="lang" value="<?php echo $PGLANG; ?>" class="textfield"><span class="validate sym"></span></p>
 	<p id="addthis">AddThis Username: <input type="text" name="addthis" value="<?php echo $ADD_PUBID; ?>" class="textfield"><span class="validate sym"></span></p>
 	<p id="gana">Google Analytics ID: <input type="text" name="gana" value="<?php echo $G_ANALYTICS; ?>" class="textfield"><span class="validate sym"></span></p>

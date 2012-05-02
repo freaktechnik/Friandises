@@ -2,8 +2,8 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title><?php include 'admin/config.php';
-include ('inc/pagevar.php');
+<title><?php include_once 'admin/config.php';
+include_once ('inc/pagevar.php');
 
 echo $PGNAME; ?> - Impressum</title>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" >
@@ -48,6 +48,8 @@ This page uses <a href="http://jquery.com">jQuery</a>.<br>
 Visit the Friandises project (which this website runs) on Github: <a href="https://github.com/freaktechnik/Friandises">Friandises on Github</a>.<br>
 Flash may be required.<br>
 Thx for reading.
+<?php if(strlen($PGIMP)>0) echo "<p>Impressum of the page owner:<br>".$PGIMP."</p>;"?>
+
 </div>
 <div id="bottom">
 <div id="footer"><b>Impressum</b> | <a href="<?php echo $PGURL; ?>/feeds/feed.rss" title="RSS Feed"><img src="images/rss.png" alt="RSS Feed" ></a></div></div>

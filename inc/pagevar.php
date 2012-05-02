@@ -44,6 +44,9 @@ $PGLANG = $objResult->value;
 $query = mysql_query("SELECT value FROM settings WHERE name='owner'");
 $objResult = mysql_fetch_object($query);
 $PGOWN = $objResult->value;
+$query = mysql_query("SELECT value FROM settings WHERE name='imptxt'");
+$objResult = mysql_fetch_object($query);
+$PGIMP = $objResult->value;
 
 mysql_close($connect);
 
