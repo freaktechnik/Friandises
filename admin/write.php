@@ -69,6 +69,7 @@ else if($action=="video") {
 	$day=$_POST['day'];
 	$month=$_POST['month'];
 	$year=$_POST['year'];
+	$format=$_POST['format'];
 	$creator=$_SESSION['username'];
 	
 	$parser = videoparse($url);

@@ -29,6 +29,29 @@ $PGNAME = $objResult->value;
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" >
 <meta http-equiv="content-language" content="de">
 <meta name="generator" content="Martin Giger">
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+var textarea = false;
+$(document).ready(function() {
+	$('select[name="format"]').change(function() {
+		if($(this).val()=="html") {
+			var val = $('input[name="url"]').val();
+			$('input[name="url"]').remove();
+			$('<textarea name="url" cols="50" rows="10">'+val+'</textarea>').insertBefore('select[name="format"]');
+			$("#urllabel").text("Code");
+			textarea = true;
+		}
+		else if(textarea) {
+			textarea = false;
+			var val = $('textarea[name="url"]').val();
+			$("#urllabel").text("URL");
+			$('textarea[name="url"]').remove();
+			$('<input type="text" name="url" class="textfield" value="'+val+'">').insertBefore('select[name="format"]');
+		}
+	});
+});
+</script>
 </head>
 <body>
 <div id="topnav"><a href="logout.php">Log out</a></div>
@@ -36,7 +59,14 @@ $PGNAME = $objResult->value;
 <?php include 'menu.php'; ?>
 <div id="intern">
 	<p>Titel: <input type="text" name="name" class="textfield"></p>
-	<p>SWF URL: <input type="text" name="url" class="textfield"></p>
+	<p><span id="urllabel">URL</span>: <input type="text" name="url" class="textfield"><select name="format">
+		<option selected="selected" value="auto">Auto detect</option>
+		<option value="swf">Flash file</option>
+		<option value="audio">Audio file</option>
+		<option value="video">Video file</option>
+		<option value="image">Image</option>
+		<option value="html">HTML code</option>
+		</select></p>
 	Beschreibung:<br/><textarea name="cap" cols="50" rows="10"></textarea><br/>
 	<p>Kategorie: <input type="text" name="cat" class="textfield"></p>
 	<p>Datum : <select name="day">
