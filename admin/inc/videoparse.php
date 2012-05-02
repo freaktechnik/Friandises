@@ -3,7 +3,7 @@ function videoparse($url) {
 
 	$suffix = '/0.jpg';
 
-	$purl = parse_url ($url);
+	$purl = parse_url($url);
 
 	switch($purl["host"]) {
 	case "youtube.com":
@@ -43,14 +43,10 @@ function videoparse($url) {
 		$vurl = $vurl."?title=0&amp;byline=0&amp;portrait=0&amp;color=ff9933";
 		$type="html";
 	break;
-	case true:
+	default:
 		$vurl = $url;
 		$thumbnail = "http://www.iwebtool2.com/img/?domain=".$url;
 		$type = "html";
-	break;
-	default:
-		header("Location: error.php?error=Error parsing URL");
-	break;
 	}
 	
 	if(is_numeric($year)) {

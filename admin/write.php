@@ -75,14 +75,6 @@ else if($action=="video") {
 
 	$url = $parser->url;
 	$thumbnail = $parser->thumbnail;
-	
-	
-	if(is_numeric($year)) {
-		$date=$year."-".$month."-".$day;
-	}
-	else {
-		die("Please enter a proper year");
-	}
 
 	$sql = "INSERT INTO content (url, name, caption, category, thumbnail, date, creator) VALUES ('$url', '$name', '$caption', '$category', '$thumbnail', '$date', '$creator');";
 	$results = mysql_query($sql);
