@@ -27,11 +27,9 @@ $day=substr($items[$id]["date"],-2,2);
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title><?php echo $PGNAME; ?> - Videoinfos von Video <?php echo $items[$id]["name"]; ?> bearbeiten</title>
+<title><?php echo $PGNAME; ?> - Edit "<?php echo $items[$id]["name"]; ?>"</title>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" >
-<meta name="description" content="<?php echo $PGDSC; ?>" >
-<meta name="keywords" content="Geschichte,History,Videos,Filme,Geschichts Videos,Geschichts Filme">
-<meta http-equiv="content-language" content="de">
+<meta http-equiv="content-language" content="en">
 
 <link rel="stylesheet" href="/style.css" type="text/css" media="screen" >
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -99,13 +97,13 @@ $(document).ready(function() {
 </head>
 <body>
 <div id="topnav"><a href="logout.php">Log out</a></div>
-<h2 id="head">Videoinfos Videoinfos von Video <?php echo $items[$id]["name"]; ?> bearbeiten</h2>
+<h2 id="head">Edit "<?php echo $items[$id]["name"]; ?>"</h2>
 <?php include 'menu.php'; ?>
 <div id="intern">
 <a href="edits.php">&lt; back</a>
-	<p id="name">Titel: <input type="text" name="name" value="<?php echo $items[$id]["name"]; ?>" class="textfield"><span class="validate sym"></span></p>
-	<p id="url">Seiten URL: <input type="text" name="url" value="<?php echo $items[$id]["url"]; ?>" class="textfield"><span class="validate sym"></span></p>
-	<p id="type">Typ: <select name="type">
+	<p id="name">Title: <input type="text" name="name" value="<?php echo $items[$id]["name"]; ?>" class="textfield"><span class="validate sym"></span></p>
+	<p id="url">URL: <input type="text" name="url" value="<?php echo $items[$id]["url"]; ?>" class="textfield"><span class="validate sym"></span></p>
+	<p id="type">Type: <select name="type">
 		<option <?php if($items[$id]["type"]=="html") echo'selected="selected" ';?>value="html">URL to display</option>
 		<option <?php if($items[$id]["type"]=="swf") echo'selected="selected" ';?>value="swf">Flash file</option>
 		<option <?php if($items[$id]["type"]=="audio") echo'selected="selected" ';?>value="audio">Audio file</option>
@@ -114,10 +112,10 @@ $(document).ready(function() {
 		<option <?php if($items[$id]["type"]=="code") echo'selected="selected" ';?>value="code">HTML code</option>
 		</select><span class="validate sym"></span>
 	<p id="thumbnail">Thumbnail URL: <input type="text" name="thumbnail" value="<?php echo $items[$id]["thumbnail"]; ?>" class="textfield"><span class="validate sym"></span></p>
-	<p id="caption">Beschreibung: <span class="validate sym"></span></p>
+	<p id="caption">Description: <span class="validate sym"></span></p>
 	<textarea name="caption" cols="50" rows="10"><?php echo $items[$id]["description"]; ?></textarea><br/>
-	<p id="category">Kategorie: <input type="text" name="category" value="<?php echo $items[$id]["category"]; ?>" class="textfield"><span class="validate sym"></span></p>
-	<p id="date">Datum : <select name="day">
+	<p id="category">Category: <input type="text" name="category" value="<?php echo $items[$id]["category"]; ?>" class="textfield"><span class="validate sym"></span></p>
+	<p id="date">Date : <select name="day">
 		<option <?php if($day=="00") echo 'selected="selected" ';?>value="00">Unknown</option>
 		<option <?php if($day=="01") echo 'selected="selected" ';?>value="01">01</option>
 		<option <?php if($day=="02") echo 'selected="selected" ';?>value="02">02</option>

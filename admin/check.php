@@ -37,7 +37,7 @@ $objResult = mysql_fetch_object($query);
 
 if($_SESSION['access']=!allowd)
 {
-    header("Location: /error.php");
+    header("Location: /error.php?error=401 Access denied");
     break;
 }
 ?>

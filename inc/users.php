@@ -1,5 +1,5 @@
 <?php
-
+include_once("admin/config.php");
 $connect = mysql_connect("$DB_LOCA", "$DB_USER", "$DB_PASS");
 if (!$connect)
 {

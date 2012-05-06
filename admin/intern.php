@@ -1,5 +1,5 @@
 <?php session_start();
-include 'config.php';
+include_once 'config.php';
 if($_SESSION['access']!=allowd||$_SESSION['access']==NULL)
 {
     session_destroy(); 
@@ -24,10 +24,10 @@ $PGNAME = $objResult->value;
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title><?php echo $PGNAME; ?> - Video hinzufügen</title>
+<title><?php echo $PGNAME; ?> - Add Entry</title>
 <link rel="stylesheet" href="/<?php echo $PG_LOCA;?>style.css" type="text/css" media="screen" >
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" >
-<meta http-equiv="content-language" content="de">
+<meta http-equiv="content-language" content="en">
 <meta name="generator" content="Martin Giger">
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -55,10 +55,10 @@ $(document).ready(function() {
 </head>
 <body>
 <div id="topnav"><a href="logout.php">Log out</a></div>
-<h2 id="head">Video hinzufügen</h2>
+<h2 id="head">Add Entry</h2>
 <?php include 'menu.php'; ?>
 <div id="intern">
-	<p>Titel: <input type="text" name="name" class="textfield"></p>
+	<p>Title: <input type="text" name="name" class="textfield"></p>
 	<p><span id="urllabel">URL</span>: <input type="text" name="url" class="textfield"><select name="format">
 		<option selected="selected" value="auto">Auto detect</option>
 		<option value="swf">Flash file</option>
@@ -67,9 +67,9 @@ $(document).ready(function() {
 		<option value="img">Image</option>
 		<option value="html">HTML code</option>
 		</select></p>
-	Beschreibung:<br/><textarea name="cap" cols="50" rows="10"></textarea><br/>
-	<p>Kategorie: <input type="text" name="cat" class="textfield"></p>
-	<p>Datum : <select name="day">
+	Description:<br/><textarea name="cap" cols="50" rows="10"></textarea><br/>
+	<p>Category: <input type="text" name="cat" class="textfield"></p>
+	<p>Date: <select name="day">
 		<option value="00">Unknown</option>
 		<option selected="selected" value="01">01</option>
 		<option value="02">02</option>
@@ -119,7 +119,7 @@ $(document).ready(function() {
 		<option value="12">December</option>
 	</select> <input type="text" size="4" maxlength="4" name="year" class="textfield"></p>
 	<input type="text" name="action" value="video" style="display:none;">
-	<input type="submit" value="Hinzufügen" style="text-align:right;"><img class="sym" src="<?php if($_GET['suc']==1) {
+	<input type="submit" value="Add" style="text-align:right;"><img class="sym" src="<?php if($_GET['suc']==1) {
 		echo "images/ok.png";
 	}
 	else {

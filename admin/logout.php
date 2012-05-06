@@ -1,5 +1,6 @@
 <?php session_start();
+include_once 'config.php';
 session_destroy(); 
-header("Location: /index.php");
+header("Location: /".$PG_LOCA."index.php");
 break;
 ?>

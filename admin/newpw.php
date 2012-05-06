@@ -1,18 +1,10 @@
 <?php session_start();
 include_once ("config.php");
 include_once ($_SERVER['DOCUMENT_ROOT'].$PG_LOCA.'inc/pagevar.php');
-$connect = mysql_connect("$DB_LOCA", "$DB_USER", "$DB_PASS");
-if (!$connect)
-{
-   header("Location: /".$PG_LOCA."error.php?error=Could not connect to the Database.");
-}
-
-mysql_select_db($DB_NAME, $connect);
 
 if($_SESSION['access']==allowd) {
     header("Location: intern.php");
 }
-mysql_close($connect);
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
@@ -30,7 +22,7 @@ mysql_close($connect);
 <div id="login">
 <form method="POST" action="pwrec.php">
 	<table><tr><td>Username:</td><td><input type="text" name="name"/></td></tr>
-	<tr><td>e-Mail:</td><td><input type="email" name="email"/></td></tr>
+	<tr><td>E-Mail:</td><td><input type="email" name="email"/></td></tr>
 	<tr><td></td><td style="text-align: right;"><img class="sym" src="<?php if($_GET['fail']=='true') {
 		echo "images/wrong.png";
 	}
