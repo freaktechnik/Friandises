@@ -134,19 +134,22 @@ function check() {
 }
 
 /* E-Mail form scriptz */
+	var oldvalue = [];
 	$('#emailform input[type!="radio"]').blur(function() {
 		var namei = $(this).attr("name");
-		$.post('write.php',{action:"edit",name:namei,value:$(this).val(),table:"logins",id:'<?php echo $un; ?>',rss:showrss},function() {
-			$("#"+namei+" .validate").addClass("ok");
-		});
+		if(oldvalue[namei] != $(this).val())
+			$.post('write.php',{action:"edit",name:namei,value:$(this).val(),table:"logins",id:'<?php echo $un; ?>',rss:showrss},function() {
+				$("#"+namei+" .validate").addClass("ok");
+			});
 	});
 	
 	$('#emailform input[type="radio"]').change(function() {
 		var namei = $(this).attr("name");
-		$.post('write.php',{action:"edit",name:namei,value:$(this).val(),table:"logins",id:'<?php echo $un; ?>',rss:1},function() {
-			$("#"+namei+" .validate").addClass("ok");
-			showrss = $(this).val();
-		});
+		if(oldvalue[namei] != $(this).val())
+			$.post('write.php',{action:"edit",name:namei,value:$(this).val(),table:"logins",id:'<?php echo $un; ?>',rss:1},function() {
+				$("#"+namei+" .validate").addClass("ok");
+				showrss = $(this).val();
+			});
 	});
 	
 	$("#emailform input").keypress(function(e) {
@@ -157,7 +160,9 @@ function check() {
 
 
 	$("#emailform input").focus(function() {
-		$("#"+$(this).attr("name")+" .validate").removeClass("ok");
+		var namei = $(this).attr("name");
+		oldvalue[namei] = $(this).val();
+		$("#"+namei+" .validate").removeClass("ok");
 	});
 });
 </script>

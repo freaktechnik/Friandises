@@ -32,8 +32,9 @@ if($id<$items_length) {
 		case "html": $inshtml = "<object type='text/html' width='750' height='450' data='".$items[$id]["url"]."' mozallowfullscreen webkitAllowFullScreen allowfullscreen></object>"; break;
 		case "swf": $inshtml= "<object width='720' height='450'>
 <param name='allowFullScreen' value='true'>
+<param name='wmode' value='transparent'>
 <param name='movie' value='".$items[$id]["url"].$suffix."'>
-<embed allowfullscreen='true' width='750' height='450' type='application/x-shockwave-flash' src='".$items[$id]["url"].$suffix."'></embed>
+<embed allowfullscreen='true' width='750' wmode='rtransparent' height='450' type='application/x-shockwave-flash' src='".$items[$id]["url"].$suffix."'></embed>
 </object>";
 		break;
 		case "audio": $inshtml = "<audio src='".$items[$id]["url"]."' width='750'>";

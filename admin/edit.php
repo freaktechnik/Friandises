@@ -36,14 +36,15 @@ $day=substr($items[$id]["date"],-2,2);
 <script type="text/javascript">
 var videoid = <?php echo $items_length-$id;?>;
 $(document).ready(function() {
+	var oldvalue = [];
 	$("input").blur(function() {
 		var namei = $(this).attr("name");
-		if(!$("#"+namei+" .validate").hasClass("ok")&&namei!="year") { // prevent radios/selects form double submitting (not excluded with type!=radio in case the change handler won't work)
+		if(!$("#"+namei+" .validate").hasClass("ok")&&namei!="year"&&oldvalue[namei] != $(this).val()) { // prevent radios/selects form double submitting (not excluded with type!=radio in case the change handler won't work)
 			$.post('write.php',{action:"edit",name:namei,value:$(this).val(),table:"content",id:videoid},function() {
 				$("#"+namei+" .validate").addClass("ok");
 			});
 		}
-		else if(namei=="year") {
+		else if(namei=="year"&& oldvalue["date"] != createDate()) {
 			namei = "date";
 			$.post('write.php',{action:"edit",name:namei,value:createDate(),table:"content",id:videoid},function() {
 				$("#"+namei+" .validate").addClass("ok");
@@ -53,18 +54,23 @@ $(document).ready(function() {
 	
 	$("textarea").blur(function() {
 		var namei = $(this).attr("name");
-		$.post('write.php',{action:"edit",name:namei,value:$(this).val(),table:"content",id:videoid},function() {
+		if(oldvalue[namei] != $(this).val())
+			$.post('write.php',{action:"edit",name:namei,value:$(this).val(),table:"content",id:videoid},function() {
 			$("#"+namei+" .validate").addClass("ok");
 		});
 	});
 	
-	$('input[type="select"]').change(function() {
+	$('select').change(function() {
 		var namei = $(this).attr("name");
-		if(namei=="month"||namei=="day")
+		var val = $(this).val();
+		if(namei=="month"||namei=="day") {
 			namei = "date";
-		$.post('write.php',{action:"edit",name:namei,value:createDate(),table:"content",id:videoid},function() {
-			$("#"+namei+" .validate").addClass("ok");
-		});
+			val = createDate();
+		}	
+		if(oldvalue[namei] != val)
+			$.post('write.php',{action:"edit",name:namei,value:createDate(),table:"content",id:videoid},function() {
+				$("#"+namei+" .validate").addClass("ok");
+			});
 	});
 	
 	$("input").keypress(function(e) {
@@ -76,19 +82,34 @@ $(document).ready(function() {
 
 	$("input").focus(function() {
 		var namei = $(this).attr("name");
-		if(namei=="year"||namei=="month"||namei=="day")
+		if(namei=="year") {
 			namei = "date";
+			oldvalue["date"] = createDate();
+		}
+		else
+			oldvalue[namei] = $(this).val();
+		$("#"+namei+" .validate").removeClass("ok");
+	});
+	$("select").focus(function() {
+		var namei = $(this).attr("name");
+		if(namei=="month"||namei=="day") {
+			namei = "date";
+			oldvalue["date"] = createDate();
+		}
+		else
+			oldvalue[namei] = $(this).val();
 		$("#"+namei+" .validate").removeClass("ok");
 	});
 	$("textarea").focus(function() {
 		var namei = $(this).attr("name");
+		oldvalue[namei] = $(this).val();
 		$("#"+namei+" .validate").removeClass("ok");
 	});
 	
 	function createDate() {
 		var year = parseInt($('input[name="year"]').val());
-		var month = $('input[name="month"]').val();
-		var day = $('input[name="day"]').val();
+		var month = $('select[name="month"]').val();
+		var day = $('select[name="day"]').val();
 		
 		return year+"-"+month+"-"+day;
 	}
@@ -110,7 +131,7 @@ $(document).ready(function() {
 		<option <?php if($items[$id]["type"]=="video") echo'selected="selected" ';?>value="video">Video file</option>
 		<option <?php if($items[$id]["type"]=="img") echo'selected="selected" ';?>value="img">Image</option>
 		<option <?php if($items[$id]["type"]=="code") echo'selected="selected" ';?>value="code">HTML code</option>
-		</select><span class="validate sym"></span>
+		</select><span class="validate sym"></span></p>
 	<p id="thumbnail">Thumbnail URL: <input type="text" name="thumbnail" value="<?php echo $items[$id]["thumbnail"]; ?>" class="textfield"><span class="validate sym"></span></p>
 	<p id="caption">Description: <span class="validate sym"></span></p>
 	<textarea name="caption" cols="50" rows="10"><?php echo $items[$id]["description"]; ?></textarea><br/>

@@ -24,9 +24,10 @@ include_once ($_SERVER['DOCUMENT_ROOT'].$PG_LOCA.'inc/pagevar.php');
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
+	var oldvalue = [];
 	$("input").blur(function() {
 		var namei = $(this).attr("name");
-		if(!$("#"+namei+" .validate").hasClass("ok")) { // prevent radios form double submitting (not excluded with type!=radio in case the change handler won't work)
+		if(!$("#"+namei+" .validate").hasClass("ok")&&oldvalue[namei] != $(this).val()) { // prevent radios form double submitting (not excluded with type!=radio in case the change handler won't work)
 			$.post('write.php',{action:"edit",name:namei,value:$(this).val(),table:"settings"},function() {
 				$("#"+namei+" .validate").addClass("ok");
 			});
@@ -34,16 +35,18 @@ $(document).ready(function() {
 	});
 	$("textarea").blur(function() {
 		var namei = $(this).attr("name");
-		$.post('write.php',{action:"edit",name:namei,value:$(this).val(),table:"settings"},function() {
-			$("#"+namei+" .validate").addClass("ok");
-		});
+		if(oldvalue[namei] != $(this).val())
+			$.post('write.php',{action:"edit",name:namei,value:$(this).val(),table:"settings"},function() {
+				$("#"+namei+" .validate").addClass("ok");
+			});
 	});
 	
 	$('input[type="radio"]').change(function() {
 		var namei = $(this).attr("name");
-		$.post('write.php',{action:"edit",name:namei,value:$(this).val(),table:"settings"},function() {
-			$("#"+namei+" .validate").addClass("ok");
-		});
+		if(oldvalue[namei] != $(this).val())
+			$.post('write.php',{action:"edit",name:namei,value:$(this).val(),table:"settings"},function() {
+				$("#"+namei+" .validate").addClass("ok");
+			});
 	});
 	
 	$("input").keypress(function(e) {
@@ -54,10 +57,14 @@ $(document).ready(function() {
 
 
 	$("input").focus(function() {
-		$("#"+$(this).attr("name")+" .validate").removeClass("ok");
+		var namei = $(this).attr("name");
+		oldvalue[namei] = $(this).val();
+		$("#"+namei+" .validate").removeClass("ok");
 	});
 	$("textarea").focus(function() {
-		$("#"+$(this).attr("name")+" .validate").removeClass("ok");
+		var namei = $(this).attr("name");
+		oldvalue[namei] = $(this).val();
+		$("#"+namei+" .validate").removeClass("ok");
 	});
 });
 </script>

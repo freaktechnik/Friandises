@@ -11,7 +11,7 @@ function videoparse($url) {
 	case "www.youtube.com":
 		$vid = preg_replace('#.+v=#','',$purl["query"]);
 		$vid = preg_replace('#&.+$#','',$vid);
-		$vurl = 'http://www.youtube.com/embed/'.$vid."?hd=1";
+		$vurl = 'http://www.youtube.com/embed/'.$vid."?hd=1&showinfo=0&autohide=1";
 		$thumbnail = 'http://img.youtube.com/vi/'.$vid.$suffix;
 		$type = "html";
 	break;
@@ -24,7 +24,7 @@ function videoparse($url) {
 	break;
 	case "youtu.be":
 		$vid = preg_replace("#/#","",$purl["path"]);
-		$vurl = 'http://www.youtube.com/embed/'.$vid."?hd=1";
+		$vurl = 'http://www.youtube.com/embed/'.$vid."?hd=1&showinfo=0&autohide=1";
 		$thumbnail= 'http://img.youtube.com/vi/'.$vid.$suffix;
 		$type="html";
 	break;
