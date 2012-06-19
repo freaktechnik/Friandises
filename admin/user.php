@@ -2,18 +2,19 @@
 include_once 'config.php';
 include_once ($_SERVER['DOCUMENT_ROOT'].$PG_LOCA.'inc/pagevar.php');
 include_once ($_SERVER['DOCUMENT_ROOT'].$PG_LOCA.'inc/users.php');
-if($_SESSION['access']!=allowd||$_SESSION['access']==NULL)
+
+if($_SESSION['access']!='allowd'||$_SESSION['access']==NULL)
 {
     session_destroy(); 
-	header("Location: /".$PG_LOCA."error.php?error=401 Access denied");
+	header('Location: '.$PGURL.'/'.$PG_LOCA.'error.php?error=401 Access denied');
 }
 else {
-	$_SESSION['access']=allowd;
+	$_SESSION['access']='allowd';
 }
 $connect = mysql_connect("$DB_LOCA", "$DB_USER", "$DB_PASS");
 if (!$connect)
 {
-   header("Location: /".$PG_LOCA."admin/error.php?error=Could not connect to the Database.");
+   header('Location: '.$PGURL.'/'.$PG_LOCA.'admin/error.php?error=Could not connect to the Database.');
 }
 $un =$_SESSION['username'];
 
@@ -23,7 +24,7 @@ $un =$_SESSION['username'];
 <html>
 <head>
 <title><?php echo $PGNAME; ?> - Personal Settings</title>
-<link rel="stylesheet" href="/<?php echo $PG_LOCA;?>style.css" type="text/css" media="screen" >
+<link rel="stylesheet" href="/style.css" type="text/css" media="screen" >
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" >
 <meta http-equiv="content-language" content="en">
 <meta name="generator" content="Martin Giger">

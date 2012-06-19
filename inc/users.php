@@ -1,9 +1,10 @@
 <?php
-include_once("admin/config.php");
-$connect = mysql_connect("$DB_LOCA", "$DB_USER", "$DB_PASS");
+include_once($_SERVER['DOCUMENT_ROOT'].$PG_LOCA.'admin/config.php');
+include_once('pagevar.php');
+$connect = mysql_connect($DB_LOCA, $DB_USER, $DB_PASS);
 if (!$connect)
 {
-   header("Location: /".$PG_LOCA."error.php?error=Could not connect to the Database.");
+   header('Location: '.$PGURL.'error.php?error=Could not connect to the Database.');
 }
 
 mysql_select_db($DB_NAME, $connect);

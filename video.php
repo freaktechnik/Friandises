@@ -7,7 +7,6 @@ $id = (int)$_GET['id'];
 $categories[0]=placeholder;
 $d=1;
 
-$suffix="&fs=1&hd=1";
 $share = '<!-- AddThis Button BEGIN -->
 <div class="addthis_toolbox addthis_default_style">
 <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
@@ -33,8 +32,8 @@ if($id<$items_length) {
 		case "swf": $inshtml= "<object width='720' height='450'>
 <param name='allowFullScreen' value='true'>
 <param name='wmode' value='transparent'>
-<param name='movie' value='".$items[$id]["url"].$suffix."'>
-<embed allowfullscreen='true' width='750' wmode='rtransparent' height='450' type='application/x-shockwave-flash' src='".$items[$id]["url"].$suffix."'></embed>
+<param name='movie' value='".$items[$id]["url"]."'>
+<embed allowfullscreen='true' width='750' height='450' wmode='rtransparent' type='application/x-shockwave-flash' src='".$items[$id]["url"]."'>
 </object>";
 		break;
 		case "audio": $inshtml = "<audio src='".$items[$id]["url"]."' width='750'>";
@@ -44,7 +43,8 @@ if($id<$items_length) {
 		case "img": $inshtml = "<img src='".$items[$id]["url"]."' width='750'>";
 		break;
 		case "code": $inshtml = $items[$id]["url"];
-		break;		
+		break;
+		default: $inshtml = "<h4>This element can't be displayed</h4>";
 	}
 	$inshtml = $inshtml."<div id='footline'>
 	".$left."<div class='center'>".$share."</div>".$right."
@@ -91,7 +91,7 @@ for($f=1;$f<$d;$f=$f+1) {
     <meta property="og:url" content="<?php echo $PGURL."/video.php?id=".$id; ?>">
     <meta property="og:image" content="<?php echo $items[$id]["thumbnail"]; ?>">
     <meta property="og:description"
-          content="<?php echo $items[$id]["description"]; ?>">
+          content="<?php echo preg_replace('/"/',"'",$items[$id]["description"]);; ?>">
     <meta property="og:video" content="<?php echo $items[$id]["url"]; ?>">
 	<meta property="og:video:type" content="application/x-shockwave-flash">
 

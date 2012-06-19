@@ -1,12 +1,11 @@
 <?php
-include_once ("config.php");
+include_once ('config.php');
 include_once ($_SERVER['DOCUMENT_ROOT'].$PG_LOCA.'inc/pagevar.php');
-$suffix = '/0.jpg';
 
-$connect = mysql_connect("$DB_LOCA", "$DB_USER", "$DB_PASS");
+$connect = mysql_connect($DB_LOCA, $DB_USER, $DB_PASS);
 if (!$connect)
 {
-   header("Location: /".$PG_LOCA."error.php?error=Could not connect to the Database.");
+   header('Location: '.$PGURL.'/'.$PG_LOCA.'error.php?error=Could not connect to the Database.');
 }
 mysql_select_db($DB_NAME, $connect);
 $name=$_POST['name'];

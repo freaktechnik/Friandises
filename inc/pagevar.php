@@ -1,16 +1,16 @@
 <?php
-include_once("admin/config.php");
-$connect = mysql_connect("$DB_LOCA", "$DB_USER", "$DB_PASS");
+include_once('admin/config.php');
+$connect = mysql_connect($DB_LOCA, $DB_USER, $DB_PASS);
 if (!$connect)
 {
-   header("Location: /".$PG_LOCA."error.php?error=Could not connect to the Database.");
+   header('Location: error.php?error=Could not connect to the Database.');
 }
 
 mysql_select_db($DB_NAME, $connect);
 
 $query = mysql_query("SELECT value FROM settings WHERE name='url'");
 $objResult = mysql_fetch_object($query);
-$PGURL = $objResult->value;
+$PGURL = ($TOP_LVL ? $objResult->value.$PG_LOCA : $objResult->value);
 $query = mysql_query("SELECT value FROM settings WHERE name='name'");
 $objResult = mysql_fetch_object($query);
 $PGNAME = $objResult->value;

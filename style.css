@@ -232,11 +232,11 @@ a img {
 .validate {
 	height: 16px;
 	width: 16px;
-	background-image: url(images/clear.png);
+	background-image: url(admin/images/clear.png);
 	
 	display: inline-block;
 }
 
 .ok {
-	background-image: url(images/ok.png);
+	background-image: url(admin/images/ok.png);
 }

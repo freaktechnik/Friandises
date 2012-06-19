@@ -4,19 +4,19 @@ include_once ("config.php");
 include_once ("inc/videoparse.php");
 include_once ($_SERVER['DOCUMENT_ROOT'].$PG_LOCA.'inc/pagevar.php');
 
-if($_SESSION['access']!=allowd||$_SESSION['access']==NULL)
+if($_SESSION['access']!='allowd'||$_SESSION['access']==NULL)
 {
     session_destroy(); 
-	header("Location: /".$PG_LOCA."error.php");
+	header('Location: '.$PGURL.'error.php');
 }
 else {
-	$_SESSION['access']=allowd;
+	$_SESSION['access']='allowd';
 }
 
-$connect = mysql_connect("$DB_LOCA", "$DB_USER", "$DB_PASS");
+$connect = mysql_connect($DB_LOCA, $DB_USER, $DB_PASS);
 if (!$connect)
 {
-   header("Location: error.php?error=Could not connect: ".mysql_error());
+   header('Location: '.$PGURL.'error.php?error=Could not connect: '.mysql_error());
 }
 
 mysql_select_db($DB_NAME, $connect);
@@ -38,7 +38,7 @@ if($action=="edit") {
 		$results = mysql_query($sql);
 	}
 	else if($table=="settings") {
-		header("Location: error.php?error=You are not allowed to do this.");
+		header('Location: '.$PGURL.'error.php?error=You are not allowed to do this.');
 	}
 	else {
 		if($table=="logins"&&$item=="password") {
@@ -50,12 +50,12 @@ if($action=="edit") {
 			}
 		}
 		else if($item=="email"&&!(filter_var($value, FILTER_VALIDATE_EMAIL))) {
-			header("Location: error.php?error=E-Mail adress is not valid.");
+			header('Location: '.$PGURL.'error.php?error=E-Mail adress is not valid.');
 		}
 		$sql = "UPDATE $table SET $item='$value' WHERE $idtype='$id'";
 		$results = mysql_query($sql);
 		if((int)$_POST['rss']==1) {
-			include ("rsscreate.php");
+			include ('inc/rsscreate.php');
 		}
 	}
 	
@@ -79,25 +79,25 @@ else if($action=="video") {
 
 	$sql = "INSERT INTO content (url, name, caption, category, thumbnail, date, creator) VALUES ('$url', '$name', '$caption', '$category', '$thumbnail', '$date', '$creator');";
 	$results = mysql_query($sql);
-	include ("rsscreate.php");
-	header("Location: intern.php?suc=1");
+	include ('inc/rsscreate.php');
+	header('Location: '.$PGURL.'intern.php?suc=1');
 }
 
-else if($action=="user") {
+else if($action=='user') {
 	$name=$_POST['name'];
 	$email=$_POST['email'];
 	$admin=$_POST['admin'];
 	
 	$query = mysql_query("SELECT email FROM logins WHERE user='$name'");
 	if($query) {
-		header("Location: newu.php?suc=3");
+		header('Location: '.$PGURL.'newu.php?suc=3');
 	}
 	$query = mysql_query("SELECT user FROM logins WHERE email='$email'");
 	if($query) {
-		header("Location: newu.php?suc=4");
+		header('Location: '.$PGURL.'newu.php?suc=4');
 	}
 	if (!(filter_var($email, FILTER_VALIDATE_EMAIL))) {
-		header("Location: newu.php?suc=4");
+		header('Location: '.$PGURL.'newu.php?suc=4');
 	}
 	
 	$password = generatePassword();
@@ -106,10 +106,10 @@ else if($action=="user") {
 	$subject = "Your new account on ".$PGNAME."";
 	$body = "Hi ".$name."\n\nSomeone just created a new account on ".$PGNAME." for you. You can find ".$PGNAME." under ".$PGURL.". \nYour login informations:\nUsername: ".$name."\nPassword: ".$password."\nYou can edit your e-mail adress and password when you are logged in.";
 	if (mail($email, $subject, $body)) {
-		header("Location: newu.php?suc=1");
+		header('Location: '.$PGURL.'newu.php?suc=1');
 	}
 	else {
-		header("Location: newu.php?suc=2");
+		header('Location: '.$PGURL.'newu.php?suc=2');
 	}
 }
 
@@ -152,7 +152,7 @@ else if($action=="views") {
 		}
 	}
 	
-	header("Location: views.php?suc=1");
+	header('Location: '.$PGURL.'views.php?suc=1');
 }
 
 function generatePassword($length = 8) {

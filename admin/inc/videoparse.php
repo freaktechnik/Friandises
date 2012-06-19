@@ -18,7 +18,7 @@ function videoparse($url) {
 	case "videoportal.sf.tv":
 	case "www.videoportal.sf.tv":
 		$vid = preg_replace('#.+id=#','',$purl["query"]);
-		$vurl = 'http://www.sf.tv/videoplayer/embed/'.$vid;
+		$vurl = 'http://www.sf.tv/videoplayer/embed/'.$vid."?fs=1";
 		$thumbnail= 'http://www.videoportal.sf.tv/cvis/segment/thumbnail/'.$vid;
 		$type="swf";
 	break;
@@ -40,7 +40,18 @@ function videoparse($url) {
 	case "www.vimeo.com":
 		$vid = preg_replace("#/#","",$purl["path"]);
 		$vurl = 'http://player.vimeo.com/video/'.$vid;
-		$thumbnail = "Vimeo is complicated."; // why do I need sockets :(
+		$req = 'http://vimeo.com/api/v2/video/'.$vid.'.php';
+
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $req);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+		$data = curl_exec($ch);
+		curl_close($ch);
+
+		$rsp_obj = unserialize($data);
+		$thumbnail = $rsp_obj[0]['thumbnail_medium'];
 		$vurl = $vurl."?title=0&amp;byline=0&amp;portrait=0&amp;color=ff9933";
 		$type ="html";
 	break;
@@ -80,7 +91,7 @@ function videoparse($url) {
 	break;
 	case $format=="html":
 		$vurl = $url;
-		$thumbnail = "imgaes/code.png";
+		$thumbnail = "images/code.png";
 		$type = "code";
 	break;
 	default:

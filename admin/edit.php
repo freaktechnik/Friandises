@@ -1,17 +1,16 @@
 <?php session_start();
-include ('config.php');
-if($_SESSION['access']!=allowd||$_SESSION['access']==NULL)
+include_once ('config.php');
+include_once ($_SERVER['DOCUMENT_ROOT'].$PG_LOCA.'inc/pagevar.php');
+if($_SESSION['access']!='allowd'||$_SESSION['access']==NULL)
 {
     session_destroy(); 
-	header("Location: /".$PG_LOCA."error.php?error=401 Access denied");
-    break;
+	header('Location: '.$PGURL.'/'.$PG_LOCA.'error.php?error=401 Access denied');
 }
 else {
-	$_SESSION['access']=allowd;
+	$_SESSION['access']='allowd';
 }
 
-include ($_SERVER['DOCUMENT_ROOT'].$PG_LOCA.'inc/items.php');
-include ($_SERVER['DOCUMENT_ROOT'].$PG_LOCA.'inc/pagevar.php');
+include_once ($_SERVER['DOCUMENT_ROOT'].$PG_LOCA.'inc/items.php');
 $id=$_GET['id'];
 
 
@@ -68,7 +67,7 @@ $(document).ready(function() {
 			val = createDate();
 		}	
 		if(oldvalue[namei] != val)
-			$.post('write.php',{action:"edit",name:namei,value:createDate(),table:"content",id:videoid},function() {
+			$.post('write.php',{action:"edit",name:namei,value:val,table:"content",id:videoid},function() {
 				$("#"+namei+" .validate").addClass("ok");
 			});
 	});

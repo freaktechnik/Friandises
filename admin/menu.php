@@ -1,5 +1,6 @@
 <?php 
-$pattern = '#'.$_SERVER['DOCUMENT_ROOT'].'admin/#';
+include_once('config.php');
+$pattern = '#'.$_SERVER['DOCUMENT_ROOT'].$PG_LOCA.'admin/#';
 $fiel = preg_replace($pattern,'',$_SERVER['SCRIPT_FILENAME']);
 
 ?>
